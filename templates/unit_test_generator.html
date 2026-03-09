@@ -1,0 +1,1253 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #f8f9fa;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f1f3f5;
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --border-color: #dee2e6;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --shadow-hover: rgba(0, 0, 0, 0.15);
+            --accent-primary: #ff6b35;
+            --accent-secondary: #ff8c42;
+            --accent-gradient: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+            --accent-light: #fff3ef;
+            --accent-dark: #e85d2e;
+            --success: #28a745;
+            --success-bg: #d4edda;
+            --error: #dc3545;
+            --error-bg: #f8d7da;
+            --info: #17a2b8;
+            --info-bg: #d1ecf1;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1a1d23;
+            --bg-secondary: #22252b;
+            --bg-tertiary: #2a2d35;
+            --text-primary: #e9ecef;
+            --text-secondary: #adb5bd;
+            --border-color: #3a3d45;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --shadow-hover: rgba(0, 0, 0, 0.5);
+            --accent-light: #3a2d29;
+            --success-bg: #1e3a2a;
+            --error-bg: #3a1e23;
+            --info-bg: #1e2f35;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            min-height: 100vh;
+            transition: background-color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px var(--shadow);
+            overflow: hidden;
+        }
+
+        .header {
+            background: var(--accent-gradient);
+            padding: 2rem;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-title i {
+            font-size: 2.5rem;
+            color: white;
+        }
+
+        .header-title h1 {
+            color: white;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            background: var(--accent-gradient);
+            box-shadow: 0 2px 8px var(--shadow);
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-link:hover {
+          background: var(--accent-gradient);
+          color: white;
+          box-shadow: 0 4px 12px var(--shadow-hover);
+          transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+          background: var(--accent-gradient);
+          color: white;
+          box-shadow: 0 4px 12px var(--shadow-hover);
+          font-weight: 600;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section {
+            background: var(--bg-secondary);
+            border-radius: 18px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px 0 rgba(0,0,0,0.10), 0 1.5px 6px 0 rgba(255,107,53,0.04);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            border: 1.5px solid #fff;
+        }
+
+        .section-title {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-primary);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .form-select {
+            padding: 12px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.1);
+        }
+
+        .form-select:hover {
+            border-color: var(--accent-primary);
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: white;
+            box-shadow: 0 4px 6px rgba(255, 107, 53, 0.3);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(255, 107, 53, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+            color: white;
+            padding: 10px 22px;
+            font-size: 13px;
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #388e3c 0%, #2e7d32 100%);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn-danger {
+            background: #f44336;
+            color: white;
+            padding: 8px 20px;
+            font-size: 13px;
+        }
+
+        .status {
+            padding: 12px 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: none;
+            font-size: 14px;
+        }
+
+        .status.success {
+            background: var(--success-bg);
+            color: var(--success);
+            border: 1px solid var(--success);
+            display: block;
+        }
+
+        .status.error {
+            background: var(--error-bg);
+            color: var(--error);
+            border: 1px solid var(--error);
+            display: block;
+        }
+
+        .status.loading {
+            background: var(--info-bg);
+            color: var(--info);
+            border: 1px solid var(--info);
+            display: block;
+        }
+
+        .test-cases-container {
+            display: none;
+        }
+
+        .test-case {
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .test-case.passed {
+            border-color: var(--success);
+            background: var(--success-bg);
+            box-shadow: 0 4px 16px rgba(76, 175, 80, 0.2);
+        }
+
+        .test-case.failed {
+            border-color: var(--error);
+            background: var(--error-bg);
+            box-shadow: 0 4px 16px rgba(244, 67, 54, 0.2);
+        }
+
+        .test-case-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+
+        .test-case-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .test-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        .badge-not-run {
+            background: linear-gradient(135deg, #e0e0e0 0%, #bdbdbd 100%);
+            color: #666;
+        }
+
+        .badge-passed {
+            background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+            color: white;
+        }
+
+        .badge-failed {
+            background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+            color: white;
+        }
+
+        .badge-running {
+            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+            color: white;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .test-description {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .test-query {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        .test-results {
+            margin-top: 15px;
+            display: none;
+        }
+
+        .test-results.show {
+            display: block;
+        }
+
+        .result-section {
+            margin-bottom: 15px;
+        }
+
+        .result-label {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .result-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 13px;
+            max-height: 200px;
+            overflow-y: auto;
+            color: var(--text-primary);
+        }
+
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        .result-table th {
+            background: var(--accent-gradient);
+            color: white;
+            padding: 8px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .result-table td {
+            padding: 8px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--border-color);
+            border-top: 2px solid var(--accent-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .metadata-section {
+            background: var(--bg-tertiary);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .metadata-section.show {
+            display: block;
+        }
+
+        .metadata-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .metadata-content {
+            font-size: 13px;
+            color: var(--text-secondary);
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="header-title">
+                <i class="fas fa-vial"></i>
+                <h1>AI Unit Test Generator</h1>
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+                <i class="fas fa-moon" id="themeIcon"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="nav-links" style="margin-top: 20px;">
+            <a href="/" class="nav-link"><i class="fas fa-database"></i> Home</a>
+            <a href="/query-tool" class="nav-link"><i class="fas fa-table"></i> SQL Query Tool</a>
+            <a href="/ai-query" class="nav-link"><i class="fas fa-robot"></i> AI Query Assistant</a>
+            <a href="/unit-test-generator" class="nav-link active"><i class="fas fa-vial"></i> Test Generator</a>
+        </div>
+        <div class="content">
+            <div class="section">
+                <div class="section-title">
+                    🎯 Select Database Object
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Database:</label>
+                        <select id="databaseSelect" class="form-select" onchange="loadSchemas()">
+                            <option value="">Select Database...</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Schema:</label>
+                        <select id="schemaSelect" class="form-select" onchange="loadObjects()">
+                            <option value="">Select Schema...</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Object Type:</label>
+                        <select id="objectTypeSelect" class="form-select" onchange="loadObjects()">
+                            <option value="">Select Type...</option>
+                            <option value="TABLE">Table</option>
+                            <option value="VIEW">View</option>
+                            <option value="PROCEDURE">Stored Procedure</option>
+                            <option value="FUNCTION">Function</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Object Name:</label>
+                        <select id="objectSelect" class="form-select" onchange="loadMetadata()">
+                            <option value="">Select Object...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- User Test Case Request Section - Only for TABLE/VIEW -->
+                <div id="testRequestSection" class="test-request-section" style="display: none; margin-top: 20px; padding: 20px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e0e0e0;">
+                    <div style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 15px;">
+                        🎯 Customize Test Generation
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 3;">
+                            <label class="form-label">What kind of test cases do you want?</label>
+                            <textarea id="userTestRequest" class="form-select" style="min-height: 80px; resize: vertical;" 
+                                placeholder="E.g., Check for null values in key columns, validate referential integrity with DIM_CUSTOMER table, ensure date ranges are valid, check for duplicate records..."></textarea>
+                        </div>
+                        <div class="form-group" style="flex: 1; min-width: 150px;">
+                            <label class="form-label">Number of test cases:</label>
+                            <input type="number" id="testCaseCount" class="form-select" min="1" max="20" value="5" style="text-align: center;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div style="display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap;">
+                    <button class="btn btn-primary" onclick="generateTests()" id="generateBtn" disabled>
+                        🚀 Generate Unit Tests with AI
+                    </button>
+                    <button class="btn btn-secondary" onclick="fetchExistingTests()" id="fetchTestsBtn" disabled style="display: flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-search"></i> Look for Unit Tests
+                    </button>
+                    <button class="btn btn-success" onclick="saveAllTests()" id="saveTestsBtn" style="display: none; background: linear-gradient(135deg, #28a745 0%, #218838 100%);">
+                        💾 Save All Test Cases
+                    </button>
+                </div>
+            </div>
+
+            <div id="status" class="status"></div>
+
+            <div id="metadataSection" class="metadata-section">
+                <div class="metadata-title">📋 Object Metadata</div>
+                <div id="metadataContent" class="metadata-content"></div>
+            </div>
+
+            <div id="testCasesContainer" class="test-cases-container">
+                <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
+                    <span>✅ Test Cases</span>
+                    <span id="testCasesSource" style="font-size: 12px; color: #666;"></span>
+                </div>
+                <div id="testCasesList"></div>
+            </div>
+
+            <div class="empty-state" id="emptyState">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <p>Select a database object above to generate automated unit tests using AI</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentMetadata = null;
+        let currentDatabase = null;
+        let currentSchema = null;
+        let currentObjectName = null;
+        let currentObjectType = null;
+
+        // Global variables for Cortex access and test cases
+        let hasCortexAccess = false;
+        let generatedTestCases = [];
+
+        // THEME TOGGLE FEATURE
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            const icon = document.getElementById('themeIcon');
+            icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+
+        // Load saved theme and databases on page load, check Cortex access
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            const icon = document.getElementById('themeIcon');
+            icon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            // Check Cortex access from sessionStorage (set by home page)
+            const storedAccess = sessionStorage.getItem('hasCortexAccess');
+            if (storedAccess !== null) {
+                hasCortexAccess = storedAccess === 'true';
+            }
+            updateUIForCortexAccess();
+            loadDatabases();
+        });
+
+        function updateUIForCortexAccess() {
+            const generateBtn = document.getElementById('generateBtn');
+            const testRequestSection = document.getElementById('testRequestSection');
+            const fetchTestsBtn = document.getElementById('fetchTestsBtn');
+            const saveTestsBtn = document.getElementById('saveTestsBtn');
+            if (hasCortexAccess) {
+                if (generateBtn) generateBtn.disabled = false;
+                if (testRequestSection) testRequestSection.style.display = 'block';
+                if (fetchTestsBtn) fetchTestsBtn.disabled = false;
+                if (saveTestsBtn) saveTestsBtn.style.display = 'none';
+            } else {
+                if (generateBtn) generateBtn.disabled = true;
+                if (testRequestSection) testRequestSection.style.display = 'none';
+                if (fetchTestsBtn) fetchTestsBtn.disabled = true;
+                if (saveTestsBtn) saveTestsBtn.style.display = 'none';
+            }
+        }
+
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.className = `status ${type}`;
+            statusDiv.innerHTML = type === 'loading' ? `<span class="loading-spinner"></span>${message}` : message;
+        }
+
+        async function loadDatabases() {
+            try {
+                const response = await fetch('/api/databases');
+                const result = await response.json();
+                const select = document.getElementById('databaseSelect');
+                select.innerHTML = '<option value="">Select Database...</option>';
+                if (result.databases && Array.isArray(result.databases)) {
+                    result.databases.forEach(db => {
+                        const option = document.createElement('option');
+                        option.value = db;
+                        option.textContent = db;
+                        select.appendChild(option);
+                    });
+                }
+                showStatus('Ready to select database', 'success');
+            } catch (error) {
+                showStatus('Error loading databases', 'error');
+            }
+        }
+
+        async function loadSchemas() {
+            const database = document.getElementById('databaseSelect').value;
+            const schemaSelect = document.getElementById('schemaSelect');
+            schemaSelect.innerHTML = '<option value="">Select Schema...</option>';
+            schemaSelect.disabled = true;
+            document.getElementById('objectSelect').innerHTML = '<option value="">Select Object...</option>';
+            document.getElementById('objectSelect').disabled = true;
+            document.getElementById('generateBtn').disabled = true;
+            if (!database) return;
+            showStatus('Loading schemas...', 'loading');
+            try {
+                const response = await fetch('/api/schemas', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ database })
+                });
+                const result = await response.json();
+                if (result.schemas && Array.isArray(result.schemas)) {
+                    result.schemas.forEach(schema => {
+                        const option = document.createElement('option');
+                        option.value = schema;
+                        option.textContent = schema;
+                        schemaSelect.appendChild(option);
+                    });
+                    schemaSelect.disabled = false;
+                }
+                showStatus(`Found ${result.schemas.length} schema(s)`, 'success');
+            } catch (error) {
+                showStatus('Error loading schemas', 'error');
+            }
+        }
+
+        async function loadObjects() {
+            const database = document.getElementById('databaseSelect').value;
+            const schema = document.getElementById('schemaSelect').value;
+            const objectType = document.getElementById('objectTypeSelect').value;
+            const objectSelect = document.getElementById('objectSelect');
+            objectSelect.innerHTML = '<option value="">Select Object...</option>';
+            objectSelect.disabled = true;
+            document.getElementById('generateBtn').disabled = true;
+            const testRequestSection = document.getElementById('testRequestSection');
+            if (objectType === 'TABLE' || objectType === 'VIEW') {
+                testRequestSection.style.display = 'block';
+            } else {
+                testRequestSection.style.display = 'none';
+            }
+            if (!database || !schema || !objectType) return;
+            showStatus('Loading objects...', 'loading');
+            try {
+                const response = await fetch('/api/objects', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ database, schema, object_type: objectType })
+                });
+                const result = await response.json();
+                if (result.objects && Array.isArray(result.objects)) {
+                    result.objects.forEach(obj => {
+                        const option = document.createElement('option');
+                        option.value = obj;
+                        option.textContent = obj;
+                        objectSelect.appendChild(option);
+                    });
+                    objectSelect.disabled = false;
+                }
+                showStatus(`Found ${result.objects.length} ${objectType.toLowerCase()}(s)`, 'success');
+            } catch (error) {
+                showStatus('Error loading objects', 'error');
+            }
+        }
+
+        async function loadMetadata() {
+            const database = document.getElementById('databaseSelect').value;
+            const schema = document.getElementById('schemaSelect').value;
+            const objectName = document.getElementById('objectSelect').value;
+            const objectType = document.getElementById('objectTypeSelect').value;
+            if (!database || !schema || !objectName || !objectType) return;
+            currentDatabase = database;
+            currentSchema = schema;
+            currentObjectName = objectName;
+            currentObjectType = objectType;
+            showStatus('Loading metadata...', 'loading');
+            document.getElementById('generateBtn').disabled = true;
+            document.getElementById('fetchTestsBtn').disabled = true;
+            try {
+                const response = await fetch('/api/object-metadata', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ database, schema, object_name: objectName, object_type: objectType })
+                });
+                const result = await response.json();
+                if (result.metadata) {
+                    currentMetadata = result.metadata;
+                    displayMetadata(result.metadata, objectType);
+                    document.getElementById('generateBtn').disabled = false;
+                    document.getElementById('fetchTestsBtn').disabled = false;
+                    showStatus('Ready', 'success');
+                } else {
+                    showStatus('No metadata found for this object', 'warning');
+                }
+            } catch (error) {
+                showStatus('Error loading metadata', 'error');
+            }
+        }
+
+        function displayMetadata(metadata, objectType) {
+            const metadataSection = document.getElementById('metadataSection');
+            const metadataContent = document.getElementById('metadataContent');
+            let html = '';
+            if (metadata.columns) {
+                html += '<div><strong>Columns:</strong><ul>';
+                metadata.columns.forEach(col => {
+                    html += `<li>${col.name || col.COLUMN_NAME}: ${col.type || col.DATA_TYPE}</li>`;
+                });
+                html += '</ul></div>';
+            }
+            if (metadata.definition) {
+                html += `<div><strong>Definition:</strong><pre>${metadata.definition}</pre></div>`;
+            }
+            if (metadata.arguments) {
+                html += '<div><strong>Arguments:</strong><ul>';
+                metadata.arguments.forEach(arg => {
+                    html += `<li>${arg.name || arg.ARGUMENT_NAME}: ${arg.type || arg.DATA_TYPE}</li>`;
+                });
+                html += '</ul></div>';
+            }
+            metadataContent.innerHTML = html;
+            metadataSection.classList.add('show');
+        }
+
+        async function generateTests() {
+            if (!currentDatabase || !currentSchema || !currentObjectName || !currentObjectType || !currentMetadata) {
+                showStatus('Please select all required fields and load metadata first', 'error');
+                return;
+            }
+            const userTestRequest = document.getElementById('userTestRequest').value.trim();
+            const testCaseCount = parseInt(document.getElementById('testCaseCount').value) || 5;
+            showStatus('🤖 AI is generating test cases... This may take a moment.', 'loading');
+            document.getElementById('generateBtn').disabled = true;
+            document.getElementById('emptyState').style.display = 'none';
+            try {
+                const response = await fetch('/api/generate-tests', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        database: currentDatabase,
+                        schema: currentSchema,
+                        object_name: currentObjectName,
+                        object_type: currentObjectType,
+                        metadata: currentMetadata,
+                        user_test_request: userTestRequest,
+                        test_case_count: testCaseCount
+                    })
+                });
+                const result = await response.json();
+                if (result.test_cases && Array.isArray(result.test_cases)) {
+                    generatedTestCases = result.test_cases;
+                    displayTestCases(result.test_cases);
+                    document.getElementById('saveTestsBtn').style.display = 'block';
+                    showStatus(`✅ Generated ${result.test_cases.length} test case(s)!`, 'success');
+                } else {
+                    showStatus('No test cases generated', 'warning');
+                }
+                document.getElementById('generateBtn').disabled = false;
+            } catch (error) {
+                showStatus('Error generating test cases', 'error');
+                document.getElementById('generateBtn').disabled = false;
+            }
+        }
+
+        function displayTestCases(testCases) {
+            const container = document.getElementById('testCasesContainer');
+            const list = document.getElementById('testCasesList');
+            list.innerHTML = '';
+            allTestCases = testCases; // Store for batch operations
+            testCases.forEach(test => {
+                const testId = test.id || test.test_id || Date.now();
+                const testDiv = document.createElement('div');
+                testDiv.className = 'test-case';
+                testDiv.id = `test-${testId}`;
+                const expectedDisplay = test.expected_description || test.expected_result || 'Not specified';
+                const expectedType = test.expected_type || 'HAS_ROWS';
+                testDiv.innerHTML = `
+                    <div class="test-case-header">
+                        <div class="test-case-title">${test.test_name || 'Test'} <span class="test-badge badge-not-run" id="badge-${testId}">NOT RUN</span></div>
+                        <button class="btn btn-success" onclick="runTest('${testId}', allTestCases[${testCases.indexOf(test)}])"><i class="fas fa-play"></i> Run</button>
+                    </div>
+                    <div class="test-description">${test.description || ''}</div>
+                    <div class="test-query">${test.query || ''}</div>
+                    <div class="test-results" id="results-${testId}"></div>
+                    <div class="result-section" id="message-section-${testId}" style="display:none;"><div class="result-label">Message:</div><div class="result-content" id="message-${testId}"></div></div>
+                    <div class="result-section"><div class="result-label">Actual Result:</div><div class="result-content" id="actual-${testId}"></div></div>
+                `;
+                list.appendChild(testDiv);
+            });
+            container.style.display = 'block';
+            // Add Run All button if not present
+            if (!document.getElementById('runAllBtn')) {
+                const runAllBtn = document.createElement('button');
+                runAllBtn.id = 'runAllBtn';
+                runAllBtn.className = 'btn btn-primary';
+                runAllBtn.style.marginBottom = '22px';
+                runAllBtn.innerHTML = '<i class="fas fa-play"></i> Run All Test Cases';
+                runAllBtn.onclick = runAllTests;
+                container.insertBefore(runAllBtn, container.firstChild);
+            }
+        }
+
+        async function runTest(testId, testData) {
+            const badge = document.getElementById(`badge-${testId}`);
+            const resultsDiv = document.getElementById(`results-${testId}`);
+            const actualDiv = document.getElementById(`actual-${testId}`);
+            const messageSection = document.getElementById(`message-section-${testId}`);
+            const messageDiv = document.getElementById(`message-${testId}`);
+            const testDiv = document.getElementById(`test-${testId}`);
+            badge.className = 'test-badge badge-running';
+            badge.textContent = 'RUNNING...';
+            resultsDiv.classList.add('show');
+            actualDiv.innerHTML = '<span class="loading-spinner"></span>Executing test...';
+            try {
+                const response = await fetch('/api/run-test', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        database: currentDatabase,
+                        schema: currentSchema,
+                        test_query: testData.query,
+                        expected_type: testData.expected_type || 'HAS_ROWS',
+                        expected_description: testData.expected_description || testData.expected_result || ''
+                    })
+                });
+                const result = await response.json();
+                if (result.message) {
+                    messageSection.style.display = 'block';
+                    messageDiv.innerHTML = result.message;
+                }
+                if (result.error && !result.passed) {
+                    badge.className = 'test-badge badge-failed';
+                    badge.textContent = 'FAILED ✗';
+                    testDiv.classList.add('failed');
+                    actualDiv.innerHTML = `<div style="color: #f44336;"><strong>Error:</strong> ${result.error}</div>`;
+                    return;
+                }
+                if (result.actual_result && result.actual_result.length > 0) {
+                    let tableHtml = `<div style="margin-bottom: 10px;"><strong>Returned ${result.actual_row_count || result.actual_result.length} row(s)</strong></div>`;
+                    tableHtml += '<table class="result-table"><thead><tr>';
+                    Object.keys(result.actual_result[0]).forEach(key => {
+                        tableHtml += `<th>${key}</th>`;
+                    });
+                    tableHtml += '</tr></thead><tbody>';
+                    result.actual_result.forEach(row => {
+                        tableHtml += '<tr>';
+                        Object.values(row).forEach(value => {
+                            tableHtml += `<td>${value !== null && value !== undefined ? value : 'NULL'}</td>`;
+                        });
+                        tableHtml += '</tr>';
+                    });
+                    tableHtml += '</tbody></table>';
+                    actualDiv.innerHTML = tableHtml;
+                } else {
+                    actualDiv.innerHTML = '<div style="color: #666; font-style: italic;">Empty result set (0 rows)</div>';
+                }
+                if (result.passed) {
+                    badge.className = 'test-badge badge-passed';
+                    badge.textContent = 'PASSED ✓';
+                    testDiv.classList.add('passed');
+                    testDiv.classList.remove('failed');
+                } else {
+                    badge.className = 'test-badge badge-failed';
+                    badge.textContent = 'FAILED ✗';
+                    testDiv.classList.add('failed');
+                    testDiv.classList.remove('passed');
+                }
+            } catch (error) {
+                badge.className = 'test-badge badge-failed';
+                badge.textContent = 'ERROR';
+                testDiv.classList.add('failed');
+                actualDiv.innerHTML = `<div style="color: #f44336;">Error: ${error.message}</div>`;
+            }
+        }
+
+        async function fetchExistingTests() {
+            if (!currentDatabase || !currentSchema || !currentObjectName || !currentObjectType) {
+                showStatus('Please select all required fields first', 'error');
+                return;
+            }
+            showStatus('🔍 Looking for existing test cases...', 'loading');
+            document.getElementById('fetchTestsBtn').disabled = true;
+            try {
+                const response = await fetch('/api/fetch-tests', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        database: currentDatabase,
+                        schema: currentSchema,
+                        object_name: currentObjectName,
+                        object_type: currentObjectType
+                    })
+                });
+                const result = await response.json();
+                if (result.error) {
+                    showStatus(`Error: ${result.error}`, 'error');
+                    document.getElementById('fetchTestsBtn').disabled = false;
+                    return;
+                }
+                if (result.test_cases && result.test_cases.length > 0) {
+                    result.test_cases.forEach((test, index) => {
+                        test.id = test.test_id || (index + 1);
+                    });
+                    displayTestCases(result.test_cases);
+                    document.getElementById('testCasesSource').textContent = '(Loaded from database)';
+                    document.getElementById('saveTestsBtn').style.display = 'none';
+                    showStatus(`✅ Found ${result.test_cases.length} existing test case(s)!`, 'success');
+                } else {
+                    showStatus('ℹ️ No existing test cases found for this object.', 'warning');
+                    document.getElementById('testCasesContainer').style.display = 'none';
+                }
+                document.getElementById('fetchTestsBtn').disabled = false;
+            } catch (error) {
+                showStatus(`Error fetching tests: ${error.message}`, 'error');
+                document.getElementById('fetchTestsBtn').disabled = false;
+            }
+        }
+
+        async function saveAllTests() {
+            if (!generatedTestCases || generatedTestCases.length === 0) {
+                showStatus('No test cases to save', 'error');
+                return;
+            }
+            showStatus('💾 Saving test cases to database...', 'loading');
+            document.getElementById('saveTestsBtn').disabled = true;
+            try {
+                const response = await fetch('/api/save-tests', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        database: currentDatabase,
+                        schema: currentSchema,
+                        object_name: currentObjectName,
+                        object_type: currentObjectType,
+                        test_cases: generatedTestCases
+                    })
+                });
+                const result = await response.json();
+                if (result.error) {
+                    showStatus(`Error saving: ${result.error}`, 'error');
+                    document.getElementById('saveTestsBtn').disabled = false;
+                    return;
+                }
+                showStatus(`✅ Successfully saved ${result.saved_count} test case(s) to database!`, 'success');
+                document.getElementById('saveTestsBtn').style.display = 'none';
+                document.getElementById('testCasesSource').textContent = '(Saved to database)';
+                generatedTestCases = [];
+            } catch (error) {
+                showStatus(`Error saving tests: ${error.message}`, 'error');
+                document.getElementById('saveTestsBtn').disabled = false;
+            }
+        }
+
+        // ...existing code...
+
+        // RUN ALL FEATURE
+        let allTestCases = [];
+
+
+        async function runAllTests() {
+            if (!allTestCases || allTestCases.length === 0) return;
+            const runAllBtn = document.getElementById('runAllBtn');
+            const originalText = runAllBtn.innerHTML;
+            runAllBtn.disabled = true;
+            runAllBtn.innerHTML = '<span class="loading-spinner"></span> Running All Tests...';
+            for (let i = 0; i < allTestCases.length; i++) {
+                const test = allTestCases[i];
+                await runTest(test.id, test);
+            }
+            runAllBtn.disabled = false;
+            runAllBtn.innerHTML = originalText;
+        }
+
+        // ...existing code...
+        // (Removed stray code block and duplicate displayTestCases function)
+
+        async function runTest(testId, testData) {
+            const badge = document.getElementById(`badge-${testId}`);
+            const resultsDiv = document.getElementById(`results-${testId}`);
+            const actualDiv = document.getElementById(`actual-${testId}`);
+            const messageSection = document.getElementById(`message-section-${testId}`);
+            const messageDiv = document.getElementById(`message-${testId}`);
+            const testDiv = document.getElementById(`test-${testId}`);
+            
+            badge.className = 'test-badge badge-running';
+            badge.textContent = 'RUNNING...';
+            resultsDiv.classList.add('show');
+            actualDiv.innerHTML = '<span class="loading-spinner"></span>Executing test...';
+            
+            try {
+                const response = await fetch('/api/run-test', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        database: currentDatabase,
+                        schema: currentSchema,
+                        test_query: testData.query,
+                        expected_type: testData.expected_type || 'HAS_ROWS',
+                        expected_description: testData.expected_description || testData.expected_result || ''
+                    })
+                });
+                
+                const result = await response.json();
+                
+                // Show message if available
+                if (result.message) {
+                    messageSection.style.display = 'block';
+                    messageDiv.innerHTML = result.message;
+                }
+                
+                if (result.error && !result.passed) {
+                    badge.className = 'test-badge badge-failed';
+                    badge.textContent = 'FAILED ✗';
+                    testDiv.classList.add('failed');
+                    actualDiv.innerHTML = `<div style="color: #f44336;"><strong>Error:</strong> ${result.error}</div>`;
+                    return;
+                }
+                
+                // Display actual results
+                if (result.actual_result && result.actual_result.length > 0) {
+                    let tableHtml = `<div style="margin-bottom: 10px;"><strong>Returned ${result.actual_row_count || result.actual_result.length} row(s)</strong></div>`;
+                    tableHtml += '<table class="result-table"><thead><tr>';
+                    Object.keys(result.actual_result[0]).forEach(key => {
+                        tableHtml += `<th>${key}</th>`;
+                    });
+                    tableHtml += '</tr></thead><tbody>';
+                    
+                    result.actual_result.forEach(row => {
+                        tableHtml += '<tr>';
+                        Object.values(row).forEach(value => {
+                            tableHtml += `<td>${value !== null && value !== undefined ? value : 'NULL'}</td>`;
+                        });
+                        tableHtml += '</tr>';
+                    });
+                    tableHtml += '</tbody></table>';
+                    actualDiv.innerHTML = tableHtml;
+                } else {
+                    actualDiv.innerHTML = '<div style="color: #666; font-style: italic;">Empty result set (0 rows)</div>';
+                }
+                
+                // Update badge and styling
+                if (result.passed) {
+                    badge.className = 'test-badge badge-passed';
+                    badge.textContent = 'PASSED ✓';
+                    testDiv.classList.add('passed');
+                    testDiv.classList.remove('failed');
+                } else {
+                    badge.className = 'test-badge badge-failed';
+                    badge.textContent = 'FAILED ✗';
+                    testDiv.classList.add('failed');
+                    testDiv.classList.remove('passed');
+                }
+            } catch (error) {
+                badge.className = 'test-badge badge-failed';
+                badge.textContent = 'ERROR';
+                testDiv.classList.add('failed');
+                actualDiv.innerHTML = `<div style="color: #f44336;">Error: ${error.message}</div>`;
+            }
+        }
+
+        async function fetchExistingTests() {
+            if (!currentDatabase || !currentSchema || !currentObjectName || !currentObjectType) {
+                showStatus('Please select all required fields first', 'error');
+                return;
+            }
+            
+            showStatus('🔍 Looking for existing test cases...', 'loading');
+            document.getElementById('fetchTestsBtn').disabled = true;
+            
+            try {
+                const response = await fetch('/api/fetch-tests', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        database: currentDatabase,
+                        schema: currentSchema,
+                        object_name: currentObjectName,
+                        object_type: currentObjectType
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.error) {
+                    showStatus(`Error: ${result.error}`, 'error');
+                    document.getElementById('fetchTestsBtn').disabled = false;
+                    return;
+                }
+                
+                if (result.test_cases && result.test_cases.length > 0) {
+                    // Add id to each test for display
+                    result.test_cases.forEach((test, index) => {
+                        test.id = test.test_id || (index + 1);
+                    });
+                    
+                    displayTestCases(result.test_cases);
+                    document.getElementById('testCasesSource').textContent = '(Loaded from database)';
+                    document.getElementById('saveTestsBtn').style.display = 'none'; // No need to save fetched tests
+                    showStatus(`✅ Found ${result.test_cases.length} existing test case(s)!`, 'success');
+                } else {
+                    showStatus('ℹ️ No existing test cases found for this object.', 'warning');
+                    document.getElementById('testCasesContainer').style.display = 'none';
+                }
+                
+                document.getElementById('fetchTestsBtn').disabled = false;
+            } catch (error) {
+                showStatus(`Error fetching tests: ${error.message}`, 'error');
+                document.getElementById('fetchTestsBtn').disabled = false;
+            }
+        }
+
+        async function saveAllTests() {
+            if (!generatedTestCases || generatedTestCases.length === 0) {
+                showStatus('No test cases to save', 'error');
+                return;
+            }
+            
+            showStatus('💾 Saving test cases to database...', 'loading');
+            document.getElementById('saveTestsBtn').disabled = true;
+            
+            try {
+                const response = await fetch('/api/save-tests', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        database: currentDatabase,
+                        schema: currentSchema,
+                        object_name: currentObjectName,
+                        object_type: currentObjectType,
+                        test_cases: generatedTestCases
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.error) {
+                    showStatus(`Error saving: ${result.error}`, 'error');
+                    document.getElementById('saveTestsBtn').disabled = false;
+                    return;
+                }
+                
+                showStatus(`✅ Successfully saved ${result.saved_count} test case(s) to database!`, 'success');
+                document.getElementById('saveTestsBtn').style.display = 'none'; // Hide after saving
+                document.getElementById('testCasesSource').textContent = '(Saved to database)';
+                generatedTestCases = []; // Clear saved tests
+            } catch (error) {
+                showStatus(`Error saving tests: ${error.message}`, 'error');
+                document.getElementById('saveTestsBtn').disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
