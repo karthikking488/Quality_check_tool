@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Quality Tool - Sign In</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .login-header {
+            background: linear-gradient(135deg, #29b5e8 0%, #1e8cbd 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .login-header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .login-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .login-body {
+            padding: 40px 30px;
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        .step-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-sso {
+            background: linear-gradient(135deg, #29b5e8 0%, #1e8cbd 100%);
+            color: white;
+        }
+
+        .btn-sso:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(41, 181, 232, 0.4);
+        }
+
+        .btn-continue {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-continue:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: #29b5e8;
+        }
+
+        .status-message {
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .status-message.show {
+            display: block;
+        }
+
+        .status-message.loading {
+            background: #e3f2fd;
+            color: #1976d2;
+            border: 1px solid #90caf9;
+        }
+
+        .status-message.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+
+        .status-message.error {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef9a9a;
+        }
+
+        .status-message.warning {
+            background: #fff3e0;
+            color: #e65100;
+            border: 1px solid #ffcc80;
+        }
+
+        .cortex-status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .cortex-status.has-access {
+            background: #e8f5e9;
+            border: 1px solid #a5d6a7;
+            color: #2e7d32;
+        }
+
+        .cortex-status.no-access {
+            background: #fff3e0;
+            border: 1px solid #ffcc80;
+            color: #e65100;
+        }
+
+        .tools-preview {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .tools-preview h3 {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .tool-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .tool-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .tool-item.enabled {
+            color: #2e7d32;
+        }
+
+        .tool-item.disabled {
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #29b5e8;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .user-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .user-info p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .user-info strong {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>🔍 Data Quality Tool</h1>
+            <p>AI-Powered Unit Test Generator for Snowflake</p>
+        </div>
+        
+        <div class="login-body">
+            <!-- Step 1: SSO Sign In -->
+            <div id="step1" class="step active">
+                <div class="step-title">Sign in to continue</div>
+                <div id="statusStep1" class="status-message"></div>
+                <button class="btn btn-sso" onclick="signInSSO()">
+                    🔐 Sign In with SSO
+                </button>
+            </div>
+
+            <!-- Step 2: Role Selection -->
+            <div id="step2" class="step">
+                <div class="step-title">Select Your Role</div>
+                
+                <div class="user-info">
+                    <p>Signed in as: <strong id="currentUser">-</strong></p>
+                </div>
+                
+                <div id="statusStep2" class="status-message"></div>
+                
+                <div class="form-group">
+                    <label class="form-label">Available Roles:</label>
+                    <select id="roleSelect" class="form-select" onchange="onRoleChange()">
+                        <option value="">Select a role...</option>
+                    </select>
+                </div>
+                
+                <button id="continueBtn" class="btn btn-continue" onclick="continueToApp()" disabled>
+                    Continue to Application →
+                </button>
+                
+                <div id="cortexStatus" class="cortex-status" style="display: none;"></div>
+                
+                <div id="toolsPreview" class="tools-preview" style="display: none;">
+                    <h3>Available Features with this Role:</h3>
+                    <div class="tool-list">
+                        <div id="featureGenerate" class="tool-item">
+                            <span>🤖</span> <span>Generate Test Cases with AI</span>
+                        </div>
+                        <div id="featureFetch" class="tool-item enabled">
+                            <span>📥</span> <span>Fetch Existing Test Cases</span>
+                        </div>
+                        <div id="featureRun" class="tool-item enabled">
+                            <span>▶️</span> <span>Run Test Cases</span>
+                        </div>
+                        <div id="featureQuery" class="tool-item">
+                            <span>💬</span> <span>AI Query Assistant</span>
+                        </div>
+                        <div id="featureExplorer" class="tool-item enabled">
+                            <span>🔍</span> <span>Schema Explorer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentRole = null;
+        let hasCortexAccess = false;
+
+        function showStatus(elementId, message, type) {
+            const el = document.getElementById(elementId);
+            el.className = `status-message show ${type}`;
+            el.innerHTML = message;
+        }
+
+        function hideStatus(elementId) {
+            document.getElementById(elementId).className = 'status-message';
+        }
+
+        async function signInSSO() {
+            showStatus('statusStep1', '<span class="spinner"></span> Connecting to Snowflake via SSO...', 'loading');
+            
+            try {
+                const response = await fetch('/api/login-sso', { method: 'POST' });
+                const result = await response.json();
+                
+                if (result.error) {
+                    showStatus('statusStep1', `❌ ${result.error}`, 'error');
+                    return;
+                }
+                
+                if (result.success) {
+                    showStatus('statusStep1', '✅ Connected successfully!', 'success');
+                    
+                    // Move to step 2
+                    setTimeout(() => {
+                        document.getElementById('step1').classList.remove('active');
+                        document.getElementById('step2').classList.add('active');
+                        document.getElementById('currentUser').textContent = result.user || 'Unknown';
+                        loadRoles();
+                    }, 500);
+                }
+            } catch (error) {
+                showStatus('statusStep1', `❌ Connection failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function loadRoles() {
+            showStatus('statusStep2', '<span class="spinner"></span> Loading available roles...', 'loading');
+            
+            try {
+                const response = await fetch('/api/roles');
+                const result = await response.json();
+                
+                if (result.error) {
+                    showStatus('statusStep2', `❌ ${result.error}`, 'error');
+                    return;
+                }
+                
+                const roleSelect = document.getElementById('roleSelect');
+                roleSelect.innerHTML = '<option value="">Select a role...</option>';
+                
+                result.roles.forEach(role => {
+                    const option = document.createElement('option');
+                    option.value = role;
+                    option.textContent = role;
+                    // Pre-select current role if available
+                    if (result.current_role && role === result.current_role) {
+                        option.selected = true;
+                    }
+                    roleSelect.appendChild(option);
+                });
+                
+                hideStatus('statusStep2');
+                
+                // If there's a current role, trigger change
+                if (result.current_role) {
+                    onRoleChange();
+                }
+            } catch (error) {
+                showStatus('statusStep2', `❌ Failed to load roles: ${error.message}`, 'error');
+            }
+        }
+
+        async function onRoleChange() {
+            const role = document.getElementById('roleSelect').value;
+            const continueBtn = document.getElementById('continueBtn');
+            const cortexStatus = document.getElementById('cortexStatus');
+            const toolsPreview = document.getElementById('toolsPreview');
+            
+            if (!role) {
+                continueBtn.disabled = true;
+                cortexStatus.style.display = 'none';
+                toolsPreview.style.display = 'none';
+                return;
+            }
+            
+            showStatus('statusStep2', '<span class="spinner"></span> Switching role and checking permissions...', 'loading');
+            
+            try {
+                // Set the role
+                const setRoleResponse = await fetch('/api/set-role', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ role: role })
+                });
+                
+                const setRoleResult = await setRoleResponse.json();
+                
+                if (setRoleResult.error) {
+                    showStatus('statusStep2', `❌ ${setRoleResult.error}`, 'error');
+                    return;
+                }
+                
+                currentRole = role;
+                
+                // Check Cortex access
+                const cortexResponse = await fetch('/api/check-cortex');
+                const cortexResult = await cortexResponse.json();
+                
+                hasCortexAccess = cortexResult.has_access === true;
+                
+                // Update UI
+                hideStatus('statusStep2');
+                cortexStatus.style.display = 'block';
+                toolsPreview.style.display = 'block';
+                continueBtn.disabled = false;
+                
+                if (hasCortexAccess) {
+                    cortexStatus.className = 'cortex-status has-access';
+                    cortexStatus.innerHTML = '✅ This role has Cortex AI access';
+                    document.getElementById('featureGenerate').className = 'tool-item enabled';
+                    document.getElementById('featureQuery').className = 'tool-item enabled';
+                } else {
+                    cortexStatus.className = 'cortex-status no-access';
+                    cortexStatus.innerHTML = '⚠️ This role does not have Cortex AI access. You can still fetch and run existing test cases.';
+                    document.getElementById('featureGenerate').className = 'tool-item disabled';
+                    document.getElementById('featureQuery').className = 'tool-item disabled';
+                }
+                
+            } catch (error) {
+                showStatus('statusStep2', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        function continueToApp() {
+            // Store Cortex access status in sessionStorage
+            sessionStorage.setItem('hasCortexAccess', hasCortexAccess);
+            sessionStorage.setItem('currentRole', currentRole);
+            
+            // Redirect to unit test generator (main app)
+            window.location.href = '/unit-test-generator';
+        }
+    </script>
+</body>
+</html>

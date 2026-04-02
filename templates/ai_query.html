@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Query Assistant - Snowflake</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #29b5e8;
+            color: white;
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: background 0.3s;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon {
+            font-size: 24px;
+        }
+
+        .selector-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        select {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #29b5e8;
+        }
+
+        .question-box {
+            margin-bottom: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 100px;
+            transition: border-color 0.3s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #29b5e8;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .generated-query-section {
+            display: none;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .generated-query-section.visible {
+            display: block;
+        }
+
+        .query-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .query-label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .copy-btn {
+            padding: 6px 12px;
+            font-size: 12px;
+            background: #29b5e8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .copy-btn:hover {
+            background: #1e8ab8;
+        }
+
+        .query-display {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .results-section {
+            display: none;
+        }
+
+        .results-section.visible {
+            display: block;
+        }
+
+        .result-stats {
+            background: #e3f2fd;
+            padding: 12px 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #1976d2;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        thead {
+            background: #29b5e8;
+            color: white;
+        }
+
+        th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #1e8ab8;
+        }
+
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tbody tr:hover {
+            background: #f5f5f5;
+        }
+
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #c62828;
+            margin-bottom: 20px;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+
+        .loading.visible {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #29b5e8;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .example-questions {
+            background: #fff9c4;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .example-questions h4 {
+            margin-bottom: 10px;
+            color: #f57c00;
+        }
+
+        .example-questions ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .example-questions li {
+            padding: 5px 0;
+            cursor: pointer;
+            color: #555;
+        }
+
+        .example-questions li:hover {
+            color: #29b5e8;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-title">
+                🤖 AI Query Assistant - Ask in Plain English
+            </div>
+            <div class="nav-links">
+                <a href="/" class="nav-link">🏠 Home</a>
+                <a href="/query-tool" class="nav-link">SQL Query Tool</a>
+                <a href="/unit-test-generator" class="nav-link">Test Generator</a>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Database and Schema Selection -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="icon">🗂️</span>
+                    Step 1: Select Database & Schema
+                </div>
+                <div class="selector-row">
+                    <div class="form-group">
+                        <label for="database-select">Database</label>
+                        <select id="database-select" onchange="loadSchemas()">
+                            <option value="">-- Select Database --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="schema-select">Schema</label>
+                        <select id="schema-select">
+                            <option value="">-- Select Schema --</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="schema-info" style="display: none; margin-top: 15px; padding: 15px; background: #f0f7ff; border-radius: 8px;">
+                    <p style="margin: 0; color: #1976d2;">📊 <strong id="schema-tables-count">0</strong> tables/views available in this schema</p>
+                </div>
+            </div>
+
+            <!-- Schema Metadata Display -->
+            <div id="schema-metadata" class="section" style="display: none;">
+                <div class="section-title">
+                    <span class="icon">📊</span>
+                    Schema Information
+                </div>
+                <div id="metadata-content"></div>
+            </div>
+
+            <!-- Question Input -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="icon">💬</span>
+                    Step 2: Ask Your Question
+                </div>
+                <div class="question-box">
+                    <textarea id="question-input" placeholder="Ask a question in plain English... e.g., 'Show me all active customers from last month' or 'What is the total sales by region?'"></textarea>
+                </div>
+                <div class="button-group">
+                    <button class="btn-primary" id="generate-btn" onclick="generateQuery()" disabled>
+                        ✨ Generate Query & Execute
+                    </button>
+                    <button class="btn-secondary" onclick="clearAll()">
+                        🔄 Clear
+                    </button>
+                </div>
+
+                <!-- Example Questions -->
+                <div class="example-questions">
+                    <h4>💡 Example Questions (AI will auto-discover tables and joins):</h4>
+                    <ul>
+                        <li onclick="setQuestion('Show me all customers and their orders')">• Show me all customers and their orders</li>
+                        <li onclick="setQuestion('What is the total sales amount by customer?')">• What is the total sales amount by customer?</li>
+                        <li onclick="setQuestion('List products with their categories')">• List products with their categories</li>
+                        <li onclick="setQuestion('Show order details with customer names')">• Show order details with customer names</li>
+                        <li onclick="setQuestion('What are the top 10 customers by total purchase amount?')">• What are the top 10 customers by total purchase amount?</li>
+                        <li onclick="setQuestion('Show me all tables in this schema')">• Show me all tables in this schema</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <div>AI is generating your query...</div>
+            </div>
+
+            <!-- Generated Query Display -->
+            <div class="generated-query-section" id="generated-query-section">
+                <div class="query-header">
+                    <span class="query-label">📝 Generated SQL Query:</span>
+                    <button class="copy-btn" onclick="copyQuery()">📋 Copy</button>
+                </div>
+                <div class="query-display" id="query-display"></div>
+            </div>
+
+            <!-- Results -->
+            <div class="results-section" id="results-section">
+                <div class="section-title">
+                    <span class="icon">✅</span>
+                    Query Results
+                </div>
+                <div id="result-stats" class="result-stats"></div>
+                <div class="table-container">
+                    <table id="results-table">
+                        <thead id="table-header"></thead>
+                        <tbody id="table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentDatabase = '';
+        let currentSchema = '';
+        let schemaMetadata = null;
+
+        // Load databases on page load
+        window.onload = async function() {
+            // First, check if user is connected (signed in via SSO)
+            try {
+                const connResponse = await fetch('/api/check-connection');
+                const connResult = await connResponse.json();
+                if (!connResult.connected) {
+                    // Not connected, redirect to home page for SSO login
+                    window.location.href = '/';
+                    return;
+                }
+            } catch (e) {
+                // Error checking connection, redirect to home
+                window.location.href = '/';
+                return;
+            }
+            
+            loadDatabases();
+        };
+
+        function loadDatabases() {
+            fetch('/api/databases')
+                .then(response => response.json())
+                .then(data => {
+                    const select = document.getElementById('database-select');
+                    select.innerHTML = '<option value="">-- Select Database --</option>';
+                    data.databases.forEach(db => {
+                        const option = document.createElement('option');
+                        option.value = db;
+                        option.textContent = db;
+                        select.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading databases:', error);
+                });
+        }
+
+        function loadSchemas() {
+            const database = document.getElementById('database-select').value;
+            const schemaSelect = document.getElementById('schema-select');
+            schemaSelect.innerHTML = '<option value="">-- Select Schema --</option>';
+            schemaSelect.disabled = !database;
+            
+            if (!database) {
+                document.getElementById('schema-info').style.display = 'none';
+                document.getElementById('schema-metadata').style.display = 'none';
+                return;
+            }
+            
+            fetch('/api/schemas', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ database })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    data.schemas.forEach(schema => {
+                        const option = document.createElement('option');
+                        option.value = schema;
+                        option.textContent = schema;
+                        schemaSelect.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading schemas:', error);
+                });
+        }
+
+        document.getElementById('schema-select').addEventListener('change', function() {
+            currentDatabase = document.getElementById('database-select').value;
+            currentSchema = this.value;
+            if (currentDatabase && currentSchema) {
+                loadSchemaMetadata();
+                document.getElementById('generate-btn').disabled = false;
+            } else {
+                document.getElementById('schema-metadata').style.display = 'none';
+                document.getElementById('schema-info').style.display = 'none';
+                document.getElementById('generate-btn').disabled = true;
+            }
+        });
+
+        function loadSchemaMetadata() {
+            document.getElementById('schema-info').style.display = 'block';
+            
+            fetch('/api/schema-metadata', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ database: currentDatabase, schema: currentSchema })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    console.error('Error:', data.error);
+                    return;
+                }
+                
+                schemaMetadata = data;
+                displaySchemaMetadata(data);
+            });
+        }
+
+        function displaySchemaMetadata(metadata) {
+            const container = document.getElementById('metadata-content');
+            const metadataSection = document.getElementById('schema-metadata');
+            const tablesCount = document.getElementById('schema-tables-count');
+            
+            const tableCount = metadata.tables.length;
+            tablesCount.textContent = tableCount;
+            
+            let html = `
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                    <p style="margin-bottom: 10px;"><strong>Tables in Schema:</strong></p>
+                    <details style="margin-top: 10px;">
+                        <summary style="cursor: pointer; font-weight: 600;">View All Tables (${tableCount})</summary>
+                        <ul style="margin-top: 10px; padding-left: 20px; max-height: 300px; overflow-y: auto;">
+            `;
+            
+            metadata.tables.forEach(table => {
+                html += `<li style="padding: 5px 0;">${table.name} <span style="color: #666;">(${table.type})</span></li>`;
+            });
+            
+            html += `
+                        </ul>
+                    </details>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+            metadataSection.style.display = 'block';
+        }
+
+        function setQuestion(question) {
+            document.getElementById('question-input').value = question;
+        }
+
+        function generateQuery() {
+            const question = document.getElementById('question-input').value.trim();
+            
+            if (!question) {
+                alert('Please enter a question!');
+                return;
+            }
+
+            if (!currentDatabase || !currentSchema) {
+                alert('Please select both database and schema first!');
+                return;
+            }
+
+            // Show loading
+            document.getElementById('loading').classList.add('visible');
+            document.getElementById('generated-query-section').classList.remove('visible');
+            document.getElementById('results-section').classList.remove('visible');
+
+            fetch('/api/generate-sql-from-question', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    database: currentDatabase,
+                    schema: currentSchema,
+                    question: question,
+                    metadata: schemaMetadata
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('loading').classList.remove('visible');
+                
+                if (data.error) {
+                    showError(data.error);
+                    return;
+                }
+
+                // Display generated query
+                document.getElementById('query-display').textContent = data.query;
+                document.getElementById('generated-query-section').classList.add('visible');
+
+                // Display results
+                displayResults(data.results);
+            })
+            .catch(error => {
+                document.getElementById('loading').classList.remove('visible');
+                showError('Failed to generate query: ' + error.message);
+            });
+        }
+
+        function displayResults(result) {
+            if (result.error) {
+                showError(result.error);
+                return;
+            }
+
+            const resultsSection = document.getElementById('results-section');
+            const resultStats = document.getElementById('result-stats');
+            const tableHeader = document.getElementById('table-header');
+            const tableBody = document.getElementById('table-body');
+
+            // Show stats
+            const rowCount = result.data ? result.data.length : 0;
+            resultStats.textContent = `📊 Returned ${rowCount} row(s)`;
+
+            // Build table
+            if (result.columns && result.data) {
+                // Header
+                let headerHTML = '<tr>';
+                result.columns.forEach(col => {
+                    headerHTML += `<th>${col}</th>`;
+                });
+                headerHTML += '</tr>';
+                tableHeader.innerHTML = headerHTML;
+
+                // Body
+                let bodyHTML = '';
+                result.data.forEach(row => {
+                    bodyHTML += '<tr>';
+                    result.columns.forEach(col => {
+                        const value = row[col];
+                        bodyHTML += `<td>${value !== null && value !== undefined ? value : 'NULL'}</td>`;
+                    });
+                    bodyHTML += '</tr>';
+                });
+                tableBody.innerHTML = bodyHTML;
+
+                resultsSection.classList.add('visible');
+            }
+        }
+
+        function showError(message) {
+            const resultsSection = document.getElementById('results-section');
+            resultsSection.innerHTML = `<div class="error-message">❌ Error: ${message}</div>`;
+            resultsSection.classList.add('visible');
+        }
+
+        function copyQuery() {
+            const queryText = document.getElementById('query-display').textContent;
+            navigator.clipboard.writeText(queryText).then(() => {
+                alert('Query copied to clipboard!');
+            });
+        }
+
+        function clearAll() {
+            document.getElementById('question-input').value = '';
+            document.getElementById('generated-query-section').classList.remove('visible');
+            document.getElementById('results-section').classList.remove('visible');
+        }
+    </script>
+</body>
+</html>
