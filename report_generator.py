@@ -259,6 +259,112 @@ def _stats_bar_chart(statistics):
     return _fig_to_image(fig, width_cm=17, height_cm=6)
 
 
+def _safe_div(num, den):
+    return (num / den) if den else 0.0
+
+
+def _build_confusion_data(test_cases):
+    """
+    Build confusion matrix for ALL executed test cases.
+
+    Positive class = test expects data to be GOOD (any expected_type except ERROR).
+    Negative class = test explicitly expects a query ERROR condition.
+
+    Matrix meaning:
+      TP  – expected good, data confirmed good       (PASSED, non-ERROR test)
+      FP  – expected good, data has an issue         (FAILED, non-ERROR test)
+      TN  – expected error condition, caught it      (FAILED, ERROR test  → error occurred = PASSED logic reversed)
+      FN  – expected error condition, missed it      (PASSED, ERROR test  → no error when one was expected)
+
+    Accuracy = (TP + TN) / total  ←  overall "did the test outcome match expectation?"
+    """
+    tp = fp = tn = fn = 0
+    evaluated = 0
+
+    for t in test_cases:
+        expected_type = str(
+            t.get('expected_type', t.get('expected_result', ''))
+        ).strip().upper()
+        status = str(t.get('status', '')).strip().upper()
+
+        if status not in ('PASSED', 'FAILED'):
+            continue  # skip NOT_RUN
+
+        evaluated += 1
+
+        # Tests of type ERROR predict a failure condition (negative class)
+        predicts_good = (expected_type != 'ERROR')
+        actually_passed = (status == 'PASSED')
+
+        if predicts_good and actually_passed:
+            tp += 1   # correctly confirmed good data
+        elif predicts_good and not actually_passed:
+            fp += 1   # expected good, found a data issue
+        elif not predicts_good and actually_passed:
+            fn += 1   # expected an error but query succeeded (missed bad pattern)
+        else:
+            tn += 1   # correctly caught expected error condition
+
+    total = tp + fp + fn + tn
+    accuracy  = _safe_div(tp + tn, total)
+    precision = _safe_div(tp, tp + fp)
+    recall    = _safe_div(tp, tp + fn)
+    f1        = _safe_div(2 * precision * recall, precision + recall)
+
+    return {
+        'tp': tp, 'fp': fp, 'tn': tn, 'fn': fn,
+        'total': total, 'evaluated': evaluated,
+        'accuracy': accuracy, 'precision': precision,
+        'recall': recall, 'f1': f1,
+    }
+
+
+def _confusion_matrix_chart(cd):
+    """Render a 2x2 confusion matrix heatmap for all executed test cases."""
+    # Row 0 = "Expected GOOD data" (non-ERROR tests), Row 1 = "Expected ERROR"
+    # Col 0 = Actual PASSED,                          Col 1 = Actual FAILED
+    matrix = [
+        [cd['tp'], cd['fp']],
+        [cd['fn'], cd['tn']],
+    ]
+
+    cell_labels = [
+        [f'TP\n{cd["tp"]}\nCorrectly confirmed\ngood data',
+         f'FP\n{cd["fp"]}\nExpected good,\nfound issue'],
+        [f'FN\n{cd["fn"]}\nExpected error,\nquery succeeded',
+         f'TN\n{cd["tn"]}\nCorrectly caught\nerror condition'],
+    ]
+
+    vmax = max(1, max(max(row) for row in matrix))
+    fig, ax = plt.subplots(figsize=(7.5, 5.8))
+    im = ax.imshow(matrix, cmap='Blues', vmin=0, vmax=vmax)
+
+    ax.set_xticks([0, 1])
+    ax.set_yticks([0, 1])
+    ax.set_xticklabels(['Actual: PASSED', 'Actual: FAILED'], fontsize=10, fontweight='bold')
+    ax.set_yticklabels(['Expected: GOOD DATA\n(non-ERROR tests)',
+                        'Expected: ERROR\n(ERROR tests)'], fontsize=9)
+    ax.set_xlabel('Test Execution Outcome', fontsize=10)
+    ax.set_ylabel('Test Expectation Type', fontsize=10)
+    ax.set_title('Test Suite Confusion Matrix', fontsize=13,
+                 fontweight='bold', color=MP_DARK, pad=14)
+
+    for i in range(2):
+        for j in range(2):
+            value = matrix[i][j]
+            txt_color = 'white' if value > (vmax * 0.55) else '#0D1B2A'
+            ax.text(j, i, cell_labels[i][j],
+                    ha='center', va='center', color=txt_color,
+                    fontsize=8.5, fontweight='bold', linespacing=1.4)
+
+    cbar = fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
+    cbar.ax.tick_params(labelsize=8)
+    cbar.set_label('Count', fontsize=8)
+    fig.patch.set_facecolor('white')
+    fig.tight_layout()
+    return _fig_to_image(fig, width_cm=14, height_cm=10)
+
+
 # ── Page template (header / footer on every page) ────────────────────────────
 
 class _ReportCanvas(pdfcanvas.Canvas):
@@ -497,10 +603,110 @@ def generate_pdf_report(
         bar_img = _bar_chart_tests(test_cases)
         story.append(bar_img)
 
+    confusion_data = _build_confusion_data(test_cases)
+    run_count = confusion_data['evaluated']
+    if run_count > 0:
+        story.append(PageBreak())
+
+        story.append(Paragraph('3. Test Suite Accuracy (Confusion Matrix)', st['section_h']))
+        story.append(HRFlowable(width='100%', thickness=1.5,
+                                 color=SNOW_CYAN, spaceAfter=8))
+        story.append(Paragraph(
+            'Each test case is treated as a binary classifier: it either expects data to be '  
+            '<b>GOOD</b> (any expected type except ERROR) or expects a known '  
+            '<b>ERROR condition</b>. The confusion matrix compares those expectations against '  
+            'actual execution outcomes to measure how accurately the test suite reflects '  
+            'real data quality.',
+            st['body']
+        ))
+        story.append(Spacer(1, 0.3 * cm))
+
+        # ── Prominent accuracy callout ────────────────────────────────────────
+        acc_pct  = confusion_data['accuracy'] * 100
+        acc_hex  = '#27AE60' if acc_pct >= 80 else ('#F39C12' if acc_pct >= 50 else '#E74C3C')
+        acc_style = ParagraphStyle('acc_big', fontName='Helvetica-Bold', fontSize=46,
+                                   textColor=colors.HexColor(acc_hex),
+                                   leading=50, alignment=TA_CENTER)
+        acc_lbl_style = ParagraphStyle('acc_lbl', fontName='Helvetica', fontSize=11,
+                                       textColor=TEXT_MID, leading=14, alignment=TA_CENTER)
+        acc_callout = Table(
+            [
+                [Paragraph(f'{acc_pct:.1f}%', acc_style)],
+                [Paragraph('Test Suite Accuracy', acc_lbl_style)],
+                [Paragraph(
+                    f'{confusion_data["tp"] + confusion_data["tn"]} of {run_count} '
+                    'tests behaved exactly as expected',
+                    ParagraphStyle('acc_sub', fontName='Helvetica', fontSize=9,
+                                   textColor=TEXT_MID, leading=12, alignment=TA_CENTER)
+                )],
+            ],
+            colWidths=[doc.width]
+        )
+        acc_callout.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, -1), SNOW_LIGHT),
+            ('BOX', (0, 0), (-1, -1), 1.5, colors.HexColor('#D5E8F3')),
+            ('TOPPADDING',    (0, 0), (-1, -1), 14),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 14),
+        ]))
+        story.append(acc_callout)
+        story.append(Spacer(1, 0.4 * cm))
+
+        # ── Matrix heatmap ───────────────────────────────────────────────────
+        cm_img = _confusion_matrix_chart(confusion_data)
+        story.append(cm_img)
+        story.append(Spacer(1, 0.25 * cm))
+
+        # ── Metrics table ────────────────────────────────────────────────────
+        acc_color  = colors.HexColor(acc_hex)
+        prec_pct   = confusion_data['precision'] * 100
+        rec_pct    = confusion_data['recall']    * 100
+        f1_pct     = confusion_data['f1']        * 100
+
+        metric_rows = [
+            [Paragraph('<b>Metric</b>',      st['body_small']),
+             Paragraph('<b>Value</b>',       st['body_small']),
+             Paragraph('<b>Meaning in this context</b>', st['body_small'])],
+            ['Accuracy',
+             Paragraph(f'<font color="{acc_hex}"><b>{acc_pct:.1f}%</b></font>',
+                       ParagraphStyle('mv', fontName='Helvetica-Bold', fontSize=9)),
+             'Tests where outcome matched expectation'],
+            ['Precision',
+             f'{prec_pct:.1f}%',
+             'Of "good data" tests, % that actually passed'],
+            ['Recall',
+             f'{rec_pct:.1f}%',
+             'Of truly passing scenarios, % correctly expected to pass'],
+            ['F1 Score',
+             f'{f1_pct:.1f}%',
+             'Harmonic mean of Precision & Recall'],
+            ['True Positive (TP)',  str(confusion_data['tp']),
+             'Expected good data → confirmed good (PASSED)'],
+            ['False Positive (FP)', str(confusion_data['fp']),
+             'Expected good data → found an issue (FAILED)'],
+            ['True Negative (TN)',  str(confusion_data['tn']),
+             'Expected error condition → correctly caught (FAILED)'],
+            ['False Negative (FN)', str(confusion_data['fn']),
+             'Expected error condition → query unexpectedly succeeded (PASSED)'],
+            ['Tests Evaluated', str(run_count), 'Excludes NOT_RUN tests'],
+        ]
+        metrics_table = Table(metric_rows, colWidths=[4 * cm, 3 * cm, 9.6 * cm])
+        metrics_table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), SNOW_BLUE),
+            ('TEXTCOLOR',  (0, 0), (-1, 0), WHITE),
+            ('FONTNAME',   (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('FONTSIZE',   (0, 0), (-1, -1), 8.5),
+            ('ROWBACKGROUNDS', (0, 1), (-1, -1), [WHITE, ROW_ALT]),
+            ('GRID', (0, 0), (-1, -1), 0.4, colors.HexColor('#D5E8F3')),
+            ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+            ('ROWPADDING', (0, 0), (-1, -1), 5),
+            ('FONTNAME', (0, 1), (0, 4), 'Helvetica-Bold'),
+        ]))
+        story.append(metrics_table)
+
     story.append(PageBreak())
 
-    # ── SECTION 3: DATA PROFILE ───────────────────────────────────────────────
-    story.append(Paragraph('3. Data Profile', st['section_h']))
+    # ── SECTION 4: DATA PROFILE ───────────────────────────────────────────────
+    story.append(Paragraph('4. Data Profile', st['section_h']))
     story.append(HRFlowable(width='100%', thickness=1.5,
                              color=SNOW_CYAN, spaceAfter=8))
 
@@ -594,8 +800,8 @@ def generate_pdf_report(
 
     story.append(PageBreak())
 
-    # ── SECTION 4: DETAILED TEST RESULTS ─────────────────────────────────────
-    story.append(Paragraph('4. Detailed Test Results', st['section_h']))
+    # ── SECTION 5: DETAILED TEST RESULTS ─────────────────────────────────────
+    story.append(Paragraph('5. Detailed Test Results', st['section_h']))
     story.append(HRFlowable(width='100%', thickness=1.5,
                              color=SNOW_CYAN, spaceAfter=8))
 
@@ -673,8 +879,8 @@ def generate_pdf_report(
 
     story.append(PageBreak())
 
-    # ── SECTION 5: RECOMMENDATIONS ───────────────────────────────────────────
-    story.append(Paragraph('5. Recommendations', st['section_h']))
+    # ── SECTION 6: RECOMMENDATIONS ───────────────────────────────────────────
+    story.append(Paragraph('6. Recommendations', st['section_h']))
     story.append(HRFlowable(width='100%', thickness=1.5,
                              color=SNOW_CYAN, spaceAfter=8))
 
