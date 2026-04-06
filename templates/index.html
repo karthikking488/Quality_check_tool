@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snowflake Query Tool</title>
+<<<<<<< HEAD
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -43,6 +44,9 @@
             --info-bg: #1e2f35;
         }
 
+=======
+    <style>
+>>>>>>> origin/feature/updated
         * {
             margin: 0;
             padding: 0;
@@ -50,17 +54,25 @@
         }
 
         body {
+<<<<<<< HEAD
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
             padding: 20px;
             transition: background 0.3s ease, color 0.3s ease;
+=======
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+>>>>>>> origin/feature/updated
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
+<<<<<<< HEAD
             background: var(--bg-secondary);
             border-radius: 16px;
             box-shadow: 0 8px 32px var(--shadow);
@@ -81,6 +93,21 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2);
+=======
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #29b5e8;
+            color: white;
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+>>>>>>> origin/feature/updated
         }
 
         .header-title {
@@ -96,6 +123,7 @@
         .nav-link {
             color: white;
             text-decoration: none;
+<<<<<<< HEAD
             padding: 10px 20px;
             border-radius: 8px;
             background: rgba(255, 255, 255, 0.15);
@@ -172,10 +200,37 @@
             display: flex;
             align-items: center;
             gap: 8px;
+=======
+            padding: 8px 20px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .query-section {
+            margin-bottom: 25px;
+        }
+
+        .query-label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            display: block;
+>>>>>>> origin/feature/updated
         }
 
         .query-input {
             width: 100%;
+<<<<<<< HEAD
             min-height: 180px;
             padding: 16px;
             border: 2px solid var(--border-color);
@@ -186,17 +241,32 @@
             transition: all 0.3s ease;
             background: var(--bg-tertiary);
             color: var(--text-primary);
+=======
+            min-height: 150px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: vertical;
+            transition: border-color 0.3s;
+>>>>>>> origin/feature/updated
         }
 
         .query-input:focus {
             outline: none;
+<<<<<<< HEAD
             border-color: var(--accent-primary);
             background: var(--bg-secondary);
             box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.1);
+=======
+            border-color: #29b5e8;
+>>>>>>> origin/feature/updated
         }
 
         .button-group {
             display: flex;
+<<<<<<< HEAD
             gap: 12px;
             margin-bottom: 24px;
         }
@@ -295,10 +365,88 @@
         .results-section {
             margin-top: 32px;
             animation: fadeIn 0.5s ease;
+=======
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-execute {
+            background: #29b5e8;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-execute:hover {
+            background: #1e8cbd;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(41, 181, 232, 0.4);
+        }
+
+        .btn-execute:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-clear {
+            background: #f44336;
+            color: white;
+            padding: 12px 25px;
+        }
+
+        .btn-clear:hover {
+            background: #d32f2f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
+        }
+
+        .status {
+            padding: 12px 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: none;
+            font-size: 14px;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .status.loading {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+            display: block;
+        }
+
+        .results-section {
+            margin-top: 30px;
+>>>>>>> origin/feature/updated
         }
 
         .results-header {
             font-size: 18px;
+<<<<<<< HEAD
             font-weight: 700;
             color: var(--text-primary);
             margin-bottom: 16px;
@@ -307,40 +455,69 @@
             align-items: center;
             padding-bottom: 12px;
             border-bottom: 2px solid var(--accent-primary);
+=======
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+>>>>>>> origin/feature/updated
         }
 
         .row-count {
             font-size: 14px;
+<<<<<<< HEAD
             color: var(--text-secondary);
             font-weight: 500;
             background: var(--accent-light);
             padding: 6px 14px;
             border-radius: 20px;
+=======
+            color: #666;
+            font-weight: normal;
+>>>>>>> origin/feature/updated
         }
 
         .table-container {
             overflow-x: auto;
+<<<<<<< HEAD
             border: 1px solid var(--border-color);
             border-radius: 12px;
             max-height: 600px;
             overflow-y: auto;
             box-shadow: 0 4px 12px var(--shadow);
+=======
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            max-height: 600px;
+            overflow-y: auto;
+>>>>>>> origin/feature/updated
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+<<<<<<< HEAD
             background: var(--bg-secondary);
         }
 
         thead {
             background: var(--accent-gradient);
+=======
+            background: white;
+        }
+
+        thead {
+            background: #f5f5f5;
+>>>>>>> origin/feature/updated
             position: sticky;
             top: 0;
             z-index: 10;
         }
 
         th {
+<<<<<<< HEAD
             padding: 16px;
             text-align: left;
             font-weight: 600;
@@ -364,6 +541,26 @@
 
         tbody tr:hover {
             background: var(--accent-light);
+=======
+            padding: 14px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 2px solid #29b5e8;
+            white-space: nowrap;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            color: #555;
+            font-size: 13px;
+        }
+
+        tbody tr:hover {
+            background: #f9f9f9;
+>>>>>>> origin/feature/updated
         }
 
         tbody tr:last-child td {
@@ -372,6 +569,7 @@
 
         .empty-state {
             text-align: center;
+<<<<<<< HEAD
             padding: 80px 20px;
             color: var(--text-secondary);
         }
@@ -386,16 +584,37 @@
         .empty-state p {
             font-size: 16px;
             font-weight: 500;
+=======
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+>>>>>>> origin/feature/updated
         }
 
         .loading-spinner {
             display: inline-block;
+<<<<<<< HEAD
             width: 18px;
             height: 18px;
             border: 3px solid rgba(255, 107, 53, 0.3);
             border-top: 3px solid var(--accent-primary);
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
+=======
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #29b5e8;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+>>>>>>> origin/feature/updated
         }
 
         @keyframes spin {
@@ -403,6 +622,7 @@
             100% { transform: rotate(360deg); }
         }
 
+<<<<<<< HEAD
         @media (max-width: 768px) {
             .header {
                 flex-direction: column;
@@ -422,6 +642,37 @@
             .button-group {
                 flex-direction: column;
             }
+=======
+        .sample-queries {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .sample-queries h3 {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .sample-query {
+            display: inline-block;
+            background: white;
+            padding: 8px 15px;
+            margin: 5px 5px 5px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+            border: 1px solid #e0e0e0;
+            transition: all 0.2s;
+        }
+
+        .sample-query:hover {
+            background: #29b5e8;
+            color: white;
+            border-color: #29b5e8;
+>>>>>>> origin/feature/updated
         }
     </style>
 </head>
@@ -429,6 +680,7 @@
     <div class="container">
         <div class="header">
             <h1 class="header-title">❄️ Snowflake Query Tool</h1>
+<<<<<<< HEAD
             <div style="display: flex; align-items: center; gap: 20px;">
                 <div class="nav-links">
                     <a href="/" class="nav-link active"><i class="fas fa-database"></i> SQL Query</a>
@@ -438,11 +690,19 @@
                 <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme" style="background: rgba(255,255,255,0.2); border: none; padding: 0.75rem 1rem; border-radius: 50px; cursor: pointer; color: white; font-size: 1.2rem; transition: all 0.3s ease; backdrop-filter: blur(10px);">
                     <i class="fas fa-moon" id="themeIcon"></i>
                 </button>
+=======
+            <div class="nav-links">
+                <a href="/" class="nav-link">🏠 Home</a>
+                <a href="/query-tool" class="nav-link" style="background: rgba(255, 255, 255, 0.3);">SQL Query Tool</a>
+                <a href="/ai-query" class="nav-link">🤖 AI Query Assistant</a>
+                <a href="/unit-test-generator" class="nav-link">AI Test Generator</a>
+>>>>>>> origin/feature/updated
             </div>
         </div>
         
         <div class="content">
             <div class="sample-queries">
+<<<<<<< HEAD
                 <h3><i class="fas fa-lightbulb"></i> Quick Start - Sample Queries</h3>
                 <span class="sample-query" onclick="setSampleQuery('SELECT * FROM YOUR_TABLE LIMIT 10')"><i class="fas fa-table"></i> SELECT * FROM TABLE</span>
                 <span class="sample-query" onclick="setSampleQuery('SELECT COUNT(*) as total_rows FROM YOUR_TABLE')"><i class="fas fa-calculator"></i> COUNT ROWS</span>
@@ -453,14 +713,33 @@
             <div class="query-section">
                 <label class="query-label"><i class="fas fa-code"></i> Enter Your SQL Query:</label>
                 <textarea id="queryInput" class="query-input" placeholder="Type your SQL query here...\n\nExample:\nSELECT * FROM MY_TABLE LIMIT 10"></textarea>
+=======
+                <h3>Sample Queries (Click to use):</h3>
+                <span class="sample-query" onclick="setSampleQuery('SELECT * FROM YOUR_TABLE LIMIT 10')">SELECT * FROM TABLE</span>
+                <span class="sample-query" onclick="setSampleQuery('SELECT COUNT(*) as total_rows FROM YOUR_TABLE')">COUNT ROWS</span>
+                <span class="sample-query" onclick="setSampleQuery('SHOW TABLES')">SHOW TABLES</span>
+                <span class="sample-query" onclick="setSampleQuery('DESCRIBE TABLE YOUR_TABLE')">DESCRIBE TABLE</span>
+            </div>
+
+            <div class="query-section">
+                <label class="query-label">Enter Your SQL Query:</label>
+                <textarea id="queryInput" class="query-input" placeholder="Type your SQL query here...&#10;&#10;Example:&#10;SELECT * FROM MY_TABLE LIMIT 10"></textarea>
+>>>>>>> origin/feature/updated
             </div>
 
             <div class="button-group">
                 <button class="btn btn-execute" onclick="executeQuery()">
+<<<<<<< HEAD
                     <i class="fas fa-play"></i> Execute Query
                 </button>
                 <button class="btn btn-clear" onclick="clearQuery()">
                     <i class="fas fa-eraser"></i> Clear
+=======
+                    ▶ Execute Query
+                </button>
+                <button class="btn btn-clear" onclick="clearQuery()">
+                    Clear
+>>>>>>> origin/feature/updated
                 </button>
             </div>
 
@@ -468,7 +747,11 @@
 
             <div class="results-section" id="resultsSection" style="display: none;">
                 <div class="results-header">
+<<<<<<< HEAD
                     <span><i class="fas fa-table"></i> Query Results</span>
+=======
+                    <span>Query Results</span>
+>>>>>>> origin/feature/updated
                     <span class="row-count" id="rowCount"></span>
                 </div>
                 <div class="table-container">
@@ -480,7 +763,13 @@
             </div>
 
             <div class="empty-state" id="emptyState">
+<<<<<<< HEAD
                 <i class="fas fa-database"></i>
+=======
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+>>>>>>> origin/feature/updated
                 <p>Enter a SQL query above and click "Execute Query" to see results</p>
             </div>
         </div>
@@ -619,6 +908,7 @@
             }
         });
     </script>
+<<<<<<< HEAD
     <script>
         // THEME TOGGLE FEATURE
         function toggleTheme() {
@@ -639,5 +929,7 @@
             icon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
         });
     </script>
+=======
+>>>>>>> origin/feature/updated
 </body>
 </html>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Quality Tool - Sign In</title>
     <style>
+<<<<<<< HEAD
         :root {
             --bg-primary: #f8f9fa;
             --bg-secondary: #ffffff;
@@ -30,11 +31,23 @@
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: var(--bg-primary);
+=======
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+>>>>>>> origin/feature/updated
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
+<<<<<<< HEAD
             position: relative;
         }
 
@@ -58,13 +71,25 @@
             background: var(--bg-secondary);
             border-radius: 18px;
             box-shadow: 0 8px 32px var(--shadow);
+=======
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+>>>>>>> origin/feature/updated
             overflow: hidden;
             max-width: 500px;
             width: 100%;
         }
 
         .login-header {
+<<<<<<< HEAD
             background: var(--accent-gradient);
+=======
+            background: linear-gradient(135deg, #29b5e8 0%, #1e8cbd 100%);
+>>>>>>> origin/feature/updated
             color: white;
             padding: 40px 30px;
             text-align: center;
@@ -72,7 +97,11 @@
 
         .login-header h1 {
             font-size: 28px;
+<<<<<<< HEAD
             font-weight: 700;
+=======
+            font-weight: 600;
+>>>>>>> origin/feature/updated
             margin-bottom: 10px;
         }
 
@@ -96,7 +125,11 @@
         .step-title {
             font-size: 18px;
             font-weight: 600;
+<<<<<<< HEAD
             color: var(--text-primary);
+=======
+            color: #333;
+>>>>>>> origin/feature/updated
             margin-bottom: 20px;
             text-align: center;
         }
@@ -117,13 +150,19 @@
         }
 
         .btn-sso {
+<<<<<<< HEAD
             background: var(--accent-gradient);
             color: white;
             box-shadow: 0 4px 6px rgba(255, 107, 53, 0.3);
+=======
+            background: linear-gradient(135deg, #29b5e8 0%, #1e8cbd 100%);
+            color: white;
+>>>>>>> origin/feature/updated
         }
 
         .btn-sso:hover {
             transform: translateY(-2px);
+<<<<<<< HEAD
             box-shadow: 0 6px 12px rgba(255, 107, 53, 0.4);
         }
 
@@ -131,11 +170,23 @@
             background: var(--accent-gradient);
             color: white;
             box-shadow: 0 4px 6px rgba(255, 107, 53, 0.3);
+=======
+            box-shadow: 0 5px 20px rgba(41, 181, 232, 0.4);
+        }
+
+        .btn-continue {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+>>>>>>> origin/feature/updated
         }
 
         .btn-continue:hover:not(:disabled) {
             transform: translateY(-2px);
+<<<<<<< HEAD
             box-shadow: 0 6px 12px rgba(255, 107, 53, 0.4);
+=======
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+>>>>>>> origin/feature/updated
         }
 
         .btn:disabled {
@@ -152,29 +203,45 @@
             display: block;
             font-size: 14px;
             font-weight: 600;
+<<<<<<< HEAD
             color: var(--text-secondary);
+=======
+            color: #555;
+>>>>>>> origin/feature/updated
             margin-bottom: 8px;
         }
 
         .form-select {
             width: 100%;
             padding: 12px 15px;
+<<<<<<< HEAD
             border: 2px solid var(--border-color);
             border-radius: 10px;
             font-size: 14px;
             transition: all 0.3s ease;
             background: var(--bg-tertiary);
             color: var(--text-primary);
+=======
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+            background: white;
+>>>>>>> origin/feature/updated
         }
 
         .form-select:focus {
             outline: none;
+<<<<<<< HEAD
             border-color: var(--accent-primary);
             box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.1);
         }
 
         .form-select:hover {
             border-color: var(--accent-primary);
+=======
+            border-color: #29b5e8;
+>>>>>>> origin/feature/updated
         }
 
         .status-message {
@@ -190,6 +257,7 @@
         }
 
         .status-message.loading {
+<<<<<<< HEAD
             background: var(--info-bg);
             color: var(--info);
             border: 1px solid var(--info);
@@ -205,6 +273,23 @@
             background: var(--error-bg);
             color: var(--error);
             border: 1px solid var(--error);
+=======
+            background: #e3f2fd;
+            color: #1976d2;
+            border: 1px solid #90caf9;
+        }
+
+        .status-message.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+
+        .status-message.error {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef9a9a;
+>>>>>>> origin/feature/updated
         }
 
         .status-message.warning {
@@ -221,9 +306,15 @@
         }
 
         .cortex-status.has-access {
+<<<<<<< HEAD
             background: var(--success-bg);
             border: 1px solid var(--success);
             color: var(--success);
+=======
+            background: #e8f5e9;
+            border: 1px solid #a5d6a7;
+            color: #2e7d32;
+>>>>>>> origin/feature/updated
         }
 
         .cortex-status.no-access {
@@ -256,13 +347,21 @@
             align-items: center;
             gap: 10px;
             padding: 10px;
+<<<<<<< HEAD
             background: var(--bg-tertiary);
+=======
+            background: #f8f9fa;
+>>>>>>> origin/feature/updated
             border-radius: 6px;
             font-size: 14px;
         }
 
         .tool-item.enabled {
+<<<<<<< HEAD
             color: var(--success);
+=======
+            color: #2e7d32;
+>>>>>>> origin/feature/updated
         }
 
         .tool-item.disabled {
@@ -274,7 +373,11 @@
             width: 20px;
             height: 20px;
             border: 3px solid #f3f3f3;
+<<<<<<< HEAD
             border-top: 3px solid var(--accent-primary);
+=======
+            border-top: 3px solid #29b5e8;
+>>>>>>> origin/feature/updated
             border-radius: 50%;
             animation: spin 1s linear infinite;
             display: inline-block;
@@ -286,7 +389,11 @@
         }
 
         .user-info {
+<<<<<<< HEAD
             background: var(--bg-tertiary);
+=======
+            background: #f8f9fa;
+>>>>>>> origin/feature/updated
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 20px;
@@ -294,15 +401,24 @@
 
         .user-info p {
             font-size: 14px;
+<<<<<<< HEAD
             color: var(--text-secondary);
         }
 
         .user-info strong {
             color: var(--text-primary);
+=======
+            color: #666;
+        }
+
+        .user-info strong {
+            color: #333;
+>>>>>>> origin/feature/updated
         }
     </style>
 </head>
 <body>
+<<<<<<< HEAD
     <div class="pattern-bg">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
             <defs>
@@ -314,6 +430,8 @@
             <rect width="100%" height="100%" fill="url(#circles)" />
         </svg>
     </div>
+=======
+>>>>>>> origin/feature/updated
     <div class="login-container">
         <div class="login-header">
             <h1>🔍 Data Quality Tool</h1>

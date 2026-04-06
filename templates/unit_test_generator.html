@@ -1,9 +1,13 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/feature/updated
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -43,6 +47,10 @@
             --info-bg: #1e2f35;
         }
 
+=======
+    <title>AI Unit Test Generator - Snowflake</title>
+    <style>
+>>>>>>> origin/feature/updated
         * {
             margin: 0;
             padding: 0;
@@ -50,6 +58,7 @@
         }
 
         body {
+<<<<<<< HEAD
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: var(--bg-primary);
             min-height: 100vh;
@@ -63,10 +72,25 @@
             background: var(--bg-secondary);
             border-radius: 16px;
             box-shadow: 0 8px 32px var(--shadow);
+=======
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+>>>>>>> origin/feature/updated
             overflow: hidden;
         }
 
         .header {
+<<<<<<< HEAD
             background: var(--accent-gradient);
             padding: 2rem;
             box-shadow: 0 4px 6px var(--shadow);
@@ -75,11 +99,17 @@
         .header-content {
             max-width: 1400px;
             margin: 0 auto;
+=======
+            background: linear-gradient(135deg, #29b5e8 0%, #1e8cbd 100%);
+            color: white;
+            padding: 25px 30px;
+>>>>>>> origin/feature/updated
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
+<<<<<<< HEAD
         .header-title {
             display: flex;
             align-items: center;
@@ -112,6 +142,11 @@
         .theme-toggle:hover {
             background: rgba(255, 255, 255, 0.3);
             transform: scale(1.05);
+=======
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+>>>>>>> origin/feature/updated
         }
 
         .nav-links {
@@ -123,6 +158,7 @@
             color: white;
             text-decoration: none;
             padding: 8px 20px;
+<<<<<<< HEAD
             border-radius: 8px;
             background: var(--accent-gradient);
             box-shadow: 0 2px 8px var(--shadow);
@@ -145,6 +181,15 @@
           color: white;
           box-shadow: 0 4px 12px var(--shadow-hover);
           font-weight: 600;
+=======
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+>>>>>>> origin/feature/updated
         }
 
         .content {
@@ -152,6 +197,7 @@
         }
 
         .section {
+<<<<<<< HEAD
             background: var(--bg-secondary);
             border-radius: 18px;
             padding: 2rem;
@@ -170,6 +216,19 @@
             gap: 0.5rem;
             padding-bottom: 0.5rem;
             border-bottom: 2px solid var(--accent-primary);
+=======
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+>>>>>>> origin/feature/updated
         }
 
         .form-row {
@@ -187,28 +246,44 @@
         .form-label {
             font-size: 14px;
             font-weight: 600;
+<<<<<<< HEAD
             color: var(--text-secondary);
+=======
+            color: #555;
+>>>>>>> origin/feature/updated
             margin-bottom: 8px;
         }
 
         .form-select {
             padding: 12px 15px;
+<<<<<<< HEAD
             border: 2px solid var(--border-color);
             border-radius: 10px;
             font-size: 14px;
             transition: all 0.3s ease;
             background: var(--bg-tertiary);
             color: var(--text-primary);
+=======
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+            background: white;
+>>>>>>> origin/feature/updated
         }
 
         .form-select:focus {
             outline: none;
+<<<<<<< HEAD
             border-color: var(--accent-primary);
             box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.1);
         }
 
         .form-select:hover {
             border-color: var(--accent-primary);
+=======
+            border-color: #29b5e8;
+>>>>>>> origin/feature/updated
         }
 
         .btn {
@@ -222,6 +297,7 @@
         }
 
         .btn-primary {
+<<<<<<< HEAD
             background: var(--accent-gradient);
             color: white;
             box-shadow: 0 4px 6px rgba(255, 107, 53, 0.3);
@@ -238,20 +314,44 @@
 
         .btn-primary:disabled {
             opacity: 0.6;
+=======
+            background: #29b5e8;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1e8cbd;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(41, 181, 232, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+>>>>>>> origin/feature/updated
             cursor: not-allowed;
             transform: none;
         }
 
         .btn-success {
+<<<<<<< HEAD
             background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
             color: white;
             padding: 10px 22px;
+=======
+            background: #4caf50;
+            color: white;
+            padding: 8px 20px;
+>>>>>>> origin/feature/updated
             font-size: 13px;
         }
 
         .btn-success:hover {
+<<<<<<< HEAD
             background: linear-gradient(135deg, #388e3c 0%, #2e7d32 100%);
             box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+=======
+            background: #45a049;
+>>>>>>> origin/feature/updated
         }
 
         .btn-danger {
@@ -270,23 +370,48 @@
         }
 
         .status.success {
+<<<<<<< HEAD
             background: var(--success-bg);
             color: var(--success);
             border: 1px solid var(--success);
+=======
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+>>>>>>> origin/feature/updated
             display: block;
         }
 
         .status.error {
+<<<<<<< HEAD
             background: var(--error-bg);
             color: var(--error);
             border: 1px solid var(--error);
+=======
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+>>>>>>> origin/feature/updated
             display: block;
         }
 
         .status.loading {
+<<<<<<< HEAD
             background: var(--info-bg);
             color: var(--info);
             border: 1px solid var(--info);
+=======
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+            display: block;
+        }
+
+        .status.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+>>>>>>> origin/feature/updated
             display: block;
         }
 
@@ -295,6 +420,7 @@
         }
 
         .test-case {
+<<<<<<< HEAD
             background: var(--bg-tertiary);
             border: 2px solid var(--border-color);
             border-radius: 12px;
@@ -314,6 +440,24 @@
             border-color: var(--error);
             background: var(--error-bg);
             box-shadow: 0 4px 16px rgba(244, 67, 54, 0.2);
+=======
+            background: #f9f9f9;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .test-case.passed {
+            border-color: #4caf50;
+            background: #f1f8f4;
+        }
+
+        .test-case.failed {
+            border-color: #f44336;
+            background: #fef5f5;
+>>>>>>> origin/feature/updated
         }
 
         .test-case-header {
@@ -326,7 +470,11 @@
         .test-case-title {
             font-size: 16px;
             font-weight: 600;
+<<<<<<< HEAD
             color: var(--text-primary);
+=======
+            color: #333;
+>>>>>>> origin/feature/updated
             display: flex;
             align-items: center;
             gap: 10px;
@@ -334,6 +482,7 @@
 
         .test-badge {
             display: inline-block;
+<<<<<<< HEAD
             padding: 6px 14px;
             border-radius: 20px;
             font-size: 11px;
@@ -345,20 +494,39 @@
 
         .badge-not-run {
             background: linear-gradient(135deg, #e0e0e0 0%, #bdbdbd 100%);
+=======
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .badge-not-run {
+            background: #e0e0e0;
+>>>>>>> origin/feature/updated
             color: #666;
         }
 
         .badge-passed {
+<<<<<<< HEAD
             background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+=======
+            background: #4caf50;
+>>>>>>> origin/feature/updated
             color: white;
         }
 
         .badge-failed {
+<<<<<<< HEAD
             background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+=======
+            background: #f44336;
+>>>>>>> origin/feature/updated
             color: white;
         }
 
         .badge-running {
+<<<<<<< HEAD
             background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
             color: white;
             animation: pulse 1.5s ease-in-out infinite;
@@ -371,6 +539,14 @@
 
         .test-description {
             color: var(--text-secondary);
+=======
+            background: #ff9800;
+            color: white;
+        }
+
+        .test-description {
+            color: #666;
+>>>>>>> origin/feature/updated
             font-size: 14px;
             margin-bottom: 15px;
             line-height: 1.6;
@@ -403,20 +579,32 @@
 
         .result-label {
             font-weight: 600;
+<<<<<<< HEAD
             color: var(--text-primary);
+=======
+            color: #333;
+>>>>>>> origin/feature/updated
             margin-bottom: 8px;
             font-size: 13px;
         }
 
         .result-content {
+<<<<<<< HEAD
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
+=======
+            background: white;
+            border: 1px solid #e0e0e0;
+>>>>>>> origin/feature/updated
             border-radius: 6px;
             padding: 12px;
             font-size: 13px;
             max-height: 200px;
             overflow-y: auto;
+<<<<<<< HEAD
             color: var(--text-primary);
+=======
+>>>>>>> origin/feature/updated
         }
 
         .result-table {
@@ -426,25 +614,41 @@
         }
 
         .result-table th {
+<<<<<<< HEAD
             background: var(--accent-gradient);
             color: white;
             padding: 8px;
             text-align: left;
+=======
+            background: #f5f5f5;
+            padding: 8px;
+            text-align: left;
+            border-bottom: 2px solid #29b5e8;
+>>>>>>> origin/feature/updated
             font-weight: 600;
         }
 
         .result-table td {
             padding: 8px;
+<<<<<<< HEAD
             border-bottom: 1px solid var(--border-color);
             color: var(--text-primary);
+=======
+            border-bottom: 1px solid #e0e0e0;
+>>>>>>> origin/feature/updated
         }
 
         .loading-spinner {
             display: inline-block;
             width: 16px;
             height: 16px;
+<<<<<<< HEAD
             border: 2px solid var(--border-color);
             border-top: 2px solid var(--accent-primary);
+=======
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #29b5e8;
+>>>>>>> origin/feature/updated
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin-right: 10px;
@@ -458,7 +662,11 @@
         .empty-state {
             text-align: center;
             padding: 60px 20px;
+<<<<<<< HEAD
             color: var(--text-secondary);
+=======
+            color: #999;
+>>>>>>> origin/feature/updated
         }
 
         .empty-state svg {
@@ -469,6 +677,7 @@
         }
 
         .metadata-section {
+<<<<<<< HEAD
             background: var(--bg-tertiary);
             padding: 20px;
             border-radius: 12px;
@@ -476,6 +685,13 @@
             display: none;
             border: 2px solid var(--border-color);
             box-shadow: 0 4px 12px var(--shadow);
+=======
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+>>>>>>> origin/feature/updated
         }
 
         .metadata-section.show {
@@ -484,19 +700,28 @@
 
         .metadata-title {
             font-weight: 600;
+<<<<<<< HEAD
             color: var(--text-primary);
+=======
+            color: #333;
+>>>>>>> origin/feature/updated
             margin-bottom: 10px;
         }
 
         .metadata-content {
             font-size: 13px;
+<<<<<<< HEAD
             color: var(--text-secondary);
+=======
+            color: #666;
+>>>>>>> origin/feature/updated
             max-height: 300px;
             overflow-y: auto;
         }
     </style>
 </head>
 <body>
+<<<<<<< HEAD
     <div class="header">
         <div class="header-content">
             <div class="header-title">
@@ -516,6 +741,19 @@
             <a href="/ai-query" class="nav-link"><i class="fas fa-robot"></i> AI Query Assistant</a>
             <a href="/unit-test-generator" class="nav-link active"><i class="fas fa-vial"></i> Test Generator</a>
         </div>
+=======
+    <div class="container">
+        <div class="header">
+            <h1>🤖 AI Unit Test Generator</h1>
+            <div class="nav-links">
+                <a href="/" class="nav-link">🏠 Home</a>
+                <a href="/query-tool" class="nav-link">SQL Query Tool</a>
+                <a href="/ai-query" class="nav-link">🤖 AI Query Assistant</a>
+                <a href="/unit-test-generator" class="nav-link" style="background: rgba(255, 255, 255, 0.3);">Test Generator</a>
+            </div>
+        </div>
+        
+>>>>>>> origin/feature/updated
         <div class="content">
             <div class="section">
                 <div class="section-title">
@@ -579,13 +817,55 @@
                     <button class="btn btn-primary" onclick="generateTests()" id="generateBtn" disabled>
                         🚀 Generate Unit Tests with AI
                     </button>
+<<<<<<< HEAD
                     <button class="btn btn-secondary" onclick="fetchExistingTests()" id="fetchTestsBtn" disabled style="display: flex; align-items: center; gap: 8px;">
                         <i class="fas fa-search"></i> Look for Unit Tests
+=======
+                    <button class="btn btn-secondary" onclick="fetchExistingTests()" id="fetchTestsBtn" disabled style="background: linear-gradient(135deg, #6c757d 0%, #495057 100%);">
+                        � Look for Unit Tests
+>>>>>>> origin/feature/updated
                     </button>
                     <button class="btn btn-success" onclick="saveAllTests()" id="saveTestsBtn" style="display: none; background: linear-gradient(135deg, #28a745 0%, #218838 100%);">
                         💾 Save All Test Cases
                     </button>
+<<<<<<< HEAD
                 </div>
+=======
+                    <button onclick="openReportModal()" id="generateReportBtn"
+                        style="display: none; background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+                               color: white; border: none; padding: 10px 22px; border-radius: 6px;
+                               font-weight: 600; cursor: pointer; font-size: 14px;">
+                        &#x1F4CA; Generate PDF Report
+                    </button>
+                </div>
+
+            <!-- Report Modal -->
+            <div id="reportModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0;
+                background:rgba(0,0,0,0.6); z-index:9999;">
+                <div style="background:white; border-radius:12px; padding:32px 36px; width:520px;
+                    max-width:95vw; box-shadow:0 20px 60px rgba(0,0,0,0.3); margin:12vh auto 0;">
+                    <h2 style="margin:0 0 6px; color:#1E6FA5; font-size:20px;">&#x1F4CA; Generate PDF Report</h2>
+                    <p style="margin:0 0 20px; color:#566573; font-size:13px;">
+                        A professional, governance-grade PDF report will be generated and downloaded.
+                    </p>
+                    <div style="font-size:12px; color:#566573; margin-bottom:20px;">
+                        The PDF will be saved to your default <strong>Downloads</strong> folder and downloaded in the browser.
+                    </div>
+                    <div style="display:flex; gap:12px; justify-content:flex-end;">
+                        <button onclick="closeReportModal()"
+                            style="padding:9px 20px; border:1px solid #ccc; border-radius:6px;
+                            background:white; color:#555; cursor:pointer; font-size:13px;">Cancel</button>
+                        <button onclick="generateReport()" id="reportGenBtn"
+                            style="padding:9px 22px; border:none; border-radius:6px;
+                            background:linear-gradient(135deg,#e67e22,#d35400); color:white;
+                            font-weight:600; cursor:pointer; font-size:13px;">
+                            &#x1F4E5; Generate &amp; Download
+                        </button>
+                    </div>
+                    <div id="reportStatus" style="margin-top:14px; font-size:13px;"></div>
+                </div>
+            </div>
+>>>>>>> origin/feature/updated
             </div>
 
             <div id="status" class="status"></div>
@@ -598,7 +878,17 @@
             <div id="testCasesContainer" class="test-cases-container">
                 <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
                     <span>✅ Test Cases</span>
+<<<<<<< HEAD
                     <span id="testCasesSource" style="font-size: 12px; color: #666;"></span>
+=======
+                    <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                        <span id="testCasesSource" style="font-size: 12px; color: #666;"></span>
+                        <button class="btn btn-primary" id="runAllTestsBtn" onclick="runAllTests()"
+                            style="display: none; padding: 8px 18px; font-size: 13px;">
+                            ▶ Run All Tests
+                        </button>
+                    </div>
+>>>>>>> origin/feature/updated
                 </div>
                 <div id="testCasesList"></div>
             </div>
@@ -619,6 +909,7 @@
         let currentObjectName = null;
         let currentObjectType = null;
 
+<<<<<<< HEAD
         // Global variables for Cortex access and test cases
         let hasCortexAccess = false;
         let generatedTestCases = [];
@@ -640,20 +931,66 @@
             document.documentElement.setAttribute('data-theme', savedTheme);
             const icon = document.getElementById('themeIcon');
             icon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+=======
+        // Global variables
+        let hasCortexAccess = false;
+        let generatedTestCases = []; // Store generated tests for saving
+        let currentDisplayedTestCases = []; // Tests currently shown in the UI
+        let testResultsMap = {};     // testId -> { status, message } — tracked on each run
+        let isRunningAllTests = false;
+
+        // Load databases on page load and check Cortex access
+        window.onload = async function() {
+            // First, check if user is connected (signed in via SSO)
+            try {
+                const connResponse = await fetch('/api/check-connection');
+                const connResult = await connResponse.json();
+                if (!connResult.connected) {
+                    // Not connected, redirect to home page for SSO login
+                    window.location.href = '/';
+                    return;
+                }
+            } catch (e) {
+                // Error checking connection, redirect to home
+                window.location.href = '/';
+                return;
+            }
+            
+>>>>>>> origin/feature/updated
             // Check Cortex access from sessionStorage (set by home page)
             const storedAccess = sessionStorage.getItem('hasCortexAccess');
             if (storedAccess !== null) {
                 hasCortexAccess = storedAccess === 'true';
+<<<<<<< HEAD
             }
             updateUIForCortexAccess();
             loadDatabases();
         });
 
+=======
+            } else {
+                // If not coming from home page, check directly
+                try {
+                    const response = await fetch('/api/check-cortex');
+                    const result = await response.json();
+                    hasCortexAccess = result.has_access === true;
+                } catch (e) {
+                    hasCortexAccess = false;
+                }
+            }
+            
+            // Update UI based on Cortex access
+            updateUIForCortexAccess();
+            loadDatabases();
+        };
+        
+>>>>>>> origin/feature/updated
         function updateUIForCortexAccess() {
             const generateBtn = document.getElementById('generateBtn');
             const testRequestSection = document.getElementById('testRequestSection');
             const fetchTestsBtn = document.getElementById('fetchTestsBtn');
             const saveTestsBtn = document.getElementById('saveTestsBtn');
+<<<<<<< HEAD
             if (hasCortexAccess) {
                 if (generateBtn) generateBtn.disabled = false;
                 if (testRequestSection) testRequestSection.style.display = 'block';
@@ -664,17 +1001,38 @@
                 if (testRequestSection) testRequestSection.style.display = 'none';
                 if (fetchTestsBtn) fetchTestsBtn.disabled = true;
                 if (saveTestsBtn) saveTestsBtn.style.display = 'none';
+=======
+            const runAllTestsBtn = document.getElementById('runAllTestsBtn');
+            
+            if (hasCortexAccess) {
+                // User has Cortex access - show generate button
+                generateBtn.style.display = 'inline-block';
+                if (saveTestsBtn) saveTestsBtn.style.display = 'none'; // Hidden until tests are generated
+                if (runAllTestsBtn) runAllTestsBtn.style.display = 'none';
+            } else {
+                // No Cortex access - hide generate button and customize section
+                generateBtn.style.display = 'none';
+                if (testRequestSection) testRequestSection.style.display = 'none';
+                if (runAllTestsBtn) runAllTestsBtn.style.display = 'none';
+>>>>>>> origin/feature/updated
             }
         }
 
         function showStatus(message, type) {
             const statusDiv = document.getElementById('status');
             statusDiv.className = `status ${type}`;
+<<<<<<< HEAD
             statusDiv.innerHTML = type === 'loading' ? `<span class="loading-spinner"></span>${message}` : message;
+=======
+            statusDiv.innerHTML = type === 'loading' 
+                ? `<span class="loading-spinner"></span>${message}`
+                : message;
+>>>>>>> origin/feature/updated
         }
 
         async function loadDatabases() {
             try {
+<<<<<<< HEAD
                 const response = await fetch('/api/databases');
                 const result = await response.json();
                 const select = document.getElementById('databaseSelect');
@@ -690,6 +1048,28 @@
                 showStatus('Ready to select database', 'success');
             } catch (error) {
                 showStatus('Error loading databases', 'error');
+=======
+                showStatus('Loading databases...', 'loading');
+                const response = await fetch('/api/databases');
+                const result = await response.json();
+                
+                if (result.error) {
+                    showStatus(`Error: ${result.error}`, 'error');
+                    return;
+                }
+                
+                const select = document.getElementById('databaseSelect');
+                select.innerHTML = '<option value="">Select Database...</option>';
+                result.databases.forEach(db => {
+                    const option = document.createElement('option');
+                    option.value = db;
+                    option.textContent = db;
+                    select.appendChild(option);
+                });
+                showStatus('Ready to select database', 'success');
+            } catch (error) {
+                showStatus(`Error loading databases: ${error.message}`, 'error');
+>>>>>>> origin/feature/updated
             }
         }
 
@@ -698,11 +1078,24 @@
             const schemaSelect = document.getElementById('schemaSelect');
             schemaSelect.innerHTML = '<option value="">Select Schema...</option>';
             schemaSelect.disabled = true;
+<<<<<<< HEAD
             document.getElementById('objectSelect').innerHTML = '<option value="">Select Object...</option>';
             document.getElementById('objectSelect').disabled = true;
             document.getElementById('generateBtn').disabled = true;
             if (!database) return;
             showStatus('Loading schemas...', 'loading');
+=======
+            
+            // Clear downstream dropdowns
+            document.getElementById('objectSelect').innerHTML = '<option value="">Select Object...</option>';
+            document.getElementById('objectSelect').disabled = true;
+            document.getElementById('generateBtn').disabled = true;
+            
+            if (!database) return;
+            
+            showStatus('Loading schemas...', 'loading');
+            
+>>>>>>> origin/feature/updated
             try {
                 const response = await fetch('/api/schemas', {
                     method: 'POST',
@@ -710,6 +1103,7 @@
                     body: JSON.stringify({ database })
                 });
                 const result = await response.json();
+<<<<<<< HEAD
                 if (result.schemas && Array.isArray(result.schemas)) {
                     result.schemas.forEach(schema => {
                         const option = document.createElement('option');
@@ -722,6 +1116,24 @@
                 showStatus(`Found ${result.schemas.length} schema(s)`, 'success');
             } catch (error) {
                 showStatus('Error loading schemas', 'error');
+=======
+                
+                if (result.error) {
+                    showStatus(`Error: ${result.error}`, 'error');
+                    return;
+                }
+                
+                schemaSelect.disabled = false;
+                result.schemas.forEach(schema => {
+                    const option = document.createElement('option');
+                    option.value = schema;
+                    option.textContent = schema;
+                    schemaSelect.appendChild(option);
+                });
+                showStatus(`Found ${result.schemas.length} schema(s)`, 'success');
+            } catch (error) {
+                showStatus(`Error loading schemas: ${error.message}`, 'error');
+>>>>>>> origin/feature/updated
             }
         }
 
@@ -729,24 +1141,42 @@
             const database = document.getElementById('databaseSelect').value;
             const schema = document.getElementById('schemaSelect').value;
             const objectType = document.getElementById('objectTypeSelect').value;
+<<<<<<< HEAD
+=======
+            
+>>>>>>> origin/feature/updated
             const objectSelect = document.getElementById('objectSelect');
             objectSelect.innerHTML = '<option value="">Select Object...</option>';
             objectSelect.disabled = true;
             document.getElementById('generateBtn').disabled = true;
+<<<<<<< HEAD
+=======
+            
+            // Show/hide the custom test request section based on object type
+>>>>>>> origin/feature/updated
             const testRequestSection = document.getElementById('testRequestSection');
             if (objectType === 'TABLE' || objectType === 'VIEW') {
                 testRequestSection.style.display = 'block';
             } else {
                 testRequestSection.style.display = 'none';
             }
+<<<<<<< HEAD
             if (!database || !schema || !objectType) return;
             showStatus('Loading objects...', 'loading');
+=======
+            
+            if (!database || !schema || !objectType) return;
+            
+            showStatus('Loading objects...', 'loading');
+            
+>>>>>>> origin/feature/updated
             try {
                 const response = await fetch('/api/objects', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ database, schema, object_type: objectType })
                 });
+<<<<<<< HEAD
                 const result = await response.json();
                 if (result.objects && Array.isArray(result.objects)) {
                     result.objects.forEach(obj => {
@@ -760,6 +1190,27 @@
                 showStatus(`Found ${result.objects.length} ${objectType.toLowerCase()}(s)`, 'success');
             } catch (error) {
                 showStatus('Error loading objects', 'error');
+=======
+                
+                const result = await response.json();
+                
+                if (result.error) {
+                    showStatus(`Error: ${result.error}`, 'error');
+                    return;
+                }
+                
+                objectSelect.disabled = false;
+                result.objects.forEach(obj => {
+                    const option = document.createElement('option');
+                    option.value = obj;
+                    option.textContent = obj;
+                    objectSelect.appendChild(option);
+                });
+                
+                showStatus(`Found ${result.objects.length} ${objectType.toLowerCase()}(s)`, 'success');
+            } catch (error) {
+                showStatus(`Error loading objects: ${error.message}`, 'error');
+>>>>>>> origin/feature/updated
             }
         }
 
@@ -768,20 +1219,35 @@
             const schema = document.getElementById('schemaSelect').value;
             const objectName = document.getElementById('objectSelect').value;
             const objectType = document.getElementById('objectTypeSelect').value;
+<<<<<<< HEAD
             if (!database || !schema || !objectName || !objectType) return;
+=======
+            
+            if (!database || !schema || !objectName || !objectType) return;
+            
+>>>>>>> origin/feature/updated
             currentDatabase = database;
             currentSchema = schema;
             currentObjectName = objectName;
             currentObjectType = objectType;
+<<<<<<< HEAD
             showStatus('Loading metadata...', 'loading');
             document.getElementById('generateBtn').disabled = true;
             document.getElementById('fetchTestsBtn').disabled = true;
+=======
+            
+            showStatus('Loading metadata...', 'loading');
+            document.getElementById('generateBtn').disabled = true;
+            document.getElementById('fetchTestsBtn').disabled = true;
+            
+>>>>>>> origin/feature/updated
             try {
                 const response = await fetch('/api/object-metadata', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ database, schema, object_name: objectName, object_type: objectType })
                 });
+<<<<<<< HEAD
                 const result = await response.json();
                 if (result.metadata) {
                     currentMetadata = result.metadata;
@@ -794,12 +1260,39 @@
                 }
             } catch (error) {
                 showStatus('Error loading metadata', 'error');
+=======
+                
+                const result = await response.json();
+                
+                if (result.error) {
+                    showStatus(`Error: ${result.error}`, 'error');
+                    return;
+                }
+                
+                currentMetadata = result.metadata;
+                displayMetadata(result.metadata, objectType);
+                
+                // Enable buttons based on Cortex access
+                if (hasCortexAccess) {
+                    document.getElementById('generateBtn').disabled = false;
+                }
+                document.getElementById('fetchTestsBtn').disabled = false;
+                
+                if (hasCortexAccess) {
+                    showStatus('Metadata loaded! Generate new tests or look for existing tests.', 'success');
+                } else {
+                    showStatus('Metadata loaded! Click "Look for Unit Tests" to see existing tests.', 'success');
+                }
+            } catch (error) {
+                showStatus(`Error loading metadata: ${error.message}`, 'error');
+>>>>>>> origin/feature/updated
             }
         }
 
         function displayMetadata(metadata, objectType) {
             const metadataSection = document.getElementById('metadataSection');
             const metadataContent = document.getElementById('metadataContent');
+<<<<<<< HEAD
             let html = '';
             if (metadata.columns) {
                 html += '<div><strong>Columns:</strong><ul>';
@@ -818,12 +1311,39 @@
                 });
                 html += '</ul></div>';
             }
+=======
+            
+            let html = '';
+            
+            if (metadata.columns) {
+                html += '<h4>Columns:</h4><ul>';
+                metadata.columns.forEach(col => {
+                    html += `<li><strong>${col.name}</strong>: ${col.type}</li>`;
+                });
+                html += '</ul>';
+            }
+            
+            if (metadata.definition) {
+                html += '<h4>Definition:</h4><pre style="background: #f5f5f5; padding: 10px; border-radius: 5px; overflow-x: auto;">' + 
+                        metadata.definition + '</pre>';
+            }
+            
+            if (metadata.arguments) {
+                html += '<h4>Arguments:</h4><ul>';
+                metadata.arguments.forEach(arg => {
+                    html += `<li><strong>${arg.argument_name}</strong>: ${arg.argument_data_type}</li>`;
+                });
+                html += '</ul>';
+            }
+            
+>>>>>>> origin/feature/updated
             metadataContent.innerHTML = html;
             metadataSection.classList.add('show');
         }
 
         async function generateTests() {
             if (!currentDatabase || !currentSchema || !currentObjectName || !currentObjectType || !currentMetadata) {
+<<<<<<< HEAD
                 showStatus('Please select all required fields and load metadata first', 'error');
                 return;
             }
@@ -832,6 +1352,20 @@
             showStatus('🤖 AI is generating test cases... This may take a moment.', 'loading');
             document.getElementById('generateBtn').disabled = true;
             document.getElementById('emptyState').style.display = 'none';
+=======
+                showStatus('Please select all required fields', 'error');
+                return;
+            }
+            
+            // Get user's custom test request and count
+            const userTestRequest = document.getElementById('userTestRequest').value.trim();
+            const testCaseCount = parseInt(document.getElementById('testCaseCount').value) || 5;
+            
+            showStatus('🤖 AI is generating test cases... This may take a moment.', 'loading');
+            document.getElementById('generateBtn').disabled = true;
+            document.getElementById('emptyState').style.display = 'none';
+            
+>>>>>>> origin/feature/updated
             try {
                 const response = await fetch('/api/generate-tests', {
                     method: 'POST',
@@ -846,6 +1380,7 @@
                         test_case_count: testCaseCount
                     })
                 });
+<<<<<<< HEAD
                 const result = await response.json();
                 if (result.test_cases && Array.isArray(result.test_cases)) {
                     generatedTestCases = result.test_cases;
@@ -858,6 +1393,32 @@
                 document.getElementById('generateBtn').disabled = false;
             } catch (error) {
                 showStatus('Error generating test cases', 'error');
+=======
+                
+                const result = await response.json();
+                
+                if (result.error) {
+                    showStatus(`Error: ${result.error}`, 'error');
+                    document.getElementById('generateBtn').disabled = false;
+                    return;
+                }
+                
+                // Store generated tests for saving
+                generatedTestCases = result.test_cases;
+                
+                displayTestCases(result.test_cases);
+                document.getElementById('testCasesSource').textContent = '(AI Generated - not saved)';
+                
+                // Show save button
+                document.getElementById('saveTestsBtn').style.display = 'inline-block';
+                document.getElementById('generateReportBtn').style.display = 'inline-block';
+                document.getElementById('saveTestsBtn').disabled = false;
+                
+                showStatus(`✅ Successfully generated ${result.test_cases.length} test cases! Click "Save All Test Cases" to store them.`, 'success');
+                document.getElementById('generateBtn').disabled = false;
+            } catch (error) {
+                showStatus(`Error generating tests: ${error.message}`, 'error');
+>>>>>>> origin/feature/updated
                 document.getElementById('generateBtn').disabled = false;
             }
         }
@@ -865,6 +1426,7 @@
         function displayTestCases(testCases) {
             const container = document.getElementById('testCasesContainer');
             const list = document.getElementById('testCasesList');
+<<<<<<< HEAD
             list.innerHTML = '';
             allTestCases = testCases; // Store for batch operations
             testCases.forEach(test => {
@@ -1082,10 +1644,76 @@
             const messageDiv = document.getElementById(`message-${testId}`);
             const testDiv = document.getElementById(`test-${testId}`);
             
+=======
+            currentDisplayedTestCases = testCases.map(test => ({ ...test }));
+            testResultsMap = {};
+            
+            list.innerHTML = '';
+            
+            testCases.forEach(test => {
+                const testDiv = document.createElement('div');
+                testDiv.className = 'test-case';
+                testDiv.id = `test-${test.id}`;
+                
+                // Determine expected result display
+                const expectedDisplay = test.expected_description || test.expected_result || 'Not specified';
+                const expectedType = test.expected_type || 'HAS_ROWS';
+                
+                testDiv.innerHTML = `
+                    <div class="test-case-header">
+                        <div class="test-case-title">
+                            Test ${test.id}: ${test.test_name}
+                            <span class="test-badge badge-not-run" id="badge-${test.id}">NOT RUN</span>
+                        </div>
+                        <button class="btn btn-success single-run-test-btn" onclick='runTest(${test.id}, ${JSON.stringify(test).replace(/'/g, "&#39;").replace(/"/g, "&quot;")})'>
+                            ▶ Run Test
+                        </button>
+                    </div>
+                    <div class="test-description">${test.description}</div>
+                    <div class="test-query">${test.query}</div>
+                    <div class="test-results" id="results-${test.id}">
+                        <div class="result-section">
+                            <div class="result-label">Expected Result Type: <strong>${expectedType}</strong></div>
+                            <div class="result-content">${expectedDisplay}</div>
+                        </div>
+                        <div class="result-section">
+                            <div class="result-label">Actual Result:</div>
+                            <div class="result-content" id="actual-${test.id}">Not executed yet</div>
+                        </div>
+                        <div class="result-section" id="message-section-${test.id}" style="display: none;">
+                            <div class="result-label">Test Message:</div>
+                            <div class="result-content" id="message-${test.id}"></div>
+                        </div>
+                    </div>
+                `;
+                
+                list.appendChild(testDiv);
+            });
+            
+            container.style.display = 'block';
+            document.getElementById('runAllTestsBtn').style.display = testCases.length > 0 ? 'inline-block' : 'none';
+        }
+
+        async function runTest(testId, testData) {
+            const badge = document.getElementById(`badge-${testId}`);
+            const resultsDiv = document.getElementById(`results-${testId}`);
+            const actualDiv = document.getElementById(`actual-${testId}`);
+            const messageSection = document.getElementById(`message-section-${testId}`);
+            const messageDiv = document.getElementById(`message-${testId}`);
+            const testDiv = document.getElementById(`test-${testId}`);
+            const runButtons = Array.from(testDiv.querySelectorAll('.single-run-test-btn'));
+            
+            testDiv.classList.remove('passed');
+            testDiv.classList.remove('failed');
+>>>>>>> origin/feature/updated
             badge.className = 'test-badge badge-running';
             badge.textContent = 'RUNNING...';
             resultsDiv.classList.add('show');
             actualDiv.innerHTML = '<span class="loading-spinner"></span>Executing test...';
+<<<<<<< HEAD
+=======
+            runButtons.forEach(button => button.disabled = true);
+>>>>>>> origin/feature/updated
             
             try {
                 const response = await fetch('/api/run-test', {
@@ -1113,7 +1741,13 @@
                     badge.textContent = 'FAILED ✗';
                     testDiv.classList.add('failed');
                     actualDiv.innerHTML = `<div style="color: #f44336;"><strong>Error:</strong> ${result.error}</div>`;
+<<<<<<< HEAD
                     return;
+=======
+                    testResultsMap[testId] = { status: 'FAILED', message: result.error };
+                    runButtons.forEach(button => button.disabled = false);
+                    return result;
+>>>>>>> origin/feature/updated
                 }
                 
                 // Display actual results
@@ -1144,17 +1778,80 @@
                     badge.textContent = 'PASSED ✓';
                     testDiv.classList.add('passed');
                     testDiv.classList.remove('failed');
+<<<<<<< HEAD
+=======
+                    testResultsMap[testId] = { status: 'PASSED', message: result.message || '' };
+>>>>>>> origin/feature/updated
                 } else {
                     badge.className = 'test-badge badge-failed';
                     badge.textContent = 'FAILED ✗';
                     testDiv.classList.add('failed');
                     testDiv.classList.remove('passed');
+<<<<<<< HEAD
                 }
+=======
+                    testResultsMap[testId] = { status: 'FAILED', message: result.message || '' };
+                }
+                runButtons.forEach(button => button.disabled = false);
+                return result;
+>>>>>>> origin/feature/updated
             } catch (error) {
                 badge.className = 'test-badge badge-failed';
                 badge.textContent = 'ERROR';
                 testDiv.classList.add('failed');
+<<<<<<< HEAD
                 actualDiv.innerHTML = `<div style="color: #f44336;">Error: ${error.message}</div>`;
+=======
+                testDiv.classList.remove('passed');
+                actualDiv.innerHTML = `<div style="color: #f44336;">Error: ${error.message}</div>`;
+                testResultsMap[testId] = { status: 'FAILED', message: error.message };
+                runButtons.forEach(button => button.disabled = false);
+                return { passed: false, error: error.message };
+            }
+        }
+
+        async function runAllTests() {
+            if (isRunningAllTests) {
+                return;
+            }
+
+            if (!currentDisplayedTestCases || currentDisplayedTestCases.length === 0) {
+                showStatus('No test cases available to run.', 'warning');
+                return;
+            }
+
+            isRunningAllTests = true;
+            const runAllBtn = document.getElementById('runAllTestsBtn');
+            const singleRunButtons = document.querySelectorAll('.single-run-test-btn');
+            const originalLabel = runAllBtn.textContent;
+
+            runAllBtn.disabled = true;
+            runAllBtn.textContent = 'Running All...';
+            singleRunButtons.forEach(button => button.disabled = true);
+            showStatus(`▶ Running ${currentDisplayedTestCases.length} test case(s)...`, 'loading');
+
+            let passedCount = 0;
+            let failedCount = 0;
+
+            try {
+                for (const test of currentDisplayedTestCases) {
+                    const result = await runTest(test.id, test);
+                    if (result && result.passed) {
+                        passedCount += 1;
+                    } else {
+                        failedCount += 1;
+                    }
+                }
+
+                showStatus(`✅ Run complete: ${passedCount} passed, ${failedCount} failed.`, failedCount > 0 ? 'warning' : 'success');
+            } catch (error) {
+                showStatus(`Error while running all tests: ${error.message}`, 'error');
+            } finally {
+                isRunningAllTests = false;
+                runAllBtn.disabled = false;
+                runAllBtn.textContent = originalLabel;
+                singleRunButtons.forEach(button => button.disabled = false);
+>>>>>>> origin/feature/updated
             }
         }
 
@@ -1192,14 +1889,26 @@
                     result.test_cases.forEach((test, index) => {
                         test.id = test.test_id || (index + 1);
                     });
+<<<<<<< HEAD
+=======
+                    generatedTestCases = [];
+>>>>>>> origin/feature/updated
                     
                     displayTestCases(result.test_cases);
                     document.getElementById('testCasesSource').textContent = '(Loaded from database)';
                     document.getElementById('saveTestsBtn').style.display = 'none'; // No need to save fetched tests
+<<<<<<< HEAD
+=======
+                    document.getElementById('generateReportBtn').style.display = 'inline-block';
+>>>>>>> origin/feature/updated
                     showStatus(`✅ Found ${result.test_cases.length} existing test case(s)!`, 'success');
                 } else {
                     showStatus('ℹ️ No existing test cases found for this object.', 'warning');
                     document.getElementById('testCasesContainer').style.display = 'none';
+<<<<<<< HEAD
+=======
+                    document.getElementById('runAllTestsBtn').style.display = 'none';
+>>>>>>> origin/feature/updated
                 }
                 
                 document.getElementById('fetchTestsBtn').disabled = false;
@@ -1248,6 +1957,127 @@
                 document.getElementById('saveTestsBtn').disabled = false;
             }
         }
+<<<<<<< HEAD
+=======
+
+        // ── Report Modal helpers ─────────────────────────────────────────────
+
+        function openReportModal() {
+            document.getElementById('reportModal').style.display = 'block';
+            document.getElementById('reportStatus').innerHTML = '';
+            document.getElementById('reportGenBtn').disabled = false;
+            document.getElementById('reportGenBtn').textContent = '\u{1F4E5} Generate & Download';
+        }
+
+        function closeReportModal() {
+            document.getElementById('reportModal').style.display = 'none';
+        }
+
+        // ── Collect live test statuses from the DOM ──────────────────────────
+
+        function collectTestResultsWithStatus() {
+            const tests = [];
+            const allTests = currentDisplayedTestCases.length > 0
+                ? currentDisplayedTestCases
+                : generatedTestCases;
+
+            allTests.forEach(t => {
+                const id   = t.id || t.test_id;
+                const badge = document.getElementById('badge-' + id);
+                let status = 'NOT_RUN';
+                if (badge) {
+                    const txt = badge.textContent.trim().toUpperCase();
+                    if (txt.includes('PASSED'))  status = 'PASSED';
+                    else if (txt.includes('FAILED')) status = 'FAILED';
+                    else if (txt.includes('RUNNING')) status = 'NOT_RUN';
+                }
+                const msgEl = document.getElementById('message-' + id);
+                tests.push(Object.assign({}, t, {
+                    status:  status,
+                    message: msgEl ? msgEl.textContent.trim() : ''
+                }));
+            });
+            return tests;
+        }
+
+        // ── Main report generator ────────────────────────────────────────────
+
+        async function generateReport() {
+            if (!currentDatabase || !currentSchema || !currentObjectName) {
+                document.getElementById('reportStatus').innerHTML =
+                    '<span style="color:#E74C3C;">Please select a database object first.</span>';
+                return;
+            }
+
+            const btn = document.getElementById('reportGenBtn');
+            btn.disabled = true;
+            btn.textContent = 'Generating...';
+            document.getElementById('reportStatus').innerHTML =
+                '<span style="color:#1E6FA5;">&#x23F3; Building your report — this may take a few seconds...</span>';
+
+            const testCases  = collectTestResultsWithStatus();
+
+            try {
+                const response = await fetch('/api/generate-report', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        database:     currentDatabase,
+                        schema:       currentSchema,
+                        object_name:  currentObjectName,
+                        object_type:  currentObjectType,
+                        test_cases:   testCases,
+                        metadata:     currentMetadata || {},
+                        download:     true
+                    })
+                });
+
+                if (!response.ok) {
+                    const err = await response.json().catch(() => ({ error: response.statusText }));
+                    document.getElementById('reportStatus').innerHTML =
+                        '<span style="color:#E74C3C;">Error: ' + (err.error || 'Unknown error') + '</span>';
+                    btn.disabled = false;
+                    btn.textContent = '\u{1F4E5} Generate & Download';
+                    return;
+                }
+
+                const contentType = response.headers.get('Content-Type') || '';
+                if (!contentType.toLowerCase().includes('application/pdf')) {
+                    const err = await response.json().catch(async () => ({ error: await response.text() }));
+                    document.getElementById('reportStatus').innerHTML =
+                        '<span style="color:#E74C3C;">Error: ' + (err.error || 'Report generation did not return a PDF') + '</span>';
+                    btn.disabled = false;
+                    btn.textContent = '\u{1F4E5} Generate & Download';
+                    return;
+                }
+
+                // Trigger browser download
+                const blob     = await response.blob();
+                const url      = URL.createObjectURL(blob);
+                const a        = document.createElement('a');
+                const cd       = response.headers.get('Content-Disposition') || '';
+                const fnMatch  = cd.match(/filename="?([^";\r\n]+)"?/);
+                a.href         = url;
+                a.download     = fnMatch ? fnMatch[1] : 'DQ_Report.pdf';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                document.getElementById('reportStatus').innerHTML =
+                    '<span style="color:#27AE60;">&#x2705; Report downloaded successfully!</span>';
+                btn.disabled = false;
+                btn.textContent = '\u{1F4E5} Generate & Download';
+
+            } catch (err) {
+                document.getElementById('reportStatus').innerHTML =
+                    '<span style="color:#E74C3C;">Error: ' + err.message + '</span>';
+                btn.disabled = false;
+                btn.textContent = '\u{1F4E5} Generate & Download';
+            }
+        }
+
+>>>>>>> origin/feature/updated
     </script>
 </body>
 </html>

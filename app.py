@@ -1,10 +1,18 @@
+<<<<<<< HEAD
 from flask import Flask, render_template, request, jsonify
+=======
+from flask import Flask, render_template, request, jsonify, send_file
+>>>>>>> origin/feature/updated
 import snowflake.connector
 from snowflake.connector import DictCursor
 import os
 import re
 from dotenv import load_dotenv
 import atexit
+<<<<<<< HEAD
+=======
+from report_generator import generate_pdf_report
+>>>>>>> origin/feature/updated
 
 # Load environment variables
 load_dotenv()
@@ -703,6 +711,7 @@ def get_object_metadata():
                             }
             
         elif object_type == 'VIEW':
+<<<<<<< HEAD
             # Get view structure
             query = f"DESCRIBE VIEW {full_name}"
             result = execute_query(query)
@@ -726,6 +735,172 @@ def get_object_metadata():
             sample_result = execute_query(sample_query)
             if "error" not in sample_result:
                 metadata['sample_data'] = sample_result['data']
+=======
+                # Get view structure
+                try:
+                    query = f"DESCRIBE VIEW {full_name}"
+                    result = execute_query(query)
+                    if "error" not in result:
+                        metadata['columns'] = result['data']
+                    else:
+                        metadata['columns'] = []
+                except Exception:
+                    metadata['columns'] = []
+
+                # Get row count for views too
+                try:
+                    count_query = f"SELECT COUNT(*) as total_rows FROM {full_name}"
+                    count_result = execute_query(count_query)
+                    if "error" not in count_result:
+                        metadata['total_rows'] = count_result['data'][0]['TOTAL_ROWS']
+                    else:
+                        metadata['total_rows'] = None
+                except Exception:
+                    metadata['total_rows'] = None
+
+                # Get view definition
+                try:
+                    ddl_query = f"SELECT GET_DDL('VIEW', '{full_name}') as ddl"
+                    ddl_result = execute_query(ddl_query)
+                    if "error" not in ddl_result:
+                        metadata['definition'] = ddl_result['data'][0]['DDL']
+                    else:
+                        metadata['definition'] = None
+                except Exception:
+                    metadata['definition'] = None
+
+                # Get sample data
+                try:
+                    sample_query = f"SELECT * FROM {full_name} LIMIT 5"
+                    sample_result = execute_query(sample_query)
+                    if "error" not in sample_result:
+                        metadata['sample_data'] = sample_result['data']
+                    else:
+                        metadata['sample_data'] = []
+                except Exception:
+                    metadata['sample_data'] = []
+
+                # Parse base tables from view DDL so we can enrich categorical values
+                base_tables = []
+                definition = metadata.get('definition') or ''
+                if definition:
+                    base_table_patterns = [
+                        r'\b(?:FROM|JOIN)\s+([A-Za-z0-9_"$]+\.[A-Za-z0-9_"$]+\.[A-Za-z0-9_"$]+)',
+                        r'\b(?:FROM|JOIN)\s+([A-Za-z0-9_"$]+\.[A-Za-z0-9_"$]+)'
+                    ]
+
+                    for pattern in base_table_patterns:
+                        matches = re.findall(pattern, definition, re.IGNORECASE)
+                        for match in matches:
+                            tbl = match.replace('"', '')
+                            parts = tbl.split('.')
+                            if len(parts) == 3:
+                                normalized = f"{parts[0].upper()}.{parts[1].upper()}.{parts[2].upper()}"
+                            elif len(parts) == 2:
+                                normalized = f"{database.upper()}.{parts[0].upper()}.{parts[1].upper()}"
+                            else:
+                                continue
+
+                            if normalized not in base_tables:
+                                base_tables.append(normalized)
+
+                metadata['base_tables'] = base_tables
+
+                if metadata.get('columns'):
+                    # Get min/max/avg statistics for key numeric columns from the view
+                    numeric_cols = [col for col in metadata['columns']
+                                   if 'NUMBER' in col.get('type', '').upper() or
+                                      'INT' in col.get('type', '').upper() or
+                                      'FLOAT' in col.get('type', '').upper() or
+                                      'DECIMAL' in col.get('type', '').upper()][:3]
+
+                    metadata['statistics'] = {}
+                    for col in numeric_cols:
+                        col_name = col['name']
+                        stat_query = f"""
+                        SELECT
+                            MIN({col_name}) as min_val,
+                            MAX({col_name}) as max_val,
+                            AVG({col_name}) as avg_val
+                        FROM {full_name}
+                        """
+                        stat_result = execute_query(stat_query)
+                        if "error" not in stat_result and len(stat_result['data']) > 0:
+                            metadata['statistics'][col_name] = stat_result['data'][0]
+
+                    # Get distinct values for categorical columns.
+                    # Prefer base table values when the column exists in a source table.
+                    string_cols = [col for col in metadata['columns']
+                                  if 'VARCHAR' in col.get('type', '').upper() or
+                                     'STRING' in col.get('type', '').upper() or
+                                     'TEXT' in col.get('type', '').upper() or
+                                     'CHAR' in col.get('type', '').upper()]
+
+                    metadata['distinct_values'] = {}
+                    for col in string_cols[:8]:
+                        col_name = col['name']
+                        value_source = 'view'
+                        source_object = full_name
+                        distinct_count = None
+                        values = None
+
+                        # Try to source complete values from base table first.
+                        for base_table in base_tables:
+                            parts = base_table.split('.')
+                            if len(parts) != 3:
+                                continue
+
+                            src_db, src_schema, src_table = parts
+                            col_exists_query = f"""
+                            SELECT 1 as found
+                            FROM {src_db}.INFORMATION_SCHEMA.COLUMNS
+                            WHERE TABLE_SCHEMA = '{src_schema}'
+                              AND TABLE_NAME = '{src_table}'
+                              AND UPPER(COLUMN_NAME) = UPPER('{col_name}')
+                            LIMIT 1
+                            """
+                            col_exists_result = execute_query(col_exists_query)
+                            if "error" in col_exists_result or not col_exists_result.get('data'):
+                                continue
+
+                            source_object = f"{src_db}.{src_schema}.{src_table}"
+                            value_source = 'base_table'
+
+                            source_count_query = f"SELECT COUNT(DISTINCT {col_name}) as cnt FROM {source_object}"
+                            source_count_result = execute_query(source_count_query)
+                            if "error" not in source_count_result and source_count_result.get('data'):
+                                distinct_count = source_count_result['data'][0]['CNT']
+
+                                # Keep explicit value list for categorical columns with manageable cardinality.
+                                if distinct_count is not None and distinct_count <= 200:
+                                    source_values_query = f"SELECT DISTINCT {col_name} as val FROM {source_object} WHERE {col_name} IS NOT NULL ORDER BY {col_name}"
+                                    source_values_result = execute_query(source_values_query)
+                                    if "error" not in source_values_result and source_values_result.get('data'):
+                                        values = [row['VAL'] for row in source_values_result['data'] if row['VAL'] is not None]
+                                break
+
+                        # Fallback to view-level distinct values if base-table enrichment is not available.
+                        if distinct_count is None:
+                            view_count_query = f"SELECT COUNT(DISTINCT {col_name}) as cnt FROM {full_name}"
+                            view_count_result = execute_query(view_count_query)
+                            if "error" not in view_count_result and view_count_result.get('data'):
+                                distinct_count = view_count_result['data'][0]['CNT']
+                                if distinct_count is not None and distinct_count <= 200:
+                                    view_values_query = f"SELECT DISTINCT {col_name} as val FROM {full_name} WHERE {col_name} IS NOT NULL ORDER BY {col_name}"
+                                    view_values_result = execute_query(view_values_query)
+                                    if "error" not in view_values_result and view_values_result.get('data'):
+                                        values = [row['VAL'] for row in view_values_result['data'] if row['VAL'] is not None]
+
+                        if distinct_count is not None:
+                            if values is None:
+                                values = f"(Too many distinct values: {distinct_count})"
+                            metadata['distinct_values'][col_name] = {
+                                'count': distinct_count,
+                                'values': values,
+                                'source': value_source,
+                                'source_object': source_object
+                            }
+>>>>>>> origin/feature/updated
                 
         elif object_type == 'PROCEDURE':
             # For procedures, we need to handle them differently
@@ -1156,6 +1331,24 @@ Focus on what the user asked for while still ensuring the tests are valid and ex
     
     prompt = f"""You are an expert data quality engineer. Analyze the metadata below and generate comprehensive, intelligent test cases for this Snowflake {object_type}.
 
+<<<<<<< HEAD
+=======
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! CRITICAL SQL RULE - READ THIS FIRST - FAILURE TO FOLLOW CAUSES ERRORS !!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+In Snowflake, DATE/TIMESTAMP/NUMBER columns CANNOT be compared to empty strings!
+- WRONG (CAUSES ERROR): WHERE DATE_COLUMN != ''
+- WRONG (CAUSES ERROR): WHERE DATE_COLUMN = ''  
+- WRONG (CAUSES ERROR): WHERE NUMBER_COLUMN != ''
+- CORRECT: WHERE DATE_COLUMN IS NOT NULL
+- CORRECT: WHERE DATE_COLUMN IS NULL
+- CORRECT: WHERE NUMBER_COLUMN IS NOT NULL
+
+Empty string comparisons ('') are ONLY valid for VARCHAR/STRING/TEXT columns!
+For DATE, TIMESTAMP, NUMBER, INTEGER, FLOAT columns: use IS NULL / IS NOT NULL ONLY!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+>>>>>>> origin/feature/updated
 === OBJECT DETAILS ===
 Object: {schema}.{object_name}
 Type: {object_type}
@@ -1182,6 +1375,10 @@ Analyze the metadata thoroughly and generate exactly {test_case_count} meaningfu
 - For categorical columns: The DISTINCT VALUES section shows ALL valid values in the data
 - For numeric columns: Use MIN/MAX/AVG from statistics to set reasonable thresholds
 - Always use the fully qualified table name: {schema}.{object_name}
+<<<<<<< HEAD
+=======
+- REMEMBER: Never use != '' or = '' with DATE/TIMESTAMP/NUMBER columns (see CRITICAL RULE above)
+>>>>>>> origin/feature/updated
 
 === OUTPUT FORMAT ===
 Return ONLY a JSON array:
@@ -1218,13 +1415,25 @@ Generate intelligent test cases based on your analysis. Return ONLY the JSON arr
         # Rebuild prompt with truncated metadata
         prompt = f"""You are a data quality engineer. Generate {test_case_count} test cases for this Snowflake {object_type}.
 
+<<<<<<< HEAD
+=======
+CRITICAL RULE: In Snowflake, DATE/TIMESTAMP/NUMBER columns CANNOT be compared to empty strings!
+- WRONG: WHERE DATE_COLUMN != '' (causes Error 100040)
+- CORRECT: WHERE DATE_COLUMN IS NOT NULL
+
+>>>>>>> origin/feature/updated
 Object: {schema}.{object_name}
 Total Rows: {total_rows}
 {user_request_section}
 {metadata_summary}
 
 Generate test cases as a JSON array with: test_name, description, query, expected_type, expected_description.
+<<<<<<< HEAD
 Use the actual column names and statistics from metadata. Return ONLY the JSON array."""
+=======
+Use the actual column names and statistics from metadata.
+Return ONLY the JSON array."""
+>>>>>>> origin/feature/updated
         escaped_prompt = prompt.replace("'", "''")
     
     return escaped_prompt
@@ -1330,6 +1539,11 @@ CRITICAL RULES:
 ✗ DON'T call with empty () if parameters are required
 ✗ DON'T ignore the sample data - USE IT to generate realistic values
 ✗ DON'T make up values that don't appear anywhere in the metadata
+<<<<<<< HEAD
+=======
+✗ DON'T compare DATE/TIMESTAMP columns to empty strings ('') - use IS NULL or IS NOT NULL instead
+✗ DON'T compare NUMBER/INTEGER columns to empty strings - they can only be NULL or numeric
+>>>>>>> origin/feature/updated
 
 If you CANNOT determine reasonable values even with the metadata:
 Generate manual testing note:
@@ -1942,6 +2156,82 @@ Return ONLY the JSON, nothing else."""
     except Exception as e:
         return jsonify({"error": str(e)})
 
+<<<<<<< HEAD
+=======
+
+@app.route('/api/generate-report', methods=['POST'])
+def generate_report():
+    """
+    Generate a PDF data quality report for a given object and its test results.
+    Accepts JSON body:
+      - database, schema, object_name, object_type
+      - test_cases  : list of test case dicts (each may include a 'status' key)
+      - metadata    : object metadata dict
+      - save_path   : (optional) directory path to save the report on the server
+      - download    : (optional) bool, default True — return file for browser download
+    """
+    try:
+        data         = request.get_json()
+        database     = data.get('database', '')
+        schema       = data.get('schema', '')
+        object_name  = data.get('object_name', '')
+        object_type  = data.get('object_type', 'TABLE')
+        test_cases   = data.get('test_cases', [])
+        metadata     = data.get('metadata', {})
+        save_path    = data.get('save_path', '').strip()
+        download     = data.get('download', True)
+
+        if not all([database, schema, object_name]):
+            return jsonify({'error': 'database, schema and object_name are required'}), 400
+
+        # Determine output directory
+        if save_path:
+            report_dir = save_path
+        else:
+            # Default to the signed-in user's Downloads folder.
+            report_dir = os.path.join(os.path.expanduser('~'), 'Downloads')
+
+        if not os.path.isdir(report_dir):
+            os.makedirs(report_dir, exist_ok=True)
+
+        from datetime import datetime
+        safe_name   = re.sub(r'[^A-Za-z0-9_\-]', '_', object_name)
+        timestamp   = datetime.now().strftime('%Y%m%d_%H%M%S')
+        filename    = f'DQ_Report_{safe_name}_{timestamp}.pdf'
+        output_path = os.path.join(report_dir, filename)
+
+        generate_pdf_report(
+            object_name  = object_name,
+            object_type  = object_type,
+            database     = database,
+            schema       = schema,
+            test_cases   = test_cases,
+            metadata     = metadata,
+            output_path  = output_path,
+        )
+
+        if not os.path.exists(output_path) or os.path.getsize(output_path) == 0:
+            return jsonify({'error': 'Report generation failed: output PDF was not created correctly'}), 500
+
+        print(f'✅ Report saved: {output_path}')
+
+        if download:
+            return send_file(
+                output_path,
+                as_attachment=True,
+                download_name=filename,
+                mimetype='application/pdf',
+            )
+        else:
+            return jsonify({'success': True, 'path': output_path, 'filename': filename})
+
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': str(e)}), 500
+
+
+>>>>>>> origin/feature/updated
 if __name__ == '__main__':
     # Initialize connection when starting the app
     print("\n" + "=" * 50)
