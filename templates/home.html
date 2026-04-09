@@ -6,65 +6,77 @@
     <title>Data Quality Tool - Sign In</title>
     <style>
         :root {
-            --bg-primary: #f8f9fa;
-            --bg-secondary: #ffffff;
-            --bg-tertiary: #f1f3f5;
-            --text-primary: #212529;
-            --text-secondary: #6c757d;
-            --border-color: #dee2e6;
-            --shadow: rgba(0, 0, 0, 0.1);
-            --shadow-hover: rgba(0, 0, 0, 0.15);
-            --accent-primary: #ff6b35;
-            --accent-secondary: #ff8c42;
-            --accent-gradient: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
-            --accent-light: #fff3ef;
-            --accent-dark: #e85d2e;
-            --success: #28a745;
-            --success-bg: #d4edda;
-            --error: #dc3545;
-            --error-bg: #f8d7da;
-            --info: #17a2b8;
-            --info-bg: #d1ecf1;
+            /* Modern Blue Theme (default) */
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --header-gradient: linear-gradient(135deg, #29b5e8 0%, #1e8cbd 100%);
+            --primary-color: #29b5e8;
+            --primary-hover: #1e8abd;
+            --secondary-color: #667eea;
+            --text-dark: #333;
+            --text-light: #666;
+            --bg-light: #f8f9fa;
+            --border-color: #e0e0e0;
+            --success-color: #4caf50;
+        }
+
+        html.theme-light {
+            --primary-gradient: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+            --header-gradient: linear-gradient(135deg, #ff8c00 0%, #ff7200 100%);
+            --primary-color: #ff8c00;
+            --primary-hover: #e68000;
+            --secondary-color: #ff9800;
+            --text-dark: #333;
+            --text-light: #666;
+            --bg-light: #ffffff;
+            --border-color: #e0e0e0;
+            --success-color: #ff8c00;
+        }
+
+        html.theme-dark {
+            --primary-gradient: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            --header-gradient: linear-gradient(135deg, #ff8c00 0%, #ff7200 100%);
+            --primary-color: #ff8c00;
+            --primary-hover: #e68000;
+            --secondary-color: #ff9800;
+            --text-dark: #f0f0f0;
+            --text-light: #b0b0b0;
+            --bg-light: #2d2d2d;
+            --border-color: #444;
+            --success-color: #ff8c00;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--bg-primary);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--primary-gradient);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            position: relative;
-        }
-
-        .pattern-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 0;
-            pointer-events: none;
-            opacity: 0.18;
+            color: var(--text-dark);
         }
 
         .login-container {
-            position: relative;
-            z-index: 1;
-        }
-
-        .login-container {
-            background: var(--bg-secondary);
-            border-radius: 18px;
-            box-shadow: 0 8px 32px var(--shadow);
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             overflow: hidden;
             max-width: 500px;
             width: 100%;
         }
 
+        html.theme-dark .login-container {
+            background: #2d2d2d;
+        }
+
         .login-header {
-            background: var(--accent-gradient);
+            background: var(--header-gradient);
             color: white;
             padding: 40px 30px;
             text-align: center;
@@ -72,7 +84,7 @@
 
         .login-header h1 {
             font-size: 28px;
-            font-weight: 700;
+            font-weight: 600;
             margin-bottom: 10px;
         }
 
@@ -83,6 +95,11 @@
 
         .login-body {
             padding: 40px 30px;
+            background: white;
+        }
+
+        html.theme-dark .login-body {
+            background: #2d2d2d;
         }
 
         .step {
@@ -96,7 +113,7 @@
         .step-title {
             font-size: 18px;
             font-weight: 600;
-            color: var(--text-primary);
+            color: var(--text-dark);
             margin-bottom: 20px;
             text-align: center;
         }
@@ -117,25 +134,27 @@
         }
 
         .btn-sso {
-            background: var(--accent-gradient);
+            background: var(--header-gradient);
             color: white;
-            box-shadow: 0 4px 6px rgba(255, 107, 53, 0.3);
         }
 
         .btn-sso:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(255, 107, 53, 0.4);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
         }
 
         .btn-continue {
-            background: var(--accent-gradient);
+            background: var(--primary-gradient);
             color: white;
-            box-shadow: 0 4px 6px rgba(255, 107, 53, 0.3);
         }
 
         .btn-continue:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(255, 107, 53, 0.4);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        html.theme-light .btn-continue {
+            color: #333;
         }
 
         .btn:disabled {
@@ -152,7 +171,7 @@
             display: block;
             font-size: 14px;
             font-weight: 600;
-            color: var(--text-secondary);
+            color: var(--text-light);
             margin-bottom: 8px;
         }
 
@@ -160,21 +179,21 @@
             width: 100%;
             padding: 12px 15px;
             border: 2px solid var(--border-color);
-            border-radius: 10px;
+            border-radius: 8px;
             font-size: 14px;
-            transition: all 0.3s ease;
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
+            transition: all 0.3s;
+            background: white;
+            color: var(--text-dark);
+        }
+
+        html.theme-dark .form-select {
+            background: #3d3d3d;
+            color: #f0f0f0;
         }
 
         .form-select:focus {
             outline: none;
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.1);
-        }
-
-        .form-select:hover {
-            border-color: var(--accent-primary);
+            border-color: var(--primary-color);
         }
 
         .status-message {
@@ -190,27 +209,51 @@
         }
 
         .status-message.loading {
-            background: var(--info-bg);
-            color: var(--info);
-            border: 1px solid var(--info);
+            background: #e3f2fd;
+            color: #1976d2;
+            border: 1px solid #90caf9;
+        }
+
+        html.theme-dark .status-message.loading {
+            background: #1a3a52;
+            color: #64b5f6;
+            border: 1px solid #42a5f5;
         }
 
         .status-message.success {
-            background: var(--success-bg);
-            color: var(--success);
-            border: 1px solid var(--success);
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+
+        html.theme-dark .status-message.success {
+            background: #1b4620;
+            color: #81c784;
+            border: 1px solid #66bb6a;
         }
 
         .status-message.error {
-            background: var(--error-bg);
-            color: var(--error);
-            border: 1px solid var(--error);
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef9a9a;
+        }
+
+        html.theme-dark .status-message.error {
+            background: #4a1a1a;
+            color: #ef9a9a;
+            border: 1px solid #e57373;
         }
 
         .status-message.warning {
             background: #fff3e0;
             color: #e65100;
             border: 1px solid #ffcc80;
+        }
+
+        html.theme-dark .status-message.warning {
+            background: #4a3c1a;
+            color: #ffb74d;
+            border: 1px solid #ffa726;
         }
 
         .cortex-status {
@@ -221,9 +264,15 @@
         }
 
         .cortex-status.has-access {
-            background: var(--success-bg);
-            border: 1px solid var(--success);
-            color: var(--success);
+            background: #e8f5e9;
+            border: 1px solid #a5d6a7;
+            color: #2e7d32;
+        }
+
+        html.theme-dark .cortex-status.has-access {
+            background: #1b4620;
+            border: 1px solid #66bb6a;
+            color: #81c784;
         }
 
         .cortex-status.no-access {
@@ -232,15 +281,25 @@
             color: #e65100;
         }
 
+        html.theme-dark .cortex-status.no-access {
+            background: #4a3c1a;
+            border: 1px solid #ffa726;
+            color: #ffb74d;
+        }
+
         .tools-preview {
             margin-top: 30px;
             padding-top: 20px;
             border-top: 1px solid #eee;
         }
 
+        html.theme-dark .tools-preview {
+            border-top: 1px solid #444;
+        }
+
         .tools-preview h3 {
             font-size: 14px;
-            color: #666;
+            color: var(--text-light);
             margin-bottom: 15px;
             text-align: center;
         }
@@ -256,13 +315,22 @@
             align-items: center;
             gap: 10px;
             padding: 10px;
-            background: var(--bg-tertiary);
+            background: #f8f9fa;
             border-radius: 6px;
             font-size: 14px;
+            color: var(--text-dark);
+        }
+
+        html.theme-dark .tool-item {
+            background: #3d3d3d;
         }
 
         .tool-item.enabled {
-            color: var(--success);
+            color: #2e7d32;
+        }
+
+        html.theme-dark .tool-item.enabled {
+            color: #81c784;
         }
 
         .tool-item.disabled {
@@ -270,11 +338,15 @@
             text-decoration: line-through;
         }
 
+        html.theme-dark .tool-item.disabled {
+            color: #666;
+        }
+
         .spinner {
             width: 20px;
             height: 20px;
             border: 3px solid #f3f3f3;
-            border-top: 3px solid var(--accent-primary);
+            border-top: 3px solid var(--primary-color);
             border-radius: 50%;
             animation: spin 1s linear infinite;
             display: inline-block;
@@ -286,33 +358,139 @@
         }
 
         .user-info {
-            background: var(--bg-tertiary);
+            background: #f8f9fa;
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 20px;
         }
 
+        html.theme-dark .user-info {
+            background: #3d3d3d;
+        }
+
         .user-info p {
             font-size: 14px;
-            color: var(--text-secondary);
+            color: var(--text-light);
         }
 
         .user-info strong {
-            color: var(--text-primary);
+            color: var(--text-dark);
+        }
+
+        html.theme-light .user-info p {
+            color: #333;
+        }
+
+        .theme-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .theme-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .theme-btn {
+            padding: 10px 16px;
+            border: 2px solid white;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .theme-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        html.theme-light .theme-btn {
+            color: #ff8c00;
+            border-color: #ff8c00;
+        }
+
+        html.theme-light .theme-btn:hover {
+            background: rgba(255, 140, 0, 0.2);
+        }
+
+        .theme-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            margin-top: 8px;
+            z-index: 1000;
+            min-width: 180px;
+            overflow: hidden;
+        }
+
+        html.theme-dark .theme-menu {
+            background: #3d3d3d;
+            border-color: #555;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .theme-menu.active {
+            display: block;
+        }
+
+        .theme-option {
+            padding: 12px 16px;
+            cursor: pointer;
+            color: var(--text-dark);
+            transition: background 0.2s;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        html.theme-dark .theme-option {
+            border-bottom-color: #444;
+        }
+
+        .theme-option:last-child {
+            border-bottom: none;
+        }
+
+        .theme-option:hover {
+            background: var(--bg-light);
+        }
+
+        html.theme-dark .theme-option:hover {
+            background: #4d4d4d;
+        }
+
+        .theme-option.selected {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
-    <div class="pattern-bg">
-        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-                <pattern id="circles" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
-                    <circle cx="40" cy="40" r="32" fill="#ff6b35" fill-opacity="0.22" />
-                    <circle cx="40" cy="40" r="16" fill="#ff8c42" fill-opacity="0.18" />
-                </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#circles)" />
-        </svg>
+    <div class="theme-switcher">
+        <div class="theme-dropdown">
+            <button class="theme-btn" onclick="toggleThemeMenu()" title="Change Theme">🎨 Theme</button>
+            <div class="theme-menu" id="themeMenu">
+                <div class="theme-option" onclick="selectTheme('default')">🔵 Modern Blue</div>
+                <div class="theme-option" onclick="selectTheme('light')">☀️ Light Orange</div>
+                <div class="theme-option" onclick="selectTheme('dark')">🌙 Dark Orange</div>
+            </div>
+        </div>
     </div>
     <div class="login-container">
         <div class="login-header">
@@ -380,6 +558,61 @@
     <script>
         let currentRole = null;
         let hasCortexAccess = false;
+
+        // Theme Management
+        function setTheme(themeName) {
+            const html = document.documentElement;
+            if (themeName === 'light') {
+                html.classList.remove('theme-dark');
+                html.classList.add('theme-light');
+            } else if (themeName === 'dark') {
+                html.classList.remove('theme-light');
+                html.classList.add('theme-dark');
+            } else {
+                html.classList.remove('theme-light', 'theme-dark');
+            }
+            localStorage.setItem('theme', themeName);
+            updateThemeOptions(themeName);
+            closeThemeMenu();
+        }
+
+        function updateThemeOptions(themeName) {
+            document.querySelectorAll('.theme-option').forEach((option) => {
+                option.classList.remove('selected');
+            });
+            const themeMap = { default: 0, light: 1, dark: 2 };
+            if (themeMap[themeName] !== undefined) {
+                document.querySelectorAll('.theme-option')[themeMap[themeName]].classList.add('selected');
+            }
+        }
+
+        function toggleThemeMenu() {
+            const menu = document.getElementById('themeMenu');
+            menu.classList.toggle('active');
+        }
+
+        function selectTheme(themeName) {
+            setTheme(themeName);
+        }
+
+        function closeThemeMenu() {
+            const menu = document.getElementById('themeMenu');
+            menu.classList.remove('active');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const themeDropdown = document.querySelector('.theme-dropdown');
+            if (themeDropdown && !themeDropdown.contains(e.target)) {
+                closeThemeMenu();
+            }
+        });
+
+        // Load theme on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'default';
+            setTheme(savedTheme);
+        });
 
         function showStatus(elementId, message, type) {
             const el = document.getElementById(elementId);

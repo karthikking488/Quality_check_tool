@@ -4,43 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snowflake Query Tool</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-primary: #f8f9fa;
-            --bg-secondary: #ffffff;
-            --bg-tertiary: #f1f3f5;
-            --text-primary: #212529;
-            --text-secondary: #6c757d;
-            --border-color: #dee2e6;
-            --shadow: rgba(0, 0, 0, 0.1);
-            --shadow-hover: rgba(0, 0, 0, 0.15);
-            --accent-primary: #ff6b35;
-            --accent-secondary: #ff8c42;
-            --accent-gradient: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
-            --accent-light: #fff3ef;
-            --accent-dark: #e85d2e;
-            --success: #28a745;
-            --success-bg: #d4edda;
-            --error: #dc3545;
-            --error-bg: #f8d7da;
-            --info: #17a2b8;
-            --info-bg: #d1ecf1;
+            /* Modern Blue Theme (default) */
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --header-bg: #29b5e8;
+            --header-hover: #1e8cbd;
+            --primary-color: #29b5e8;
+            --primary-hover: #1e8abd;
+            --secondary-color: #667eea;
+            --text-dark: #333;
+            --text-light: #666;
+            --bg-light: #f9f9f9;
+            --border-color: #e0e0e0;
+            --success-color: #4caf50;
+            --error-color: #f44336;
+            --table-hover: #f9f9f9;
         }
 
-        [data-theme="dark"] {
-            --bg-primary: #1a1d23;
-            --bg-secondary: #22252b;
-            --bg-tertiary: #2a2d35;
-            --text-primary: #e9ecef;
-            --text-secondary: #adb5bd;
-            --border-color: #3a3d45;
-            --shadow: rgba(0, 0, 0, 0.3);
-            --shadow-hover: rgba(0, 0, 0, 0.5);
-            --accent-light: #3a2d29;
-            --success-bg: #1e3a2a;
-            --error-bg: #3a1e23;
-            --info-bg: #1e2f35;
+        html.theme-light {
+            --primary-gradient: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+            --header-bg: #ff8c00;
+            --header-hover: #e68000;
+            --primary-color: #ff8c00;
+            --primary-hover: #e68000;
+            --secondary-color: #ff9800;
+            --text-dark: #333;
+            --text-light: #666;
+            --bg-light: #ffffff;
+            --border-color: #e0e0e0;
+            --success-color: #ff8c00;
+            --error-color: #d32f2f;
+            --table-hover: #fff9f0;
+        }
+
+        html.theme-dark {
+            --primary-gradient: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            --header-bg: #ff8c00;
+            --header-hover: #e68000;
+            --primary-color: #ff8c00;
+            --primary-hover: #e68000;
+            --secondary-color: #ff9800;
+            --text-dark: #f0f0f0;
+            --text-light: #b0b0b0;
+            --bg-light: #2d2d2d;
+            --border-color: #444;
+            --success-color: #ff8c00;
+            --error-color: #ff6b6b;
+            --table-hover: #3d3d3d;
         }
 
         * {
@@ -50,37 +61,33 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--primary-gradient);
             min-height: 100vh;
             padding: 20px;
-            transition: background 0.3s ease, color 0.3s ease;
+            color: var(--text-dark);
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            background: var(--bg-secondary);
-            border-radius: 16px;
-            box-shadow: 0 8px 32px var(--shadow);
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
             overflow: hidden;
-            animation: fadeIn 0.5s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        html.theme-dark .container {
+            background: #2d2d2d;
         }
 
         .header {
-            background: var(--accent-gradient);
+            background: var(--header-bg);
             color: white;
-            padding: 24px 32px;
+            padding: 25px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2);
         }
 
         .header-title {
@@ -96,274 +103,218 @@
         .nav-link {
             color: white;
             text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.15);
-            transition: all 0.3s ease;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            padding: 8px 20px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
         }
 
         .nav-link:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-2px);
-        }
-
-        .nav-link.active {
             background: rgba(255, 255, 255, 0.3);
-            font-weight: 600;
         }
 
         .content {
-            padding: 32px;
+            padding: 30px;
         }
 
-        .sample-queries {
-            background: var(--bg-tertiary);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 24px;
-            border: 1px solid var(--border-color);
-        }
-
-        .sample-queries h3 {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .sample-query {
-            display: inline-block;
-            background: var(--bg-secondary);
-            padding: 10px 18px;
-            margin: 6px 6px 6px 0;
-            border-radius: 24px;
-            cursor: pointer;
-            font-size: 13px;
-            border: 2px solid var(--border-color);
-            color: var(--text-primary);
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .sample-query:hover {
-            background: var(--accent-gradient);
-            color: white;
-            border-color: var(--accent-primary);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+        html.theme-dark .content {
+            background: #2d2d2d;
         }
 
         .query-section {
-            margin-bottom: 24px;
+            margin-bottom: 25px;
         }
 
         .query-label {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            display: block;
         }
 
         .query-input {
             width: 100%;
-            min-height: 180px;
-            padding: 16px;
+            min-height: 150px;
+            padding: 15px;
             border: 2px solid var(--border-color);
-            border-radius: 12px;
-            font-family: 'Fira Code', 'Courier New', monospace;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
             font-size: 14px;
             resize: vertical;
-            transition: all 0.3s ease;
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
+            transition: border-color 0.3s;
+            background: white;
+            color: var(--text-dark);
+        }
+
+        html.theme-dark .query-input {
+            background: #3d3d3d;
+            color: #f0f0f0;
         }
 
         .query-input:focus {
             outline: none;
-            border-color: var(--accent-primary);
-            background: var(--bg-secondary);
-            box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.1);
+            border-color: var(--primary-color);
         }
 
         .button-group {
             display: flex;
-            gap: 12px;
-            margin-bottom: 24px;
+            gap: 10px;
+            margin-bottom: 25px;
         }
 
         .btn {
-            padding: 14px 28px;
+            padding: 12px 30px;
             border: none;
-            border-radius: 10px;
+            border-radius: 6px;
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            justify-content: center;
+            transition: all 0.3s;
         }
 
         .btn-execute {
-            background: var(--accent-gradient);
+            background: var(--header-bg);
             color: white;
             flex: 1;
-            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
         }
 
-        .btn-execute:hover:not(:disabled) {
+        .btn-execute:hover {
+            background: var(--header-hover);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
-        }
-
-        .btn-execute:active:not(:disabled) {
-            transform: translateY(0);
+            box-shadow: 0 4px 12px rgba(41, 181, 232, 0.4);
         }
 
         .btn-execute:disabled {
-            opacity: 0.6;
+            background: #ccc;
             cursor: not-allowed;
+            transform: none;
         }
 
         .btn-clear {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-            border: 2px solid var(--border-color);
-            padding: 14px 24px;
+            background: var(--error-color);
+            color: white;
+            padding: 12px 25px;
         }
 
         .btn-clear:hover {
-            background: var(--error);
-            color: white;
-            border-color: var(--error);
+            background: #d32f2f;
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
         }
 
         .status {
-            padding: 14px 20px;
-            border-radius: 10px;
-            margin-bottom: 24px;
+            padding: 12px 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
             display: none;
             font-size: 14px;
-            font-weight: 500;
-            animation: slideDown 0.3s ease;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .status.success {
-            background: var(--success-bg);
-            color: var(--success);
-            border-left: 4px solid var(--success);
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        html.theme-dark .status.success {
+            background: #1b4620;
+            color: #81c784;
+            border: 1px solid #66bb6a;
         }
 
         .status.error {
-            background: var(--error-bg);
-            color: var(--error);
-            border-left: 4px solid var(--error);
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        html.theme-dark .status.error {
+            background: #4a1a1a;
+            color: #ef9a9a;
+            border: 1px solid #e57373;
         }
 
         .status.loading {
-            background: var(--info-bg);
-            color: var(--info);
-            border-left: 4px solid var(--info);
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        html.theme-dark .status.loading {
+            background: #1a3a52;
+            color: #64b5f6;
+            border: 1px solid #42a5f5;
         }
 
         .results-section {
-            margin-top: 32px;
-            animation: fadeIn 0.5s ease;
+            margin-top: 30px;
         }
 
         .results-header {
             font-size: 18px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 16px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-bottom: 12px;
-            border-bottom: 2px solid var(--accent-primary);
         }
 
         .row-count {
             font-size: 14px;
-            color: var(--text-secondary);
-            font-weight: 500;
-            background: var(--accent-light);
-            padding: 6px 14px;
-            border-radius: 20px;
+            color: var(--text-light);
+            font-weight: normal;
         }
 
         .table-container {
             overflow-x: auto;
             border: 1px solid var(--border-color);
-            border-radius: 12px;
+            border-radius: 8px;
             max-height: 600px;
             overflow-y: auto;
-            box-shadow: 0 4px 12px var(--shadow);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            background: var(--bg-secondary);
+            background: white;
+        }
+
+        html.theme-dark table {
+            background: #3d3d3d;
         }
 
         thead {
-            background: var(--accent-gradient);
+            background: #f5f5f5;
             position: sticky;
             top: 0;
             z-index: 10;
         }
 
-        th {
-            padding: 16px;
-            text-align: left;
-            font-weight: 600;
-            color: white;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            white-space: nowrap;
+        html.theme-dark thead {
+            background: #2d2d2d;
         }
 
-        td {
+        th {
             padding: 14px 16px;
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-primary);
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-dark);
+            border-bottom: 2px solid var(--primary-color);
+            white-space: nowrap;
             font-size: 14px;
         }
 
-        tbody tr {
-            transition: all 0.2s ease;
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-light);
+            font-size: 13px;
         }
 
         tbody tr:hover {
-            background: var(--accent-light);
+            background: var(--table-hover);
         }
 
         tbody tr:last-child td {
@@ -372,30 +323,26 @@
 
         .empty-state {
             text-align: center;
-            padding: 80px 20px;
-            color: var(--text-secondary);
+            padding: 60px 20px;
+            color: var(--text-light);
         }
 
-        .empty-state i {
-            font-size: 64px;
+        .empty-state svg {
+            width: 80px;
+            height: 80px;
             margin-bottom: 20px;
             opacity: 0.5;
-            color: var(--accent-primary);
-        }
-
-        .empty-state p {
-            font-size: 16px;
-            font-weight: 500;
         }
 
         .loading-spinner {
             display: inline-block;
-            width: 18px;
-            height: 18px;
-            border: 3px solid rgba(255, 107, 53, 0.3);
-            border-top: 3px solid var(--accent-primary);
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid var(--primary-color);
             border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
         }
 
         @keyframes spin {
@@ -403,25 +350,134 @@
             100% { transform: rotate(360deg); }
         }
 
-        @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                gap: 16px;
-            }
+        .sample-queries {
+            background: var(--bg-light);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
 
-            .nav-links {
-                flex-direction: column;
-                width: 100%;
-            }
+        .sample-queries h3 {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
 
-            .nav-link {
-                width: 100%;
-                justify-content: center;
-            }
+        .sample-query {
+            display: inline-block;
+            background: white;
+            padding: 8px 15px;
+            margin: 5px 5px 5px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s;
+            color: var(--text-dark);
+        }
 
-            .button-group {
-                flex-direction: column;
-            }
+        html.theme-dark .sample-query {
+            background: #3d3d3d;
+            color: #f0f0f0;
+        }
+
+        .sample-query:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .theme-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .theme-btn {
+            padding: 8px 16px;
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .theme-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        html.theme-light .theme-btn {
+            color: white;
+            border-color: white;
+        }
+
+        html.theme-light .theme-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .theme-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            margin-top: 8px;
+            z-index: 1000;
+            min-width: 180px;
+            overflow: hidden;
+        }
+
+        html.theme-dark .theme-menu {
+            background: #3d3d3d;
+            border-color: #555;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .theme-menu.active {
+            display: block;
+        }
+
+        .theme-option {
+            padding: 12px 16px;
+            cursor: pointer;
+            color: var(--text-dark);
+            transition: background 0.2s;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        html.theme-dark .theme-option {
+            border-bottom-color: #444;
+        }
+
+        .theme-option:last-child {
+            border-bottom: none;
+        }
+
+        .theme-option:hover {
+            background: var(--bg-light);
+        }
+
+        html.theme-dark .theme-option:hover {
+            background: #4d4d4d;
+        }
+
+        .theme-option.selected {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
         }
     </style>
 </head>
@@ -429,38 +485,42 @@
     <div class="container">
         <div class="header">
             <h1 class="header-title">❄️ Snowflake Query Tool</h1>
-            <div style="display: flex; align-items: center; gap: 20px;">
-                <div class="nav-links">
-                    <a href="/" class="nav-link active"><i class="fas fa-database"></i> SQL Query</a>
-                    <a href="/ai-query" class="nav-link"><i class="fas fa-robot"></i> AI Query Assistant</a>
-                    <a href="/unit-test-generator" class="nav-link"><i class="fas fa-vial"></i> AI Test Generator</a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">🏠 Home</a>
+                <a href="/query-tool" class="nav-link" style="background: rgba(255, 255, 255, 0.3);">SQL Query Tool</a>
+                <a href="/ai-query" class="nav-link">🤖 AI Query Assistant</a>
+                <a href="/unit-test-generator" class="nav-link">AI Test Generator</a>
+                <div class="theme-dropdown">
+                    <button class="nav-link theme-btn" onclick="toggleThemeMenu()" title="Change Theme">🎨 Theme</button>
+                    <div class="theme-menu" id="themeMenu">
+                        <div class="theme-option" onclick="selectTheme('default')">🔵 Modern Blue</div>
+                        <div class="theme-option" onclick="selectTheme('light')">☀️ Light Orange</div>
+                        <div class="theme-option" onclick="selectTheme('dark')">🌙 Dark Orange</div>
+                    </div>
                 </div>
-                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme" style="background: rgba(255,255,255,0.2); border: none; padding: 0.75rem 1rem; border-radius: 50px; cursor: pointer; color: white; font-size: 1.2rem; transition: all 0.3s ease; backdrop-filter: blur(10px);">
-                    <i class="fas fa-moon" id="themeIcon"></i>
-                </button>
             </div>
         </div>
         
         <div class="content">
             <div class="sample-queries">
-                <h3><i class="fas fa-lightbulb"></i> Quick Start - Sample Queries</h3>
-                <span class="sample-query" onclick="setSampleQuery('SELECT * FROM YOUR_TABLE LIMIT 10')"><i class="fas fa-table"></i> SELECT * FROM TABLE</span>
-                <span class="sample-query" onclick="setSampleQuery('SELECT COUNT(*) as total_rows FROM YOUR_TABLE')"><i class="fas fa-calculator"></i> COUNT ROWS</span>
-                <span class="sample-query" onclick="setSampleQuery('SHOW TABLES')"><i class="fas fa-list"></i> SHOW TABLES</span>
-                <span class="sample-query" onclick="setSampleQuery('DESCRIBE TABLE YOUR_TABLE')"><i class="fas fa-info-circle"></i> DESCRIBE TABLE</span>
+                <h3>Sample Queries (Click to use):</h3>
+                <span class="sample-query" onclick="setSampleQuery('SELECT * FROM YOUR_TABLE LIMIT 10')">SELECT * FROM TABLE</span>
+                <span class="sample-query" onclick="setSampleQuery('SELECT COUNT(*) as total_rows FROM YOUR_TABLE')">COUNT ROWS</span>
+                <span class="sample-query" onclick="setSampleQuery('SHOW TABLES')">SHOW TABLES</span>
+                <span class="sample-query" onclick="setSampleQuery('DESCRIBE TABLE YOUR_TABLE')">DESCRIBE TABLE</span>
             </div>
 
             <div class="query-section">
-                <label class="query-label"><i class="fas fa-code"></i> Enter Your SQL Query:</label>
-                <textarea id="queryInput" class="query-input" placeholder="Type your SQL query here...\n\nExample:\nSELECT * FROM MY_TABLE LIMIT 10"></textarea>
+                <label class="query-label">Enter Your SQL Query:</label>
+                <textarea id="queryInput" class="query-input" placeholder="Type your SQL query here...&#10;&#10;Example:&#10;SELECT * FROM MY_TABLE LIMIT 10"></textarea>
             </div>
 
             <div class="button-group">
                 <button class="btn btn-execute" onclick="executeQuery()">
-                    <i class="fas fa-play"></i> Execute Query
+                    ▶ Execute Query
                 </button>
                 <button class="btn btn-clear" onclick="clearQuery()">
-                    <i class="fas fa-eraser"></i> Clear
+                    Clear
                 </button>
             </div>
 
@@ -468,7 +528,7 @@
 
             <div class="results-section" id="resultsSection" style="display: none;">
                 <div class="results-header">
-                    <span><i class="fas fa-table"></i> Query Results</span>
+                    <span>Query Results</span>
                     <span class="row-count" id="rowCount"></span>
                 </div>
                 <div class="table-container">
@@ -480,7 +540,9 @@
             </div>
 
             <div class="empty-state" id="emptyState">
-                <i class="fas fa-database"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
                 <p>Enter a SQL query above and click "Execute Query" to see results</p>
             </div>
         </div>
@@ -502,7 +564,59 @@
                 window.location.href = '/';
                 return;
             }
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme') || 'default';
+            setTheme(savedTheme);
         };
+
+        // Theme Management
+        function setTheme(themeName) {
+            const html = document.documentElement;
+            if (themeName === 'light') {
+                html.classList.remove('theme-dark');
+                html.classList.add('theme-light');
+            } else if (themeName === 'dark') {
+                html.classList.remove('theme-light');
+                html.classList.add('theme-dark');
+            } else {
+                html.classList.remove('theme-light', 'theme-dark');
+            }
+            localStorage.setItem('theme', themeName);
+            updateThemeOptions(themeName);
+            closeThemeMenu();
+        }
+
+        function updateThemeOptions(themeName) {
+            document.querySelectorAll('.theme-option').forEach((option) => {
+                option.classList.remove('selected');
+            });
+            const themeMap = { default: 0, light: 1, dark: 2 };
+            if (themeMap[themeName] !== undefined) {
+                document.querySelectorAll('.theme-option')[themeMap[themeName]].classList.add('selected');
+            }
+        }
+
+        function toggleThemeMenu() {
+            const menu = document.getElementById('themeMenu');
+            menu.classList.toggle('active');
+        }
+
+        function selectTheme(themeName) {
+            setTheme(themeName);
+        }
+
+        function closeThemeMenu() {
+            const menu = document.getElementById('themeMenu');
+            menu.classList.remove('active');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const themeDropdown = document.querySelector('.theme-dropdown');
+            if (themeDropdown && !themeDropdown.contains(e.target)) {
+                closeThemeMenu();
+            }
+        });
         
         function setSampleQuery(query) {
             document.getElementById('queryInput').value = query;
@@ -617,26 +731,6 @@
             if (e.ctrlKey && e.key === 'Enter') {
                 executeQuery();
             }
-        });
-    </script>
-    <script>
-        // THEME TOGGLE FEATURE
-        function toggleTheme() {
-            const html = document.documentElement;
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            html.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            const icon = document.getElementById('themeIcon');
-            icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-        }
-
-        // Load saved theme on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            const icon = document.getElementById('themeIcon');
-            icon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
         });
     </script>
 </body>
