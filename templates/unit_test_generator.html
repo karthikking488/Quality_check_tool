@@ -1,56 +1,44 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/feature/updated
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --bg-primary: #f8f9fa;
-            --bg-secondary: #ffffff;
-            --bg-tertiary: #f1f3f5;
-            --text-primary: #212529;
-            --text-secondary: #6c757d;
-            --border-color: #dee2e6;
-            --shadow: rgba(0, 0, 0, 0.1);
-            --shadow-hover: rgba(0, 0, 0, 0.15);
-            --accent-primary: #ff6b35;
-            --accent-secondary: #ff8c42;
-            --accent-gradient: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
-            --accent-light: #fff3ef;
-            --accent-dark: #e85d2e;
-            --success: #28a745;
-            --success-bg: #d4edda;
-            --error: #dc3545;
-            --error-bg: #f8d7da;
-            --info: #17a2b8;
-            --info-bg: #d1ecf1;
-        }
-
-        [data-theme="dark"] {
-            --bg-primary: #1a1d23;
-            --bg-secondary: #22252b;
-            --bg-tertiary: #2a2d35;
-            --text-primary: #e9ecef;
-            --text-secondary: #adb5bd;
-            --border-color: #3a3d45;
-            --shadow: rgba(0, 0, 0, 0.3);
-            --shadow-hover: rgba(0, 0, 0, 0.5);
-            --accent-light: #3a2d29;
-            --success-bg: #1e3a2a;
-            --error-bg: #3a1e23;
-            --info-bg: #1e2f35;
-        }
-
-=======
     <title>AI Unit Test Generator - Snowflake</title>
     <style>
->>>>>>> origin/feature/updated
+        :root {
+            /* Modern Blue Theme (default) */
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --header-gradient: linear-gradient(135deg, #29b5e8 0%, #1e8cbd 100%);
+            --header-bg: #29b5e8;
+            --primary-color: #29b5e8;
+            --text-dark: #333;
+            --text-light: #666;
+            --bg-light: #f9f9f9;
+            --border-color: #e0e0e0;
+        }
+
+        html.theme-light {
+            --primary-gradient: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+            --header-gradient: linear-gradient(135deg, #ff8c00 0%, #ff7200 100%);
+            --header-bg: #ff8c00;
+            --primary-color: #ff8c00;
+            --text-dark: #333;
+            --text-light: #666;
+            --bg-light: #ffffff;
+            --border-color: #e0e0e0;
+        }
+
+        html.theme-dark {
+            --primary-gradient: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            --header-gradient: linear-gradient(135deg, #ff8c00 0%, #ff7200 100%);
+            --header-bg: #ff8c00;
+            --primary-color: #ff8c00;
+            --text-dark: #f0f0f0;
+            --text-light: #b0b0b0;
+            --bg-light: #2d2d2d;
+            --border-color: #444;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -58,25 +46,11 @@
         }
 
         body {
-<<<<<<< HEAD
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--bg-primary);
-            min-height: 100vh;
-            transition: background-color 0.3s ease;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-            background: var(--bg-secondary);
-            border-radius: 16px;
-            box-shadow: 0 8px 32px var(--shadow);
-=======
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--primary-gradient);
             min-height: 100vh;
             padding: 20px;
+            color: var(--text-dark);
         }
 
         .container {
@@ -85,68 +59,25 @@
             background: white;
             border-radius: 10px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
->>>>>>> origin/feature/updated
             overflow: hidden;
         }
 
-        .header {
-<<<<<<< HEAD
-            background: var(--accent-gradient);
-            padding: 2rem;
-            box-shadow: 0 4px 6px var(--shadow);
+        html.theme-dark .container {
+            background: #2d2d2d;
         }
 
-        .header-content {
-            max-width: 1400px;
-            margin: 0 auto;
-=======
-            background: linear-gradient(135deg, #29b5e8 0%, #1e8cbd 100%);
+        .header {
+            background: var(--header-gradient);
             color: white;
             padding: 25px 30px;
->>>>>>> origin/feature/updated
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-<<<<<<< HEAD
-        .header-title {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .header-title i {
-            font-size: 2.5rem;
-            color: white;
-        }
-
-        .header-title h1 {
-            color: white;
-            font-size: 2rem;
-            font-weight: 700;
-        }
-
-        .theme-toggle {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            padding: 0.75rem 1rem;
-            border-radius: 50px;
-            cursor: pointer;
-            color: white;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .theme-toggle:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.05);
-=======
         .header h1 {
             font-size: 28px;
             font-weight: 600;
->>>>>>> origin/feature/updated
         }
 
         .nav-links {
@@ -158,30 +89,6 @@
             color: white;
             text-decoration: none;
             padding: 8px 20px;
-<<<<<<< HEAD
-            border-radius: 8px;
-            background: var(--accent-gradient);
-            box-shadow: 0 2px 8px var(--shadow);
-            transition: all 0.3s ease;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .nav-link:hover {
-          background: var(--accent-gradient);
-          color: white;
-          box-shadow: 0 4px 12px var(--shadow-hover);
-          transform: translateY(-2px);
-        }
-
-        .nav-link.active {
-          background: var(--accent-gradient);
-          color: white;
-          box-shadow: 0 4px 12px var(--shadow-hover);
-          font-weight: 600;
-=======
             border-radius: 5px;
             background: rgba(255, 255, 255, 0.2);
             transition: all 0.3s;
@@ -189,46 +96,28 @@
 
         .nav-link:hover {
             background: rgba(255, 255, 255, 0.3);
->>>>>>> origin/feature/updated
         }
 
         .content {
             padding: 30px;
         }
 
-        .section {
-<<<<<<< HEAD
-            background: var(--bg-secondary);
-            border-radius: 18px;
-            padding: 2rem;
-            box-shadow: 0 8px 32px 0 rgba(0,0,0,0.10), 0 1.5px 6px 0 rgba(255,107,53,0.04);
-            margin-bottom: 2rem;
-            transition: all 0.3s ease;
-            border: 1.5px solid #fff;
+        html.theme-dark .content {
+            background: #2d2d2d;
         }
 
-        .section-title {
-            color: var(--text-primary);
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--accent-primary);
-=======
+        .section {
             margin-bottom: 30px;
         }
 
         .section-title {
             font-size: 20px;
             font-weight: 600;
-            color: #333;
+            color: var(--text-dark);
             margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 10px;
->>>>>>> origin/feature/updated
         }
 
         .form-row {
@@ -246,44 +135,28 @@
         .form-label {
             font-size: 14px;
             font-weight: 600;
-<<<<<<< HEAD
-            color: var(--text-secondary);
-=======
-            color: #555;
->>>>>>> origin/feature/updated
+            color: var(--text-light);
             margin-bottom: 8px;
         }
 
         .form-select {
             padding: 12px 15px;
-<<<<<<< HEAD
             border: 2px solid var(--border-color);
-            border-radius: 10px;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-=======
-            border: 2px solid #e0e0e0;
             border-radius: 6px;
             font-size: 14px;
             transition: border-color 0.3s;
             background: white;
->>>>>>> origin/feature/updated
+            color: var(--text-dark);
+        }
+
+        html.theme-dark .form-select {
+            background: #3d3d3d;
+            color: #f0f0f0;
         }
 
         .form-select:focus {
             outline: none;
-<<<<<<< HEAD
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.1);
-        }
-
-        .form-select:hover {
-            border-color: var(--accent-primary);
-=======
-            border-color: #29b5e8;
->>>>>>> origin/feature/updated
+            border-color: var(--primary-color);
         }
 
         .btn {
@@ -297,68 +170,40 @@
         }
 
         .btn-primary {
-<<<<<<< HEAD
-            background: var(--accent-gradient);
-            color: white;
-            box-shadow: 0 4px 6px rgba(255, 107, 53, 0.3);
-        }
-
-        .btn-primary:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(255, 107, 53, 0.4);
-        }
-
-        .btn-primary:active {
-            transform: translateY(0);
-        }
-
-        .btn-primary:disabled {
-            opacity: 0.6;
-=======
-            background: #29b5e8;
+            background: var(--header-bg);
             color: white;
         }
 
         .btn-primary:hover {
-            background: #1e8cbd;
+            background: var(--primary-color);
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(41, 181, 232, 0.4);
         }
 
         .btn-primary:disabled {
             background: #ccc;
->>>>>>> origin/feature/updated
             cursor: not-allowed;
             transform: none;
         }
 
         .btn-success {
-<<<<<<< HEAD
-            background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
-            color: white;
-            padding: 10px 22px;
-=======
             background: #4caf50;
             color: white;
             padding: 8px 20px;
->>>>>>> origin/feature/updated
             font-size: 13px;
         }
 
         .btn-success:hover {
-<<<<<<< HEAD
-            background: linear-gradient(135deg, #388e3c 0%, #2e7d32 100%);
-            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
-=======
             background: #45a049;
->>>>>>> origin/feature/updated
         }
 
         .btn-danger {
             background: #f44336;
             color: white;
-            padding: 8px 20px;
-            font-size: 13px;
+        }
+
+        .btn-danger:hover {
+            background: #d32f2f;
         }
 
         .status {
@@ -370,49 +215,55 @@
         }
 
         .status.success {
-<<<<<<< HEAD
-            background: var(--success-bg);
-            color: var(--success);
-            border: 1px solid var(--success);
-=======
             background: #d4edda;
             color: #155724;
             border: 1px solid #c3e6cb;
->>>>>>> origin/feature/updated
             display: block;
+        }
+
+        html.theme-dark .status.success {
+            background: #1b4620;
+            color: #81c784;
+            border: 1px solid #66bb6a;
         }
 
         .status.error {
-<<<<<<< HEAD
-            background: var(--error-bg);
-            color: var(--error);
-            border: 1px solid var(--error);
-=======
             background: #f8d7da;
             color: #721c24;
             border: 1px solid #f5c6cb;
->>>>>>> origin/feature/updated
             display: block;
         }
 
+        html.theme-dark .status.error {
+            background: #4a1a1a;
+            color: #ef9a9a;
+            border: 1px solid #e57373;
+        }
+
         .status.loading {
-<<<<<<< HEAD
-            background: var(--info-bg);
-            color: var(--info);
-            border: 1px solid var(--info);
-=======
             background: #d1ecf1;
             color: #0c5460;
             border: 1px solid #bee5eb;
             display: block;
         }
 
+        html.theme-dark .status.loading {
+            background: #1a3a52;
+            color: #64b5f6;
+            border: 1px solid #42a5f5;
+        }
+
         .status.warning {
             background: #fff3cd;
             color: #856404;
             border: 1px solid #ffeeba;
->>>>>>> origin/feature/updated
             display: block;
+        }
+
+        html.theme-dark .status.warning {
+            background: #4a3c1a;
+            color: #ffb74d;
+            border: 1px solid #ffa726;
         }
 
         .test-cases-container {
@@ -420,33 +271,16 @@
         }
 
         .test-case {
-<<<<<<< HEAD
-            background: var(--bg-tertiary);
+            background: var(--bg-light);
             border: 2px solid var(--border-color);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px var(--shadow);
-        }
-
-        .test-case.passed {
-            border-color: var(--success);
-            background: var(--success-bg);
-            box-shadow: 0 4px 16px rgba(76, 175, 80, 0.2);
-        }
-
-        .test-case.failed {
-            border-color: var(--error);
-            background: var(--error-bg);
-            box-shadow: 0 4px 16px rgba(244, 67, 54, 0.2);
-=======
-            background: #f9f9f9;
-            border: 2px solid #e0e0e0;
             border-radius: 8px;
             padding: 20px;
             margin-bottom: 20px;
             transition: all 0.3s;
+        }
+
+        html.theme-dark .test-case {
+            background: #3d3d3d;
         }
 
         .test-case.passed {
@@ -454,10 +288,17 @@
             background: #f1f8f4;
         }
 
+        html.theme-dark .test-case.passed {
+            background: #1b4620;
+        }
+
         .test-case.failed {
             border-color: #f44336;
             background: #fef5f5;
->>>>>>> origin/feature/updated
+        }
+
+        html.theme-dark .test-case.failed {
+            background: #4a1a1a;
         }
 
         .test-case-header {
@@ -470,11 +311,7 @@
         .test-case-title {
             font-size: 16px;
             font-weight: 600;
-<<<<<<< HEAD
-            color: var(--text-primary);
-=======
-            color: #333;
->>>>>>> origin/feature/updated
+            color: var(--text-dark);
             display: flex;
             align-items: center;
             gap: 10px;
@@ -482,19 +319,6 @@
 
         .test-badge {
             display: inline-block;
-<<<<<<< HEAD
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-        }
-
-        .badge-not-run {
-            background: linear-gradient(135deg, #e0e0e0 0%, #bdbdbd 100%);
-=======
             padding: 4px 12px;
             border-radius: 12px;
             font-size: 11px;
@@ -503,50 +327,26 @@
 
         .badge-not-run {
             background: #e0e0e0;
->>>>>>> origin/feature/updated
             color: #666;
         }
 
         .badge-passed {
-<<<<<<< HEAD
-            background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
-=======
             background: #4caf50;
->>>>>>> origin/feature/updated
             color: white;
         }
 
         .badge-failed {
-<<<<<<< HEAD
-            background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
-=======
             background: #f44336;
->>>>>>> origin/feature/updated
             color: white;
         }
 
         .badge-running {
-<<<<<<< HEAD
-            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
-            color: white;
-            animation: pulse 1.5s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        .test-description {
-            color: var(--text-secondary);
-=======
             background: #ff9800;
             color: white;
         }
 
         .test-description {
-            color: #666;
->>>>>>> origin/feature/updated
+            color: var(--text-light);
             font-size: 14px;
             margin-bottom: 15px;
             line-height: 1.6;
@@ -579,32 +379,25 @@
 
         .result-label {
             font-weight: 600;
-<<<<<<< HEAD
-            color: var(--text-primary);
-=======
-            color: #333;
->>>>>>> origin/feature/updated
+            color: var(--text-dark);
             margin-bottom: 8px;
             font-size: 13px;
         }
 
         .result-content {
-<<<<<<< HEAD
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-=======
             background: white;
-            border: 1px solid #e0e0e0;
->>>>>>> origin/feature/updated
+            border: 1px solid var(--border-color);
             border-radius: 6px;
             padding: 12px;
             font-size: 13px;
             max-height: 200px;
             overflow-y: auto;
-<<<<<<< HEAD
-            color: var(--text-primary);
-=======
->>>>>>> origin/feature/updated
+            color: var(--text-dark);
+        }
+
+        html.theme-dark .result-content {
+            background: #3d3d3d;
+            color: #f0f0f0;
         }
 
         .result-table {
@@ -614,41 +407,26 @@
         }
 
         .result-table th {
-<<<<<<< HEAD
-            background: var(--accent-gradient);
-            color: white;
+            background: var(--bg-light);
             padding: 8px;
             text-align: left;
-=======
-            background: #f5f5f5;
-            padding: 8px;
-            text-align: left;
-            border-bottom: 2px solid #29b5e8;
->>>>>>> origin/feature/updated
+            border-bottom: 2px solid var(--primary-color);
             font-weight: 600;
+            color: var(--text-dark);
         }
 
         .result-table td {
             padding: 8px;
-<<<<<<< HEAD
             border-bottom: 1px solid var(--border-color);
-            color: var(--text-primary);
-=======
-            border-bottom: 1px solid #e0e0e0;
->>>>>>> origin/feature/updated
+            color: var(--text-light);
         }
 
         .loading-spinner {
             display: inline-block;
             width: 16px;
             height: 16px;
-<<<<<<< HEAD
-            border: 2px solid var(--border-color);
-            border-top: 2px solid var(--accent-primary);
-=======
             border: 2px solid #f3f3f3;
-            border-top: 2px solid #29b5e8;
->>>>>>> origin/feature/updated
+            border-top: 2px solid var(--primary-color);
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin-right: 10px;
@@ -662,11 +440,7 @@
         .empty-state {
             text-align: center;
             padding: 60px 20px;
-<<<<<<< HEAD
-            color: var(--text-secondary);
-=======
-            color: #999;
->>>>>>> origin/feature/updated
+            color: var(--text-light);
         }
 
         .empty-state svg {
@@ -677,21 +451,16 @@
         }
 
         .metadata-section {
-<<<<<<< HEAD
-            background: var(--bg-tertiary);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            display: none;
-            border: 2px solid var(--border-color);
-            box-shadow: 0 4px 12px var(--shadow);
-=======
-            background: #f9f9f9;
+            background: var(--bg-light);
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 20px;
             display: none;
->>>>>>> origin/feature/updated
+            border: 1px solid var(--border-color);
+        }
+
+        html.theme-dark .metadata-section {
+            background: #3d3d3d;
         }
 
         .metadata-section.show {
@@ -700,48 +469,102 @@
 
         .metadata-title {
             font-weight: 600;
-<<<<<<< HEAD
-            color: var(--text-primary);
-=======
-            color: #333;
->>>>>>> origin/feature/updated
+            color: var(--text-dark);
             margin-bottom: 10px;
         }
 
         .metadata-content {
             font-size: 13px;
-<<<<<<< HEAD
-            color: var(--text-secondary);
-=======
-            color: #666;
->>>>>>> origin/feature/updated
+            color: var(--text-light);
             max-height: 300px;
             overflow-y: auto;
+        }
+
+        .theme-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .theme-btn {
+            padding: 8px 16px;
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .theme-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .theme-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            margin-top: 8px;
+            z-index: 1000;
+            min-width: 180px;
+            overflow: hidden;
+        }
+
+        html.theme-dark .theme-menu {
+            background: #3d3d3d;
+            border-color: #555;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .theme-menu.active {
+            display: block;
+        }
+
+        .theme-option {
+            padding: 12px 16px;
+            cursor: pointer;
+            color: var(--text-dark);
+            transition: background 0.2s;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        html.theme-dark .theme-option {
+            border-bottom-color: #444;
+        }
+
+        .theme-option:last-child {
+            border-bottom: none;
+        }
+
+        .theme-option:hover {
+            background: var(--bg-light);
+        }
+
+        html.theme-dark .theme-option:hover {
+            background: #4d4d4d;
+        }
+
+        .theme-option.selected {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
-<<<<<<< HEAD
-    <div class="header">
-        <div class="header-content">
-            <div class="header-title">
-                <i class="fas fa-vial"></i>
-                <h1>AI Unit Test Generator</h1>
-            </div>
-            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-                <i class="fas fa-moon" id="themeIcon"></i>
-            </button>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="nav-links" style="margin-top: 20px;">
-            <a href="/" class="nav-link"><i class="fas fa-database"></i> Home</a>
-            <a href="/query-tool" class="nav-link"><i class="fas fa-table"></i> SQL Query Tool</a>
-            <a href="/ai-query" class="nav-link"><i class="fas fa-robot"></i> AI Query Assistant</a>
-            <a href="/unit-test-generator" class="nav-link active"><i class="fas fa-vial"></i> Test Generator</a>
-        </div>
-=======
     <div class="container">
         <div class="header">
             <h1>🤖 AI Unit Test Generator</h1>
@@ -750,10 +573,17 @@
                 <a href="/query-tool" class="nav-link">SQL Query Tool</a>
                 <a href="/ai-query" class="nav-link">🤖 AI Query Assistant</a>
                 <a href="/unit-test-generator" class="nav-link" style="background: rgba(255, 255, 255, 0.3);">Test Generator</a>
+                <div class="theme-dropdown">
+                    <button class="nav-link theme-btn" onclick="toggleThemeMenu()" title="Change Theme">🎨 Theme</button>
+                    <div class="theme-menu" id="themeMenu">
+                        <div class="theme-option" onclick="selectTheme('default')">🔵 Modern Blue</div>
+                        <div class="theme-option" onclick="selectTheme('light')">☀️ Light Orange</div>
+                        <div class="theme-option" onclick="selectTheme('dark')">🌙 Dark Orange</div>
+                    </div>
+                </div>
             </div>
         </div>
         
->>>>>>> origin/feature/updated
         <div class="content">
             <div class="section">
                 <div class="section-title">
@@ -817,20 +647,9 @@
                     <button class="btn btn-primary" onclick="generateTests()" id="generateBtn" disabled>
                         🚀 Generate Unit Tests with AI
                     </button>
-<<<<<<< HEAD
-                    <button class="btn btn-secondary" onclick="fetchExistingTests()" id="fetchTestsBtn" disabled style="display: flex; align-items: center; gap: 8px;">
-                        <i class="fas fa-search"></i> Look for Unit Tests
-=======
                     <button class="btn btn-secondary" onclick="fetchExistingTests()" id="fetchTestsBtn" disabled style="background: linear-gradient(135deg, #6c757d 0%, #495057 100%);">
                         � Look for Unit Tests
->>>>>>> origin/feature/updated
                     </button>
-                    <button class="btn btn-success" onclick="saveAllTests()" id="saveTestsBtn" style="display: none; background: linear-gradient(135deg, #28a745 0%, #218838 100%);">
-                        💾 Save All Test Cases
-                    </button>
-<<<<<<< HEAD
-                </div>
-=======
                     <button onclick="openReportModal()" id="generateReportBtn"
                         style="display: none; background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
                                color: white; border: none; padding: 10px 22px; border-radius: 6px;
@@ -865,7 +684,6 @@
                     <div id="reportStatus" style="margin-top:14px; font-size:13px;"></div>
                 </div>
             </div>
->>>>>>> origin/feature/updated
             </div>
 
             <div id="status" class="status"></div>
@@ -878,9 +696,6 @@
             <div id="testCasesContainer" class="test-cases-container">
                 <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
                     <span>✅ Test Cases</span>
-<<<<<<< HEAD
-                    <span id="testCasesSource" style="font-size: 12px; color: #666;"></span>
-=======
                     <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
                         <span id="testCasesSource" style="font-size: 12px; color: #666;"></span>
                         <button class="btn btn-primary" id="runAllTestsBtn" onclick="runAllTests()"
@@ -888,7 +703,6 @@
                             ▶ Run All Tests
                         </button>
                     </div>
->>>>>>> origin/feature/updated
                 </div>
                 <div id="testCasesList"></div>
             </div>
@@ -909,29 +723,6 @@
         let currentObjectName = null;
         let currentObjectType = null;
 
-<<<<<<< HEAD
-        // Global variables for Cortex access and test cases
-        let hasCortexAccess = false;
-        let generatedTestCases = [];
-
-        // THEME TOGGLE FEATURE
-        function toggleTheme() {
-            const html = document.documentElement;
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            html.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            const icon = document.getElementById('themeIcon');
-            icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-        }
-
-        // Load saved theme and databases on page load, check Cortex access
-        document.addEventListener('DOMContentLoaded', function() {
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            const icon = document.getElementById('themeIcon');
-            icon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-=======
         // Global variables
         let hasCortexAccess = false;
         let generatedTestCases = []; // Store generated tests for saving
@@ -939,8 +730,60 @@
         let testResultsMap = {};     // testId -> { status, message } — tracked on each run
         let isRunningAllTests = false;
 
+        // Theme Management
+        function setTheme(themeName) {
+            const html = document.documentElement;
+            if (themeName === 'light') {
+                html.classList.remove('theme-dark');
+                html.classList.add('theme-light');
+            } else if (themeName === 'dark') {
+                html.classList.remove('theme-light');
+                html.classList.add('theme-dark');
+            } else {
+                html.classList.remove('theme-light', 'theme-dark');
+            }
+            localStorage.setItem('theme', themeName);
+            updateThemeOptions(themeName);
+            closeThemeMenu();
+        }
+
+        function updateThemeOptions(themeName) {
+            document.querySelectorAll('.theme-option').forEach((option) => {
+                option.classList.remove('selected');
+            });
+            const themeMap = { default: 0, light: 1, dark: 2 };
+            if (themeMap[themeName] !== undefined) {
+                document.querySelectorAll('.theme-option')[themeMap[themeName]].classList.add('selected');
+            }
+        }
+
+        function toggleThemeMenu() {
+            const menu = document.getElementById('themeMenu');
+            menu.classList.toggle('active');
+        }
+
+        function selectTheme(themeName) {
+            setTheme(themeName);
+        }
+
+        function closeThemeMenu() {
+            const menu = document.getElementById('themeMenu');
+            menu.classList.remove('active');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const themeDropdown = document.querySelector('.theme-dropdown');
+            if (themeDropdown && !themeDropdown.contains(e.target)) {
+                closeThemeMenu();
+            }
+        });
+
         // Load databases on page load and check Cortex access
         window.onload = async function() {
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme') || 'default';
+            setTheme(savedTheme);
             // First, check if user is connected (signed in via SSO)
             try {
                 const connResponse = await fetch('/api/check-connection');
@@ -956,18 +799,10 @@
                 return;
             }
             
->>>>>>> origin/feature/updated
             // Check Cortex access from sessionStorage (set by home page)
             const storedAccess = sessionStorage.getItem('hasCortexAccess');
             if (storedAccess !== null) {
                 hasCortexAccess = storedAccess === 'true';
-<<<<<<< HEAD
-            }
-            updateUIForCortexAccess();
-            loadDatabases();
-        });
-
-=======
             } else {
                 // If not coming from home page, check directly
                 try {
@@ -984,24 +819,11 @@
             loadDatabases();
         };
         
->>>>>>> origin/feature/updated
         function updateUIForCortexAccess() {
             const generateBtn = document.getElementById('generateBtn');
             const testRequestSection = document.getElementById('testRequestSection');
             const fetchTestsBtn = document.getElementById('fetchTestsBtn');
             const saveTestsBtn = document.getElementById('saveTestsBtn');
-<<<<<<< HEAD
-            if (hasCortexAccess) {
-                if (generateBtn) generateBtn.disabled = false;
-                if (testRequestSection) testRequestSection.style.display = 'block';
-                if (fetchTestsBtn) fetchTestsBtn.disabled = false;
-                if (saveTestsBtn) saveTestsBtn.style.display = 'none';
-            } else {
-                if (generateBtn) generateBtn.disabled = true;
-                if (testRequestSection) testRequestSection.style.display = 'none';
-                if (fetchTestsBtn) fetchTestsBtn.disabled = true;
-                if (saveTestsBtn) saveTestsBtn.style.display = 'none';
-=======
             const runAllTestsBtn = document.getElementById('runAllTestsBtn');
             
             if (hasCortexAccess) {
@@ -1014,41 +836,19 @@
                 generateBtn.style.display = 'none';
                 if (testRequestSection) testRequestSection.style.display = 'none';
                 if (runAllTestsBtn) runAllTestsBtn.style.display = 'none';
->>>>>>> origin/feature/updated
             }
         }
 
         function showStatus(message, type) {
             const statusDiv = document.getElementById('status');
             statusDiv.className = `status ${type}`;
-<<<<<<< HEAD
-            statusDiv.innerHTML = type === 'loading' ? `<span class="loading-spinner"></span>${message}` : message;
-=======
             statusDiv.innerHTML = type === 'loading' 
                 ? `<span class="loading-spinner"></span>${message}`
                 : message;
->>>>>>> origin/feature/updated
         }
 
         async function loadDatabases() {
             try {
-<<<<<<< HEAD
-                const response = await fetch('/api/databases');
-                const result = await response.json();
-                const select = document.getElementById('databaseSelect');
-                select.innerHTML = '<option value="">Select Database...</option>';
-                if (result.databases && Array.isArray(result.databases)) {
-                    result.databases.forEach(db => {
-                        const option = document.createElement('option');
-                        option.value = db;
-                        option.textContent = db;
-                        select.appendChild(option);
-                    });
-                }
-                showStatus('Ready to select database', 'success');
-            } catch (error) {
-                showStatus('Error loading databases', 'error');
-=======
                 showStatus('Loading databases...', 'loading');
                 const response = await fetch('/api/databases');
                 const result = await response.json();
@@ -1069,7 +869,6 @@
                 showStatus('Ready to select database', 'success');
             } catch (error) {
                 showStatus(`Error loading databases: ${error.message}`, 'error');
->>>>>>> origin/feature/updated
             }
         }
 
@@ -1078,13 +877,6 @@
             const schemaSelect = document.getElementById('schemaSelect');
             schemaSelect.innerHTML = '<option value="">Select Schema...</option>';
             schemaSelect.disabled = true;
-<<<<<<< HEAD
-            document.getElementById('objectSelect').innerHTML = '<option value="">Select Object...</option>';
-            document.getElementById('objectSelect').disabled = true;
-            document.getElementById('generateBtn').disabled = true;
-            if (!database) return;
-            showStatus('Loading schemas...', 'loading');
-=======
             
             // Clear downstream dropdowns
             document.getElementById('objectSelect').innerHTML = '<option value="">Select Object...</option>';
@@ -1095,7 +887,6 @@
             
             showStatus('Loading schemas...', 'loading');
             
->>>>>>> origin/feature/updated
             try {
                 const response = await fetch('/api/schemas', {
                     method: 'POST',
@@ -1103,20 +894,6 @@
                     body: JSON.stringify({ database })
                 });
                 const result = await response.json();
-<<<<<<< HEAD
-                if (result.schemas && Array.isArray(result.schemas)) {
-                    result.schemas.forEach(schema => {
-                        const option = document.createElement('option');
-                        option.value = schema;
-                        option.textContent = schema;
-                        schemaSelect.appendChild(option);
-                    });
-                    schemaSelect.disabled = false;
-                }
-                showStatus(`Found ${result.schemas.length} schema(s)`, 'success');
-            } catch (error) {
-                showStatus('Error loading schemas', 'error');
-=======
                 
                 if (result.error) {
                     showStatus(`Error: ${result.error}`, 'error');
@@ -1133,7 +910,6 @@
                 showStatus(`Found ${result.schemas.length} schema(s)`, 'success');
             } catch (error) {
                 showStatus(`Error loading schemas: ${error.message}`, 'error');
->>>>>>> origin/feature/updated
             }
         }
 
@@ -1141,56 +917,30 @@
             const database = document.getElementById('databaseSelect').value;
             const schema = document.getElementById('schemaSelect').value;
             const objectType = document.getElementById('objectTypeSelect').value;
-<<<<<<< HEAD
-=======
             
->>>>>>> origin/feature/updated
             const objectSelect = document.getElementById('objectSelect');
             objectSelect.innerHTML = '<option value="">Select Object...</option>';
             objectSelect.disabled = true;
             document.getElementById('generateBtn').disabled = true;
-<<<<<<< HEAD
-=======
             
             // Show/hide the custom test request section based on object type
->>>>>>> origin/feature/updated
             const testRequestSection = document.getElementById('testRequestSection');
             if (objectType === 'TABLE' || objectType === 'VIEW') {
                 testRequestSection.style.display = 'block';
             } else {
                 testRequestSection.style.display = 'none';
             }
-<<<<<<< HEAD
-            if (!database || !schema || !objectType) return;
-            showStatus('Loading objects...', 'loading');
-=======
             
             if (!database || !schema || !objectType) return;
             
             showStatus('Loading objects...', 'loading');
             
->>>>>>> origin/feature/updated
             try {
                 const response = await fetch('/api/objects', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ database, schema, object_type: objectType })
                 });
-<<<<<<< HEAD
-                const result = await response.json();
-                if (result.objects && Array.isArray(result.objects)) {
-                    result.objects.forEach(obj => {
-                        const option = document.createElement('option');
-                        option.value = obj;
-                        option.textContent = obj;
-                        objectSelect.appendChild(option);
-                    });
-                    objectSelect.disabled = false;
-                }
-                showStatus(`Found ${result.objects.length} ${objectType.toLowerCase()}(s)`, 'success');
-            } catch (error) {
-                showStatus('Error loading objects', 'error');
-=======
                 
                 const result = await response.json();
                 
@@ -1210,7 +960,6 @@
                 showStatus(`Found ${result.objects.length} ${objectType.toLowerCase()}(s)`, 'success');
             } catch (error) {
                 showStatus(`Error loading objects: ${error.message}`, 'error');
->>>>>>> origin/feature/updated
             }
         }
 
@@ -1219,48 +968,24 @@
             const schema = document.getElementById('schemaSelect').value;
             const objectName = document.getElementById('objectSelect').value;
             const objectType = document.getElementById('objectTypeSelect').value;
-<<<<<<< HEAD
-            if (!database || !schema || !objectName || !objectType) return;
-=======
             
             if (!database || !schema || !objectName || !objectType) return;
             
->>>>>>> origin/feature/updated
             currentDatabase = database;
             currentSchema = schema;
             currentObjectName = objectName;
             currentObjectType = objectType;
-<<<<<<< HEAD
-            showStatus('Loading metadata...', 'loading');
-            document.getElementById('generateBtn').disabled = true;
-            document.getElementById('fetchTestsBtn').disabled = true;
-=======
             
             showStatus('Loading metadata...', 'loading');
             document.getElementById('generateBtn').disabled = true;
             document.getElementById('fetchTestsBtn').disabled = true;
             
->>>>>>> origin/feature/updated
             try {
                 const response = await fetch('/api/object-metadata', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ database, schema, object_name: objectName, object_type: objectType })
                 });
-<<<<<<< HEAD
-                const result = await response.json();
-                if (result.metadata) {
-                    currentMetadata = result.metadata;
-                    displayMetadata(result.metadata, objectType);
-                    document.getElementById('generateBtn').disabled = false;
-                    document.getElementById('fetchTestsBtn').disabled = false;
-                    showStatus('Ready', 'success');
-                } else {
-                    showStatus('No metadata found for this object', 'warning');
-                }
-            } catch (error) {
-                showStatus('Error loading metadata', 'error');
-=======
                 
                 const result = await response.json();
                 
@@ -1285,33 +1010,12 @@
                 }
             } catch (error) {
                 showStatus(`Error loading metadata: ${error.message}`, 'error');
->>>>>>> origin/feature/updated
             }
         }
 
         function displayMetadata(metadata, objectType) {
             const metadataSection = document.getElementById('metadataSection');
             const metadataContent = document.getElementById('metadataContent');
-<<<<<<< HEAD
-            let html = '';
-            if (metadata.columns) {
-                html += '<div><strong>Columns:</strong><ul>';
-                metadata.columns.forEach(col => {
-                    html += `<li>${col.name || col.COLUMN_NAME}: ${col.type || col.DATA_TYPE}</li>`;
-                });
-                html += '</ul></div>';
-            }
-            if (metadata.definition) {
-                html += `<div><strong>Definition:</strong><pre>${metadata.definition}</pre></div>`;
-            }
-            if (metadata.arguments) {
-                html += '<div><strong>Arguments:</strong><ul>';
-                metadata.arguments.forEach(arg => {
-                    html += `<li>${arg.name || arg.ARGUMENT_NAME}: ${arg.type || arg.DATA_TYPE}</li>`;
-                });
-                html += '</ul></div>';
-            }
-=======
             
             let html = '';
             
@@ -1336,23 +1040,12 @@
                 html += '</ul>';
             }
             
->>>>>>> origin/feature/updated
             metadataContent.innerHTML = html;
             metadataSection.classList.add('show');
         }
 
         async function generateTests() {
             if (!currentDatabase || !currentSchema || !currentObjectName || !currentObjectType || !currentMetadata) {
-<<<<<<< HEAD
-                showStatus('Please select all required fields and load metadata first', 'error');
-                return;
-            }
-            const userTestRequest = document.getElementById('userTestRequest').value.trim();
-            const testCaseCount = parseInt(document.getElementById('testCaseCount').value) || 5;
-            showStatus('🤖 AI is generating test cases... This may take a moment.', 'loading');
-            document.getElementById('generateBtn').disabled = true;
-            document.getElementById('emptyState').style.display = 'none';
-=======
                 showStatus('Please select all required fields', 'error');
                 return;
             }
@@ -1365,7 +1058,6 @@
             document.getElementById('generateBtn').disabled = true;
             document.getElementById('emptyState').style.display = 'none';
             
->>>>>>> origin/feature/updated
             try {
                 const response = await fetch('/api/generate-tests', {
                     method: 'POST',
@@ -1380,20 +1072,6 @@
                         test_case_count: testCaseCount
                     })
                 });
-<<<<<<< HEAD
-                const result = await response.json();
-                if (result.test_cases && Array.isArray(result.test_cases)) {
-                    generatedTestCases = result.test_cases;
-                    displayTestCases(result.test_cases);
-                    document.getElementById('saveTestsBtn').style.display = 'block';
-                    showStatus(`✅ Generated ${result.test_cases.length} test case(s)!`, 'success');
-                } else {
-                    showStatus('No test cases generated', 'warning');
-                }
-                document.getElementById('generateBtn').disabled = false;
-            } catch (error) {
-                showStatus('Error generating test cases', 'error');
-=======
                 
                 const result = await response.json();
                 
@@ -1409,16 +1087,13 @@
                 displayTestCases(result.test_cases);
                 document.getElementById('testCasesSource').textContent = '(AI Generated - not saved)';
                 
-                // Show save button
-                document.getElementById('saveTestsBtn').style.display = 'inline-block';
+                // Show report button
                 document.getElementById('generateReportBtn').style.display = 'inline-block';
-                document.getElementById('saveTestsBtn').disabled = false;
                 
-                showStatus(`✅ Successfully generated ${result.test_cases.length} test cases! Click "Save All Test Cases" to store them.`, 'success');
+                showStatus(`✅ Successfully generated ${result.test_cases.length} test cases!`, 'success');
                 document.getElementById('generateBtn').disabled = false;
             } catch (error) {
                 showStatus(`Error generating tests: ${error.message}`, 'error');
->>>>>>> origin/feature/updated
                 document.getElementById('generateBtn').disabled = false;
             }
         }
@@ -1426,225 +1101,6 @@
         function displayTestCases(testCases) {
             const container = document.getElementById('testCasesContainer');
             const list = document.getElementById('testCasesList');
-<<<<<<< HEAD
-            list.innerHTML = '';
-            allTestCases = testCases; // Store for batch operations
-            testCases.forEach(test => {
-                const testId = test.id || test.test_id || Date.now();
-                const testDiv = document.createElement('div');
-                testDiv.className = 'test-case';
-                testDiv.id = `test-${testId}`;
-                const expectedDisplay = test.expected_description || test.expected_result || 'Not specified';
-                const expectedType = test.expected_type || 'HAS_ROWS';
-                testDiv.innerHTML = `
-                    <div class="test-case-header">
-                        <div class="test-case-title">${test.test_name || 'Test'} <span class="test-badge badge-not-run" id="badge-${testId}">NOT RUN</span></div>
-                        <button class="btn btn-success" onclick="runTest('${testId}', allTestCases[${testCases.indexOf(test)}])"><i class="fas fa-play"></i> Run</button>
-                    </div>
-                    <div class="test-description">${test.description || ''}</div>
-                    <div class="test-query">${test.query || ''}</div>
-                    <div class="test-results" id="results-${testId}"></div>
-                    <div class="result-section" id="message-section-${testId}" style="display:none;"><div class="result-label">Message:</div><div class="result-content" id="message-${testId}"></div></div>
-                    <div class="result-section"><div class="result-label">Actual Result:</div><div class="result-content" id="actual-${testId}"></div></div>
-                `;
-                list.appendChild(testDiv);
-            });
-            container.style.display = 'block';
-            // Add Run All button if not present
-            if (!document.getElementById('runAllBtn')) {
-                const runAllBtn = document.createElement('button');
-                runAllBtn.id = 'runAllBtn';
-                runAllBtn.className = 'btn btn-primary';
-                runAllBtn.style.marginBottom = '22px';
-                runAllBtn.innerHTML = '<i class="fas fa-play"></i> Run All Test Cases';
-                runAllBtn.onclick = runAllTests;
-                container.insertBefore(runAllBtn, container.firstChild);
-            }
-        }
-
-        async function runTest(testId, testData) {
-            const badge = document.getElementById(`badge-${testId}`);
-            const resultsDiv = document.getElementById(`results-${testId}`);
-            const actualDiv = document.getElementById(`actual-${testId}`);
-            const messageSection = document.getElementById(`message-section-${testId}`);
-            const messageDiv = document.getElementById(`message-${testId}`);
-            const testDiv = document.getElementById(`test-${testId}`);
-            badge.className = 'test-badge badge-running';
-            badge.textContent = 'RUNNING...';
-            resultsDiv.classList.add('show');
-            actualDiv.innerHTML = '<span class="loading-spinner"></span>Executing test...';
-            try {
-                const response = await fetch('/api/run-test', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        database: currentDatabase,
-                        schema: currentSchema,
-                        test_query: testData.query,
-                        expected_type: testData.expected_type || 'HAS_ROWS',
-                        expected_description: testData.expected_description || testData.expected_result || ''
-                    })
-                });
-                const result = await response.json();
-                if (result.message) {
-                    messageSection.style.display = 'block';
-                    messageDiv.innerHTML = result.message;
-                }
-                if (result.error && !result.passed) {
-                    badge.className = 'test-badge badge-failed';
-                    badge.textContent = 'FAILED ✗';
-                    testDiv.classList.add('failed');
-                    actualDiv.innerHTML = `<div style="color: #f44336;"><strong>Error:</strong> ${result.error}</div>`;
-                    return;
-                }
-                if (result.actual_result && result.actual_result.length > 0) {
-                    let tableHtml = `<div style="margin-bottom: 10px;"><strong>Returned ${result.actual_row_count || result.actual_result.length} row(s)</strong></div>`;
-                    tableHtml += '<table class="result-table"><thead><tr>';
-                    Object.keys(result.actual_result[0]).forEach(key => {
-                        tableHtml += `<th>${key}</th>`;
-                    });
-                    tableHtml += '</tr></thead><tbody>';
-                    result.actual_result.forEach(row => {
-                        tableHtml += '<tr>';
-                        Object.values(row).forEach(value => {
-                            tableHtml += `<td>${value !== null && value !== undefined ? value : 'NULL'}</td>`;
-                        });
-                        tableHtml += '</tr>';
-                    });
-                    tableHtml += '</tbody></table>';
-                    actualDiv.innerHTML = tableHtml;
-                } else {
-                    actualDiv.innerHTML = '<div style="color: #666; font-style: italic;">Empty result set (0 rows)</div>';
-                }
-                if (result.passed) {
-                    badge.className = 'test-badge badge-passed';
-                    badge.textContent = 'PASSED ✓';
-                    testDiv.classList.add('passed');
-                    testDiv.classList.remove('failed');
-                } else {
-                    badge.className = 'test-badge badge-failed';
-                    badge.textContent = 'FAILED ✗';
-                    testDiv.classList.add('failed');
-                    testDiv.classList.remove('passed');
-                }
-            } catch (error) {
-                badge.className = 'test-badge badge-failed';
-                badge.textContent = 'ERROR';
-                testDiv.classList.add('failed');
-                actualDiv.innerHTML = `<div style="color: #f44336;">Error: ${error.message}</div>`;
-            }
-        }
-
-        async function fetchExistingTests() {
-            if (!currentDatabase || !currentSchema || !currentObjectName || !currentObjectType) {
-                showStatus('Please select all required fields first', 'error');
-                return;
-            }
-            showStatus('🔍 Looking for existing test cases...', 'loading');
-            document.getElementById('fetchTestsBtn').disabled = true;
-            try {
-                const response = await fetch('/api/fetch-tests', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        database: currentDatabase,
-                        schema: currentSchema,
-                        object_name: currentObjectName,
-                        object_type: currentObjectType
-                    })
-                });
-                const result = await response.json();
-                if (result.error) {
-                    showStatus(`Error: ${result.error}`, 'error');
-                    document.getElementById('fetchTestsBtn').disabled = false;
-                    return;
-                }
-                if (result.test_cases && result.test_cases.length > 0) {
-                    result.test_cases.forEach((test, index) => {
-                        test.id = test.test_id || (index + 1);
-                    });
-                    displayTestCases(result.test_cases);
-                    document.getElementById('testCasesSource').textContent = '(Loaded from database)';
-                    document.getElementById('saveTestsBtn').style.display = 'none';
-                    showStatus(`✅ Found ${result.test_cases.length} existing test case(s)!`, 'success');
-                } else {
-                    showStatus('ℹ️ No existing test cases found for this object.', 'warning');
-                    document.getElementById('testCasesContainer').style.display = 'none';
-                }
-                document.getElementById('fetchTestsBtn').disabled = false;
-            } catch (error) {
-                showStatus(`Error fetching tests: ${error.message}`, 'error');
-                document.getElementById('fetchTestsBtn').disabled = false;
-            }
-        }
-
-        async function saveAllTests() {
-            if (!generatedTestCases || generatedTestCases.length === 0) {
-                showStatus('No test cases to save', 'error');
-                return;
-            }
-            showStatus('💾 Saving test cases to database...', 'loading');
-            document.getElementById('saveTestsBtn').disabled = true;
-            try {
-                const response = await fetch('/api/save-tests', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        database: currentDatabase,
-                        schema: currentSchema,
-                        object_name: currentObjectName,
-                        object_type: currentObjectType,
-                        test_cases: generatedTestCases
-                    })
-                });
-                const result = await response.json();
-                if (result.error) {
-                    showStatus(`Error saving: ${result.error}`, 'error');
-                    document.getElementById('saveTestsBtn').disabled = false;
-                    return;
-                }
-                showStatus(`✅ Successfully saved ${result.saved_count} test case(s) to database!`, 'success');
-                document.getElementById('saveTestsBtn').style.display = 'none';
-                document.getElementById('testCasesSource').textContent = '(Saved to database)';
-                generatedTestCases = [];
-            } catch (error) {
-                showStatus(`Error saving tests: ${error.message}`, 'error');
-                document.getElementById('saveTestsBtn').disabled = false;
-            }
-        }
-
-        // ...existing code...
-
-        // RUN ALL FEATURE
-        let allTestCases = [];
-
-
-        async function runAllTests() {
-            if (!allTestCases || allTestCases.length === 0) return;
-            const runAllBtn = document.getElementById('runAllBtn');
-            const originalText = runAllBtn.innerHTML;
-            runAllBtn.disabled = true;
-            runAllBtn.innerHTML = '<span class="loading-spinner"></span> Running All Tests...';
-            for (let i = 0; i < allTestCases.length; i++) {
-                const test = allTestCases[i];
-                await runTest(test.id, test);
-            }
-            runAllBtn.disabled = false;
-            runAllBtn.innerHTML = originalText;
-        }
-
-        // ...existing code...
-        // (Removed stray code block and duplicate displayTestCases function)
-
-        async function runTest(testId, testData) {
-            const badge = document.getElementById(`badge-${testId}`);
-            const resultsDiv = document.getElementById(`results-${testId}`);
-            const actualDiv = document.getElementById(`actual-${testId}`);
-            const messageSection = document.getElementById(`message-section-${testId}`);
-            const messageDiv = document.getElementById(`message-${testId}`);
-            const testDiv = document.getElementById(`test-${testId}`);
-            
-=======
             currentDisplayedTestCases = testCases.map(test => ({ ...test }));
             testResultsMap = {};
             
@@ -1705,15 +1161,11 @@
             
             testDiv.classList.remove('passed');
             testDiv.classList.remove('failed');
->>>>>>> origin/feature/updated
             badge.className = 'test-badge badge-running';
             badge.textContent = 'RUNNING...';
             resultsDiv.classList.add('show');
             actualDiv.innerHTML = '<span class="loading-spinner"></span>Executing test...';
-<<<<<<< HEAD
-=======
             runButtons.forEach(button => button.disabled = true);
->>>>>>> origin/feature/updated
             
             try {
                 const response = await fetch('/api/run-test', {
@@ -1741,13 +1193,9 @@
                     badge.textContent = 'FAILED ✗';
                     testDiv.classList.add('failed');
                     actualDiv.innerHTML = `<div style="color: #f44336;"><strong>Error:</strong> ${result.error}</div>`;
-<<<<<<< HEAD
-                    return;
-=======
                     testResultsMap[testId] = { status: 'FAILED', message: result.error };
                     runButtons.forEach(button => button.disabled = false);
                     return result;
->>>>>>> origin/feature/updated
                 }
                 
                 // Display actual results
@@ -1778,30 +1226,20 @@
                     badge.textContent = 'PASSED ✓';
                     testDiv.classList.add('passed');
                     testDiv.classList.remove('failed');
-<<<<<<< HEAD
-=======
                     testResultsMap[testId] = { status: 'PASSED', message: result.message || '' };
->>>>>>> origin/feature/updated
                 } else {
                     badge.className = 'test-badge badge-failed';
                     badge.textContent = 'FAILED ✗';
                     testDiv.classList.add('failed');
                     testDiv.classList.remove('passed');
-<<<<<<< HEAD
-                }
-=======
                     testResultsMap[testId] = { status: 'FAILED', message: result.message || '' };
                 }
                 runButtons.forEach(button => button.disabled = false);
                 return result;
->>>>>>> origin/feature/updated
             } catch (error) {
                 badge.className = 'test-badge badge-failed';
                 badge.textContent = 'ERROR';
                 testDiv.classList.add('failed');
-<<<<<<< HEAD
-                actualDiv.innerHTML = `<div style="color: #f44336;">Error: ${error.message}</div>`;
-=======
                 testDiv.classList.remove('passed');
                 actualDiv.innerHTML = `<div style="color: #f44336;">Error: ${error.message}</div>`;
                 testResultsMap[testId] = { status: 'FAILED', message: error.message };
@@ -1851,7 +1289,6 @@
                 runAllBtn.disabled = false;
                 runAllBtn.textContent = originalLabel;
                 singleRunButtons.forEach(button => button.disabled = false);
->>>>>>> origin/feature/updated
             }
         }
 
@@ -1889,26 +1326,17 @@
                     result.test_cases.forEach((test, index) => {
                         test.id = test.test_id || (index + 1);
                     });
-<<<<<<< HEAD
-=======
                     generatedTestCases = [];
->>>>>>> origin/feature/updated
                     
                     displayTestCases(result.test_cases);
                     document.getElementById('testCasesSource').textContent = '(Loaded from database)';
                     document.getElementById('saveTestsBtn').style.display = 'none'; // No need to save fetched tests
-<<<<<<< HEAD
-=======
                     document.getElementById('generateReportBtn').style.display = 'inline-block';
->>>>>>> origin/feature/updated
                     showStatus(`✅ Found ${result.test_cases.length} existing test case(s)!`, 'success');
                 } else {
                     showStatus('ℹ️ No existing test cases found for this object.', 'warning');
                     document.getElementById('testCasesContainer').style.display = 'none';
-<<<<<<< HEAD
-=======
                     document.getElementById('runAllTestsBtn').style.display = 'none';
->>>>>>> origin/feature/updated
                 }
                 
                 document.getElementById('fetchTestsBtn').disabled = false;
@@ -1957,8 +1385,6 @@
                 document.getElementById('saveTestsBtn').disabled = false;
             }
         }
-<<<<<<< HEAD
-=======
 
         // ── Report Modal helpers ─────────────────────────────────────────────
 
@@ -2077,7 +1503,6 @@
             }
         }
 
->>>>>>> origin/feature/updated
     </script>
 </body>
 </html>

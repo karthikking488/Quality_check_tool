@@ -4,49 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Query Assistant - Snowflake</title>
-<<<<<<< HEAD
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-primary: #f8f9fa;
-            --bg-secondary: #ffffff;
-            --bg-tertiary: #f1f3f5;
-            --text-primary: #212529;
-            --text-secondary: #6c757d;
-            --border-color: #dee2e6;
-            --shadow: rgba(0, 0, 0, 0.1);
-            --shadow-hover: rgba(0, 0, 0, 0.15);
-            --accent-primary: #ff6b35;
-            --accent-secondary: #ff8c42;
-            --accent-gradient: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
-            --accent-light: #fff3ef;
-            --accent-dark: #e85d2e;
-            --success: #28a745;
-            --success-bg: #d4edda;
-            --error: #dc3545;
-            --error-bg: #f8d7da;
-            --info: #17a2b8;
-            --info-bg: #d1ecf1;
+            /* Modern Blue Theme (default) */
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --header-bg: #29b5e8;
+            --header-hover: #1e8cbd;
+            --primary-color: #29b5e8;
+            --primary-hover: #1e8abd;
+            --secondary-color: #667eea;
+            --text-dark: #333;
+            --text-light: #666;
+            --bg-light: #f8f9fa;
+            --border-color: #e0e0e0;
         }
 
-        [data-theme="dark"] {
-            --bg-primary: #1a1d23;
-            --bg-secondary: #22252b;
-            --bg-tertiary: #2a2d35;
-            --text-primary: #e9ecef;
-            --text-secondary: #adb5bd;
-            --border-color: #3a3d45;
-            --shadow: rgba(0, 0, 0, 0.3);
-            --shadow-hover: rgba(0, 0, 0, 0.5);
-            --accent-light: #3a2d29;
-            --success-bg: #1e3a2a;
-            --error-bg: #3a1e23;
-            --info-bg: #1e2f35;
+        html.theme-light {
+            --primary-gradient: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+            --header-bg: #ff8c00;
+            --header-hover: #e68000;
+            --primary-color: #ff8c00;
+            --primary-hover: #e68000;
+            --secondary-color: #ff9800;
+            --text-dark: #333;
+            --text-light: #666;
+            --bg-light: #ffffff;
+            --border-color: #e0e0e0;
         }
 
-=======
-    <style>
->>>>>>> origin/feature/updated
+        html.theme-dark {
+            --primary-gradient: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            --header-bg: #ff8c00;
+            --header-hover: #e68000;
+            --primary-color: #ff8c00;
+            --primary-hover: #e68000;
+            --secondary-color: #ff9800;
+            --text-dark: #f0f0f0;
+            --text-light: #b0b0b0;
+            --bg-light: #2d2d2d;
+            --border-color: #444;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -54,60 +52,33 @@
         }
 
         body {
-<<<<<<< HEAD
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            min-height: 100vh;
-            padding: 20px;
-            transition: background 0.3s ease, color 0.3s ease;
-=======
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--primary-gradient);
             min-height: 100vh;
             padding: 20px;
->>>>>>> origin/feature/updated
+            color: var(--text-dark);
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
-<<<<<<< HEAD
-            background: var(--bg-secondary);
-            border-radius: 16px;
-            box-shadow: 0 8px 32px var(--shadow);
-            overflow: hidden;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .header {
-            background: var(--accent-gradient);
-            color: white;
-            padding: 24px 32px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2);
-=======
             background: white;
             border-radius: 10px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
             overflow: hidden;
         }
 
+        html.theme-dark .container {
+            background: #2d2d2d;
+        }
+
         .header {
-            background: #29b5e8;
+            background: var(--header-bg);
             color: white;
             padding: 25px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
->>>>>>> origin/feature/updated
         }
 
         .header-title {
@@ -123,51 +94,6 @@
         .nav-link {
             color: white;
             text-decoration: none;
-<<<<<<< HEAD
-            padding: 10px 20px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.15);
-            transition: all 0.3s ease;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .nav-link:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-2px);
-        }
-
-        .nav-link.active {
-            background: rgba(255, 255, 255, 0.3);
-            font-weight: 600;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .theme-toggle {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            padding: 10px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .theme-toggle:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.05);
-=======
             padding: 8px 16px;
             border-radius: 5px;
             background: rgba(255, 255, 255, 0.1);
@@ -176,11 +102,14 @@
 
         .nav-link:hover {
             background: rgba(255, 255, 255, 0.2);
->>>>>>> origin/feature/updated
         }
 
         .content {
             padding: 30px;
+        }
+
+        html.theme-dark .content {
+            background: #2d2d2d;
         }
 
         .section {
@@ -188,25 +117,13 @@
         }
 
         .section-title {
-<<<<<<< HEAD
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid var(--accent-primary);
-=======
             font-size: 20px;
             font-weight: 600;
-            color: #333;
+            color: var(--text-dark);
             margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 10px;
->>>>>>> origin/feature/updated
         }
 
         .icon {
@@ -228,48 +145,29 @@
         label {
             font-size: 14px;
             font-weight: 600;
-<<<<<<< HEAD
-            color: var(--text-secondary);
-=======
-            color: #555;
->>>>>>> origin/feature/updated
+            color: var(--text-light);
             margin-bottom: 8px;
         }
 
         select {
-<<<<<<< HEAD
-            padding: 14px;
-            border: 2px solid var(--border-color);
-            border-radius: 10px;
-            font-size: 14px;
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-            cursor: pointer;
-            transition: all 0.3s ease;
-=======
             padding: 12px;
-            border: 2px solid #e0e0e0;
+            border: 2px solid var(--border-color);
             border-radius: 8px;
             font-size: 14px;
             background: white;
             cursor: pointer;
             transition: border-color 0.3s;
->>>>>>> origin/feature/updated
+            color: var(--text-dark);
+        }
+
+        html.theme-dark select {
+            background: #3d3d3d;
+            color: #f0f0f0;
         }
 
         select:focus {
             outline: none;
-<<<<<<< HEAD
-            border-color: #ff6b35;
-            background: var(--bg-secondary);
-            box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.1);
-        }
-
-        select:hover {
-            border-color: #ff6b35;
-=======
-            border-color: #29b5e8;
->>>>>>> origin/feature/updated
+            border-color: var(--primary-color);
         }
 
         .question-box {
@@ -279,36 +177,25 @@
         textarea {
             width: 100%;
             padding: 15px;
-<<<<<<< HEAD
             border: 2px solid var(--border-color);
-            border-radius: 12px;
-            font-size: 15px;
-            font-family: inherit;
-            resize: vertical;
-            min-height: 120px;
-            transition: all 0.3s ease;
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-=======
-            border: 2px solid #e0e0e0;
             border-radius: 8px;
             font-size: 16px;
             font-family: inherit;
             resize: vertical;
             min-height: 100px;
             transition: border-color 0.3s;
->>>>>>> origin/feature/updated
+            background: white;
+            color: var(--text-dark);
+        }
+
+        html.theme-dark textarea {
+            background: #3d3d3d;
+            color: #f0f0f0;
         }
 
         textarea:focus {
             outline: none;
-<<<<<<< HEAD
-            border-color: #ff6b35;
-            background: var(--bg-secondary);
-            box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.1);
-=======
-            border-color: #29b5e8;
->>>>>>> origin/feature/updated
+            border-color: var(--primary-color);
         }
 
         .button-group {
@@ -317,46 +204,6 @@
         }
 
         button {
-<<<<<<< HEAD
-            padding: 14px 28px;
-            font-size: 15px;
-            font-weight: 600;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn-primary {
-            background: var(--accent-gradient);
-            color: white;
-            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
-        }
-
-        .btn-primary:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
-        }
-
-        .btn-primary:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .btn-secondary {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-            border: 2px solid var(--border-color);
-        }
-
-        .btn-secondary:hover {
-            background: var(--text-secondary);
-            color: white;
-            border-color: var(--text-secondary);
-=======
             padding: 12px 30px;
             font-size: 16px;
             font-weight: 600;
@@ -367,13 +214,17 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--primary-gradient);
             color: white;
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        html.theme-light .btn-primary {
+            color: #333 !important;
         }
 
         .btn-primary:disabled {
@@ -389,25 +240,15 @@
 
         .btn-secondary:hover {
             background: #5a6268;
->>>>>>> origin/feature/updated
         }
 
         .generated-query-section {
             display: none;
-<<<<<<< HEAD
-            background: var(--bg-tertiary);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 24px;
-            border: 2px solid var(--border-color);
-            box-shadow: 0 4px 12px var(--shadow);
-            animation: fadeIn 0.5s ease;
-=======
-            background: #f8f9fa;
+            background: var(--bg-light);
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 20px;
->>>>>>> origin/feature/updated
+            border: 1px solid var(--border-color);
         }
 
         .generated-query-section.visible {
@@ -423,35 +264,13 @@
 
         .query-label {
             font-weight: 600;
-<<<<<<< HEAD
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .copy-btn {
-            padding: 8px 16px;
-            font-size: 13px;
-            background: var(--accent-primary);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .copy-btn:hover {
-            background: var(--accent-dark);
-            transform: scale(1.05);
-=======
-            color: #333;
+            color: var(--text-dark);
         }
 
         .copy-btn {
             padding: 6px 12px;
             font-size: 12px;
-            background: #29b5e8;
+            background: var(--primary-color);
             color: white;
             border: none;
             border-radius: 4px;
@@ -459,8 +278,7 @@
         }
 
         .copy-btn:hover {
-            background: #1e8ab8;
->>>>>>> origin/feature/updated
+            background: var(--primary-hover);
         }
 
         .query-display {
@@ -477,24 +295,6 @@
 
         .results-section {
             display: none;
-<<<<<<< HEAD
-            animation: fadeIn 0.5s ease;
-        }
-
-        .results-section.visible { display: block; }
-
-        .result-stats {
-            background: var(--info-bg);
-            padding: 14px 18px;
-            border-radius: 10px;
-            margin-bottom: 16px;
-            font-size: 14px;
-            color: var(--info);
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-=======
         }
 
         .results-section.visible {
@@ -508,84 +308,53 @@
             margin-bottom: 15px;
             font-size: 14px;
             color: #1976d2;
->>>>>>> origin/feature/updated
+        }
+
+        html.theme-dark .result-stats {
+            background: #1a3a52;
+            color: #64b5f6;
         }
 
         .table-container {
             overflow-x: auto;
-<<<<<<< HEAD
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            box-shadow: 0 4px 12px var(--shadow);
-=======
-            border: 1px solid #e0e0e0;
             border-radius: 8px;
->>>>>>> origin/feature/updated
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-<<<<<<< HEAD
-            background: var(--bg-secondary);
-        }
-
-        thead {
-            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
-=======
             background: white;
         }
 
+        html.theme-dark table {
+            background: #3d3d3d;
+        }
+
         thead {
-            background: #29b5e8;
->>>>>>> origin/feature/updated
+            background: var(--header-bg);
             color: white;
         }
 
         th {
-<<<<<<< HEAD
-            padding: 16px;
-            text-align: left;
-            font-weight: 600;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        td {
-            padding: 14px 16px;
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-primary);
-        }
-
-        tbody tr:hover {
-            background: var(--accent-light);
-        }
-
-        .error-message {
-            background: var(--error-bg);
-            color: var(--error);
-            padding: 16px;
-            border-radius: 10px;
-            border-left: 4px solid var(--error);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-=======
             padding: 12px;
             text-align: left;
             font-weight: 600;
-            border-bottom: 2px solid #1e8ab8;
+            border-bottom: 2px solid var(--header-hover);
         }
 
         td {
             padding: 10px 12px;
-            border-bottom: 1px solid #e0e0e0;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-light);
+        }
+
+        html.theme-dark td {
+            color: #b0b0b0;
         }
 
         tbody tr:hover {
-            background: #f5f5f5;
+            background: var(--bg-light);
         }
 
         .error-message {
@@ -595,47 +364,33 @@
             border-radius: 8px;
             border-left: 4px solid #c62828;
             margin-bottom: 20px;
->>>>>>> origin/feature/updated
+        }
+
+        html.theme-dark .error-message {
+            background: #4a1a1a;
+            color: #ef9a9a;
+            border-left: 4px solid #ef9a9a;
         }
 
         .loading {
             display: none;
             text-align: center;
-<<<<<<< HEAD
-            padding: 40px;
-            color: var(--text-secondary);
-=======
             padding: 20px;
-            color: #666;
->>>>>>> origin/feature/updated
+            color: var(--text-light);
         }
 
         .loading.visible {
             display: block;
-<<<<<<< HEAD
-            animation: fadeIn 0.3s ease;
-        }
-
-        .spinner {
-            border: 4px solid rgba(255, 107, 53, 0.2);
-            border-top: 4px solid var(--accent-primary);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 0.8s linear infinite;
-            margin: 0 auto 16px;
-=======
         }
 
         .spinner {
             border: 3px solid #f3f3f3;
-            border-top: 3px solid #29b5e8;
+            border-top: 3px solid var(--primary-color);
             border-radius: 50%;
             width: 40px;
             height: 40px;
             animation: spin 1s linear infinite;
             margin: 0 auto 10px;
->>>>>>> origin/feature/updated
         }
 
         @keyframes spin {
@@ -644,33 +399,23 @@
         }
 
         .example-questions {
-<<<<<<< HEAD
-            background: var(--bg-tertiary);
-            padding: 20px;
-            border-radius: 12px;
-            margin-top: 16px;
-            border: 2px solid var(--border-color);
-        }
-
-        .example-questions h4 {
-            margin-bottom: 12px;
-            color: var(--accent-primary);
-            font-size: 15px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-=======
             background: #fff9c4;
             padding: 15px;
             border-radius: 8px;
             margin-top: 10px;
         }
 
+        html.theme-dark .example-questions {
+            background: #4a3c1a;
+        }
+
         .example-questions h4 {
             margin-bottom: 10px;
             color: #f57c00;
->>>>>>> origin/feature/updated
+        }
+
+        html.theme-dark .example-questions h4 {
+            color: #ffb74d;
         }
 
         .example-questions ul {
@@ -679,242 +424,131 @@
         }
 
         .example-questions li {
-<<<<<<< HEAD
-            padding: 12px 16px;
+            padding: 5px 0;
             cursor: pointer;
-            color: var(--text-primary);
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            color: var(--text-light);
         }
 
         .example-questions li:hover {
-            background: var(--accent-gradient);
-            color: white;
-            transform: translateX(8px);
+            color: var(--primary-color);
+            text-decoration: underline;
         }
 
-        .example-questions li:before {
-            content: '→';
-            font-weight: bold;
+        html.theme-dark #schema-info {
+            background: #3d3d3d !important;
+            border: 1px solid #555 !important;
+            color: #b0b0b0 !important;
         }
 
-        /* Query History Styles */
-        .history-toggle {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-            border: 2px solid var(--border-color);
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        html.theme-dark #schema-info p {
+            color: #b0b0b0 !important;
         }
 
-        .history-toggle:hover {
-            background: var(--accent-light);
-            border-color: var(--accent-primary);
-            color: var(--accent-primary);
+        html.theme-dark #metadata-content {
+            color: #b0b0b0 !important;
         }
 
-        .history-panel {
-            position: fixed;
-            right: -400px;
-            top: 0;
-            width: 400px;
-            height: 100vh;
-            background: var(--bg-secondary);
-            box-shadow: -4px 0 12px var(--shadow);
-            transition: right 0.3s ease;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
+        html.theme-dark #metadata-content > div {
+            background: #3d3d3d !important;
         }
 
-        .history-panel.open {
-            right: 0;
-        }
+        html.theme-dark #metadata-content p,
+        html.theme-dark #metadata-content strong,
+        html.theme-dark #metadata-content summary,
+        html.theme-dark #metadata-content li {
+            color: #b0b0b0 !important;
+        }s
 
-        .history-header {
-            background: var(--accent-gradient);
-            color: white;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .history-header h3 {
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .history-close {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 20px;
-            line-height: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            padding: 0;
-        }
-
-        .history-close:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: rotate(90deg);
-        }
-
-        .history-content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-        }
-
-        .history-empty {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--text-secondary);
-        }
-
-        .history-empty i {
-            font-size: 48px;
-            margin-bottom: 16px;
-            opacity: 0.5;
-        }
-
-        .history-item {
-            background: var(--bg-tertiary);
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .history-item:hover {
-            border-color: var(--accent-primary);
-            background: var(--accent-light);
-            transform: translateX(-4px);
-        }
-
-        .history-item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 8px;
-        }
-
-        .history-timestamp {
-            font-size: 11px;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .history-delete {
-            background: transparent;
-            border: none;
-            color: var(--error);
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-
-        .history-delete:hover {
-            background: var(--error-bg);
-        }
-
-        .history-question {
-            color: var(--text-primary);
-            font-size: 14px;
-            line-height: 1.5;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        .history-schema {
+        .theme-dropdown {
+            position: relative;
             display: inline-block;
-            background: var(--info-bg);
-            color: var(--info);
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 600;
         }
 
-        .history-actions {
-            padding: 20px;
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            gap: 10px;
-        }
-
-        .history-clear-btn {
-            flex: 1;
-            padding: 12px;
-            background: var(--error);
-            color: white;
+        .theme-btn {
+            padding: 8px 16px;
             border: none;
-            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 5px;
             cursor: pointer;
+            font-size: 14px;
             font-weight: 600;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .history-clear-btn:hover {
-            background: #c82333;
-            transform: translateY(-2px);
+        .theme-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
         }
 
-        .history-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+        html.theme-light .theme-btn {
+            color: white;
+            border-color: white;
+        }
+
+        html.theme-light .theme-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .theme-menu {
             display: none;
-            z-index: 999;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            margin-top: 8px;
+            z-index: 1000;
+            min-width: 180px;
+            overflow: hidden;
         }
 
-        .history-overlay.show {
+        html.theme-dark .theme-menu {
+            background: #3d3d3d;
+            border-color: #555;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .theme-menu.active {
             display: block;
         }
 
-        @media (max-width: 768px) {
-            .header { flex-direction: column; gap: 16px; }
-            .nav-links { flex-direction: column; width: 100%; }
-            .nav-link { width: 100%; justify-content: center; }
-            .history-panel { width: 100%; right: -100%; }
-=======
-            padding: 5px 0;
+        .theme-option {
+            padding: 12px 16px;
             cursor: pointer;
-            color: #555;
+            color: var(--text-dark);
+            transition: background 0.2s;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
         }
 
-        .example-questions li:hover {
-            color: #29b5e8;
-            text-decoration: underline;
->>>>>>> origin/feature/updated
+        html.theme-dark .theme-option {
+            border-bottom-color: #444;
+        }
+
+        .theme-option:last-child {
+            border-bottom: none;
+        }
+
+        .theme-option:hover {
+            background: var(--bg-light);
+        }
+
+        html.theme-dark .theme-option:hover {
+            background: #4d4d4d;
+        }
+
+        .theme-option.selected {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
         }
     </style>
 </head>
@@ -924,22 +558,19 @@
             <div class="header-title">
                 🤖 AI Query Assistant - Ask in Plain English
             </div>
-<<<<<<< HEAD
-            <div class="header-right">
-                <button class="theme-toggle" onclick="toggleTheme()">
-                    <i class="fas fa-moon" id="theme-icon"></i>
-                </button>
-                <div class="nav-links">
-                    <a href="/" class="nav-link"><i class="fas fa-database"></i> Home</a>
-                    <a href="/query-tool" class="nav-link"><i class="fas fa-table"></i> SQL Query Tool</a>
-                    <a href="/unit-test-generator" class="nav-link"><i class="fas fa-vial"></i> Test Generator</a>
-                </div>
-=======
             <div class="nav-links">
                 <a href="/" class="nav-link">🏠 Home</a>
                 <a href="/query-tool" class="nav-link">SQL Query Tool</a>
-                <a href="/unit-test-generator" class="nav-link">Test Generator</a>
->>>>>>> origin/feature/updated
+                <a href="/ai-query" class="nav-link">🤖 AI Query Assistant</a>
+                <a href="/unit-test-generator" class="nav-link">AI Test Generator</a>
+                <div class="theme-dropdown">
+                    <button class="nav-link theme-btn" onclick="toggleThemeMenu()" title="Change Theme">🎨 Theme</button>
+                    <div class="theme-menu" id="themeMenu">
+                        <div class="theme-option" onclick="selectTheme('default')">🔵 Modern Blue</div>
+                        <div class="theme-option" onclick="selectTheme('light')">☀️ Light Orange</div>
+                        <div class="theme-option" onclick="selectTheme('dark')">🌙 Dark Orange</div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -994,12 +625,6 @@
                     <button class="btn-secondary" onclick="clearAll()">
                         🔄 Clear
                     </button>
-<<<<<<< HEAD
-                    <button class="history-toggle" onclick="toggleHistory()">
-                        <i class="fas fa-history"></i> History
-                    </button>
-=======
->>>>>>> origin/feature/updated
                 </div>
 
                 <!-- Example Questions -->
@@ -1013,28 +638,6 @@
                         <li onclick="setQuestion('What are the top 10 customers by total purchase amount?')">• What are the top 10 customers by total purchase amount?</li>
                         <li onclick="setQuestion('Show me all tables in this schema')">• Show me all tables in this schema</li>
                     </ul>
-<<<<<<< HEAD
-    <!-- Query History Panel -->
-    <div class="history-overlay" id="historyOverlay" onclick="toggleHistory()"></div>
-    <div class="history-panel" id="historyPanel">
-        <div class="history-header">
-            <h3><i class="fas fa-history"></i> Query History</h3>
-            <button class="history-close" onclick="toggleHistory()">×</button>
-        </div>
-        <div class="history-content" id="historyContent">
-            <div class="history-empty">
-                <i class="fas fa-inbox"></i>
-                <p>No query history yet</p>
-            </div>
-        </div>
-        <div class="history-actions">
-            <button class="history-clear-btn" onclick="clearHistory()">
-                <i class="fas fa-trash"></i> Clear All History
-            </button>
-        </div>
-    </div>
-=======
->>>>>>> origin/feature/updated
                 </div>
             </div>
 
@@ -1075,31 +678,60 @@
         let currentSchema = '';
         let schemaMetadata = null;
 
-<<<<<<< HEAD
         // Theme Management
-        function toggleTheme() {
+        function setTheme(themeName) {
             const html = document.documentElement;
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            html.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            const icon = document.getElementById('theme-icon');
-            icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            if (themeName === 'light') {
+                html.classList.remove('theme-dark');
+                html.classList.add('theme-light');
+            } else if (themeName === 'dark') {
+                html.classList.remove('theme-light');
+                html.classList.add('theme-dark');
+            } else {
+                html.classList.remove('theme-light', 'theme-dark');
+            }
+            localStorage.setItem('theme', themeName);
+            updateThemeOptions(themeName);
+            closeThemeMenu();
         }
 
-        // Load saved theme and history on DOMContentLoaded
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            const icon = document.getElementById('theme-icon');
-            icon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-            loadHistoryPanel();
+        function updateThemeOptions(themeName) {
+            document.querySelectorAll('.theme-option').forEach((option) => {
+                option.classList.remove('selected');
+            });
+            const themeMap = { default: 0, light: 1, dark: 2 };
+            if (themeMap[themeName] !== undefined) {
+                document.querySelectorAll('.theme-option')[themeMap[themeName]].classList.add('selected');
+            }
+        }
+
+        function toggleThemeMenu() {
+            const menu = document.getElementById('themeMenu');
+            menu.classList.toggle('active');
+        }
+
+        function selectTheme(themeName) {
+            setTheme(themeName);
+        }
+
+        function closeThemeMenu() {
+            const menu = document.getElementById('themeMenu');
+            menu.classList.remove('active');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const themeDropdown = document.querySelector('.theme-dropdown');
+            if (themeDropdown && !themeDropdown.contains(e.target)) {
+                closeThemeMenu();
+            }
         });
 
-=======
->>>>>>> origin/feature/updated
         // Load databases on page load
         window.onload = async function() {
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme') || 'default';
+            setTheme(savedTheme);
             // First, check if user is connected (signed in via SSO)
             try {
                 const connResponse = await fetch('/api/check-connection');
@@ -1114,134 +746,9 @@
                 window.location.href = '/';
                 return;
             }
-<<<<<<< HEAD
-            loadDatabases();
-        };
-        // =====================
-        // QUERY HISTORY FEATURE
-        // =====================
-        function saveToHistory(question, schema, query) {
-            const history = getHistory();
-            const newEntry = {
-                id: Date.now(),
-                question: question,
-                schema: schema,
-                query: query,
-                timestamp: new Date().toISOString()
-            };
-            history.unshift(newEntry);
-            const limitedHistory = history.slice(0, 50);
-            localStorage.setItem('aiQueryHistory', JSON.stringify(limitedHistory));
-            loadHistoryPanel();
-        }
-
-        function getHistory() {
-            const history = localStorage.getItem('aiQueryHistory');
-            return history ? JSON.parse(history) : [];
-        }
-
-        function loadHistoryPanel() {
-            const history = getHistory();
-            const content = document.getElementById('historyContent');
-            if (history.length === 0) {
-                content.innerHTML = `
-                    <div class="history-empty">
-                        <i class="fas fa-inbox"></i>
-                        <p>No query history yet</p>
-                    </div>
-                `;
-                return;
-            }
-            let html = '';
-            history.forEach(entry => {
-                const date = new Date(entry.timestamp);
-                const timeAgo = getTimeAgo(date);
-                html += `
-                    <div class="history-item" onclick="loadFromHistory(${entry.id})">
-                        <div class="history-item-header">
-                            <span class="history-timestamp">
-                                <i class="fas fa-clock"></i> ${timeAgo}
-                            </span>
-                            <button class="history-delete" onclick="event.stopPropagation(); deleteHistoryItem(${entry.id})">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                        <div class="history-question">${escapeHtml(entry.question)}</div>
-                        <span class="history-schema">
-                            <i class="fas fa-database"></i> ${escapeHtml(entry.schema)}
-                        </span>
-                    </div>
-                `;
-            });
-            content.innerHTML = html;
-        }
-
-        function loadFromHistory(id) {
-            const history = getHistory();
-            const entry = history.find(h => h.id === id);
-            if (entry) {
-                // Set schema
-                document.getElementById('schema-select').value = entry.schema;
-                currentSchema = entry.schema;
-                loadSchemaMetadata();
-                document.getElementById('generate-btn').disabled = false;
-                // Set question
-                document.getElementById('question-input').value = entry.question;
-                // Close history panel
-                toggleHistory();
-            }
-        }
-
-        function deleteHistoryItem(id) {
-            const history = getHistory();
-            const filtered = history.filter(h => h.id !== id);
-            localStorage.setItem('aiQueryHistory', JSON.stringify(filtered));
-            loadHistoryPanel();
-        }
-
-        function clearHistory() {
-            if (confirm('Are you sure you want to clear all query history? This cannot be undone.')) {
-                localStorage.removeItem('aiQueryHistory');
-                loadHistoryPanel();
-            }
-        }
-
-        function toggleHistory() {
-            const panel = document.getElementById('historyPanel');
-            const overlay = document.getElementById('historyOverlay');
-            panel.classList.toggle('open');
-            overlay.classList.toggle('show');
-        }
-
-        function getTimeAgo(date) {
-            const seconds = Math.floor((new Date() - date) / 1000);
-            const intervals = {
-                year: 31536000,
-                month: 2592000,
-                week: 604800,
-                day: 86400,
-                hour: 3600,
-                minute: 60
-            };
-            for (const [unit, secondsInUnit] of Object.entries(intervals)) {
-                const interval = Math.floor(seconds / secondsInUnit);
-                if (interval >= 1) {
-                    return interval === 1 ? `1 ${unit} ago` : `${interval} ${unit}s ago`;
-                }
-            }
-            return 'Just now';
-        }
-
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-=======
             
             loadDatabases();
         };
->>>>>>> origin/feature/updated
 
         function loadDatabases() {
             fetch('/api/databases')
@@ -1390,27 +897,16 @@
             .then(response => response.json())
             .then(data => {
                 document.getElementById('loading').classList.remove('visible');
-<<<<<<< HEAD
-=======
                 
->>>>>>> origin/feature/updated
                 if (data.error) {
                     showError(data.error);
                     return;
                 }
-<<<<<<< HEAD
-                // Save to history
-                saveToHistory(question, currentSchema, data.query);
-                // Display generated query
-                document.getElementById('query-display').textContent = data.query;
-                document.getElementById('generated-query-section').classList.add('visible');
-=======
 
                 // Display generated query
                 document.getElementById('query-display').textContent = data.query;
                 document.getElementById('generated-query-section').classList.add('visible');
 
->>>>>>> origin/feature/updated
                 // Display results
                 displayResults(data.results);
             })

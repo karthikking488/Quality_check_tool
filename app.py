@@ -1,18 +1,11 @@
-<<<<<<< HEAD
-from flask import Flask, render_template, request, jsonify
-=======
 from flask import Flask, render_template, request, jsonify, send_file
->>>>>>> origin/feature/updated
 import snowflake.connector
 from snowflake.connector import DictCursor
 import os
 import re
 from dotenv import load_dotenv
 import atexit
-<<<<<<< HEAD
-=======
 from report_generator import generate_pdf_report
->>>>>>> origin/feature/updated
 
 # Load environment variables
 load_dotenv()
@@ -711,31 +704,6 @@ def get_object_metadata():
                             }
             
         elif object_type == 'VIEW':
-<<<<<<< HEAD
-            # Get view structure
-            query = f"DESCRIBE VIEW {full_name}"
-            result = execute_query(query)
-            if "error" not in result:
-                metadata['columns'] = result['data']
-            
-            # Get row count for views too
-            count_query = f"SELECT COUNT(*) as total_rows FROM {full_name}"
-            count_result = execute_query(count_query)
-            if "error" not in count_result:
-                metadata['total_rows'] = count_result['data'][0]['TOTAL_ROWS']
-            
-            # Get view definition
-            ddl_query = f"SELECT GET_DDL('VIEW', '{full_name}') as ddl"
-            ddl_result = execute_query(ddl_query)
-            if "error" not in ddl_result:
-                metadata['definition'] = ddl_result['data'][0]['DDL']
-            
-            # Get sample data
-            sample_query = f"SELECT * FROM {full_name} LIMIT 5"
-            sample_result = execute_query(sample_query)
-            if "error" not in sample_result:
-                metadata['sample_data'] = sample_result['data']
-=======
                 # Get view structure
                 try:
                     query = f"DESCRIBE VIEW {full_name}"
@@ -900,7 +868,6 @@ def get_object_metadata():
                                 'source': value_source,
                                 'source_object': source_object
                             }
->>>>>>> origin/feature/updated
                 
         elif object_type == 'PROCEDURE':
             # For procedures, we need to handle them differently
@@ -1331,8 +1298,6 @@ Focus on what the user asked for while still ensuring the tests are valid and ex
     
     prompt = f"""You are an expert data quality engineer. Analyze the metadata below and generate comprehensive, intelligent test cases for this Snowflake {object_type}.
 
-<<<<<<< HEAD
-=======
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! CRITICAL SQL RULE - READ THIS FIRST - FAILURE TO FOLLOW CAUSES ERRORS !!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -1348,7 +1313,6 @@ Empty string comparisons ('') are ONLY valid for VARCHAR/STRING/TEXT columns!
 For DATE, TIMESTAMP, NUMBER, INTEGER, FLOAT columns: use IS NULL / IS NOT NULL ONLY!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
->>>>>>> origin/feature/updated
 === OBJECT DETAILS ===
 Object: {schema}.{object_name}
 Type: {object_type}
@@ -1375,10 +1339,7 @@ Analyze the metadata thoroughly and generate exactly {test_case_count} meaningfu
 - For categorical columns: The DISTINCT VALUES section shows ALL valid values in the data
 - For numeric columns: Use MIN/MAX/AVG from statistics to set reasonable thresholds
 - Always use the fully qualified table name: {schema}.{object_name}
-<<<<<<< HEAD
-=======
 - REMEMBER: Never use != '' or = '' with DATE/TIMESTAMP/NUMBER columns (see CRITICAL RULE above)
->>>>>>> origin/feature/updated
 
 === OUTPUT FORMAT ===
 Return ONLY a JSON array:
@@ -1415,25 +1376,18 @@ Generate intelligent test cases based on your analysis. Return ONLY the JSON arr
         # Rebuild prompt with truncated metadata
         prompt = f"""You are a data quality engineer. Generate {test_case_count} test cases for this Snowflake {object_type}.
 
-<<<<<<< HEAD
-=======
 CRITICAL RULE: In Snowflake, DATE/TIMESTAMP/NUMBER columns CANNOT be compared to empty strings!
 - WRONG: WHERE DATE_COLUMN != '' (causes Error 100040)
 - CORRECT: WHERE DATE_COLUMN IS NOT NULL
 
->>>>>>> origin/feature/updated
 Object: {schema}.{object_name}
 Total Rows: {total_rows}
 {user_request_section}
 {metadata_summary}
 
 Generate test cases as a JSON array with: test_name, description, query, expected_type, expected_description.
-<<<<<<< HEAD
-Use the actual column names and statistics from metadata. Return ONLY the JSON array."""
-=======
 Use the actual column names and statistics from metadata.
 Return ONLY the JSON array."""
->>>>>>> origin/feature/updated
         escaped_prompt = prompt.replace("'", "''")
     
     return escaped_prompt
@@ -1539,11 +1493,8 @@ CRITICAL RULES:
 ✗ DON'T call with empty () if parameters are required
 ✗ DON'T ignore the sample data - USE IT to generate realistic values
 ✗ DON'T make up values that don't appear anywhere in the metadata
-<<<<<<< HEAD
-=======
 ✗ DON'T compare DATE/TIMESTAMP columns to empty strings ('') - use IS NULL or IS NOT NULL instead
 ✗ DON'T compare NUMBER/INTEGER columns to empty strings - they can only be NULL or numeric
->>>>>>> origin/feature/updated
 
 If you CANNOT determine reasonable values even with the metadata:
 Generate manual testing note:
@@ -2156,8 +2107,6 @@ Return ONLY the JSON, nothing else."""
     except Exception as e:
         return jsonify({"error": str(e)})
 
-<<<<<<< HEAD
-=======
 
 @app.route('/api/generate-report', methods=['POST'])
 def generate_report():
@@ -2231,7 +2180,6 @@ def generate_report():
         return jsonify({'error': str(e)}), 500
 
 
->>>>>>> origin/feature/updated
 if __name__ == '__main__':
     # Initialize connection when starting the app
     print("\n" + "=" * 50)
