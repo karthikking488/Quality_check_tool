@@ -89,6 +89,9 @@
         .nav-links {
             display: flex;
             gap: 15px;
+            align-items: center;
+            position: relative;
+            z-index: 10;
         }
 
         .nav-link {
@@ -214,17 +217,17 @@
         }
 
         .btn-primary {
-            background: var(--primary-gradient);
+            background: linear-gradient(135deg, #ff8c00 0%, #ff7200 100%);
             color: white;
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 5px 15px rgba(255, 140, 0, 0.4);
         }
 
         html.theme-light .btn-primary {
-            color: #333 !important;
+            color: white;
         }
 
         .btn-primary:disabled {
@@ -462,6 +465,7 @@
         .theme-dropdown {
             position: relative;
             display: inline-block;
+            z-index: 100;
         }
 
         .theme-btn {
@@ -495,14 +499,13 @@
         .theme-menu {
             display: none;
             position: absolute;
-            top: 100%;
+            top: calc(100% + 8px);
             right: 0;
             background: white;
             border: 1px solid var(--border-color);
             border-radius: 6px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            margin-top: 8px;
-            z-index: 1000;
+            z-index: 1001;
             min-width: 180px;
             overflow: hidden;
         }
