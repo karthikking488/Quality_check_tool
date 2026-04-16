@@ -958,6 +958,6 @@ def _build_recommendations(test_cases, metadata, score):
         pass
 
     recs.append('Schedule this report to run automatically after each ETL load for continuous data quality monitoring.')
-    recs.append('Store the generated test cases in the DATA_QUALITY_TEST_CASES table and integrate with your CI/CD pipeline for automated regression testing.')
+    recs.append('Version and maintain the generated test cases alongside your pipeline code so they can be reused for automated regression testing.')
 
     return recs

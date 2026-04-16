@@ -369,7 +369,7 @@ def check_cortex():
         
         # Try a simple Cortex call
         try:
-            cursor.execute("SELECT SNOWFLAKE.CORTEX.COMPLETE('mixtral-8x7b', 'Say hello') as test")
+            cursor.execute("SELECT SNOWFLAKE.CORTEX.COMPLETE('llama3.1-70b', 'Say hello') as test")
             result = cursor.fetchone()
             cursor.close()
             return jsonify({"has_access": True})
@@ -384,133 +384,6 @@ def check_cortex():
             
     except Exception as e:
         return jsonify({"error": str(e), "has_access": False})
-
-@app.route('/api/save-tests', methods=['POST'])
-def save_tests():
-    """
-    Save generated test cases to the Snowflake table
-    """
-    try:
-        data = request.get_json()
-        database = data.get('database')
-        schema = data.get('schema')
-        object_name = data.get('object_name')
-        object_type = data.get('object_type')
-        test_cases = data.get('test_cases', [])
-        
-        if not all([database, schema, object_name, object_type, test_cases]):
-            return jsonify({"error": "Missing required parameters"})
-        
-        conn = get_connection()
-        if conn is None:
-            return jsonify({"error": "Not connected to Snowflake"})
-        
-        full_schema = f"{database}.{schema}"
-        cursor = conn.cursor()
-        
-        # Insert each test case
-        saved_count = 0
-        for test in test_cases:
-            test_name = test.get('test_name', '').replace("'", "''")
-            test_desc = test.get('description', '').replace("'", "''")
-            test_query = test.get('query', '').replace("'", "''")
-            expected_result = test.get('expected_type', '').replace("'", "''")
-            
-            insert_query = f"""
-            INSERT INTO HACKATHON_POC.NN.DATA_QUALITY_TEST_CASES 
-            (SCHEMA_NAME, OBJECT_TYPE, OBJECT_NAME, TEST_NAME, TEST_DESCRIPTION, TEST_QUERY, EXPECTED_RESULT)
-            VALUES ('{full_schema}', '{object_type}', '{object_name}', '{test_name}', '{test_desc}', '{test_query}', '{expected_result}')
-            """
-            
-            try:
-                cursor.execute(insert_query)
-                saved_count += 1
-            except Exception as insert_error:
-                print(f"Error inserting test case: {insert_error}")
-        
-        cursor.close()
-        
-        return jsonify({"success": True, "saved_count": saved_count})
-    except Exception as e:
-        return jsonify({"error": str(e)})
-
-@app.route('/api/fetch-tests', methods=['POST'])
-def fetch_tests():
-    """
-    Fetch existing test cases for an object from the Snowflake table
-    """
-    try:
-        data = request.get_json()
-        database = data.get('database')
-        schema = data.get('schema')
-        object_name = data.get('object_name')
-        object_type = data.get('object_type')
-        
-        if not all([database, schema, object_name, object_type]):
-            return jsonify({"error": "Missing required parameters"})
-        
-        conn = get_connection()
-        if conn is None:
-            return jsonify({"error": "Not connected to Snowflake"})
-        
-        full_schema = f"{database}.{schema}"
-        cursor = conn.cursor(DictCursor)
-        
-        fetch_query = f"""
-        SELECT TEST_ID, TEST_NAME, TEST_DESCRIPTION, TEST_QUERY, EXPECTED_RESULT, CREATED_AT
-        FROM HACKATHON_POC.NN.DATA_QUALITY_TEST_CASES
-        WHERE SCHEMA_NAME = '{full_schema}'
-          AND OBJECT_TYPE = '{object_type}'
-          AND OBJECT_NAME = '{object_name}'
-        ORDER BY CREATED_AT DESC
-        """
-        
-        cursor.execute(fetch_query)
-        results = cursor.fetchall()
-        cursor.close()
-        
-        # Convert to test case format
-        test_cases = []
-        for row in results:
-            test_cases.append({
-                "test_id": row.get('TEST_ID'),
-                "test_name": row.get('TEST_NAME'),
-                "description": row.get('TEST_DESCRIPTION'),
-                "query": row.get('TEST_QUERY'),
-                "expected_type": row.get('EXPECTED_RESULT'),
-                "expected_description": row.get('TEST_DESCRIPTION'),
-                "created_at": str(row.get('CREATED_AT')) if row.get('CREATED_AT') else None
-            })
-        
-        return jsonify({"success": True, "test_cases": test_cases})
-    except Exception as e:
-        return jsonify({"error": str(e)})
-
-@app.route('/api/delete-test', methods=['POST'])
-def delete_test():
-    """
-    Delete a test case from the Snowflake table
-    """
-    try:
-        data = request.get_json()
-        test_id = data.get('test_id')
-        
-        if not test_id:
-            return jsonify({"error": "Test ID is required"})
-        
-        conn = get_connection()
-        if conn is None:
-            return jsonify({"error": "Not connected to Snowflake"})
-        
-        cursor = conn.cursor()
-        cursor.execute(f"DELETE FROM HACKATHON_POC.NN.DATA_QUALITY_TEST_CASES WHERE TEST_ID = {test_id}")
-        cursor.close()
-        
-        return jsonify({"success": True})
-    except Exception as e:
-        return jsonify({"error": str(e)})
-
-# ============== END NEW ENDPOINTS ==============
 
 @app.route('/execute', methods=['POST'])
 def execute():
@@ -989,10 +862,10 @@ def generate_tests():
         prompt = create_test_generation_prompt(full_schema, object_name, object_type, metadata, user_test_request, test_case_count)
         
         # Call Cortex AI to generate test cases
-        # Using mixtral-8x7b (more commonly available than mistral-large2)
+        # Using llama3.1-70b
         cortex_query = f"""
         SELECT SNOWFLAKE.CORTEX.COMPLETE(
-            'mixtral-8x7b',
+            'llama3.1-70b',
             '{prompt}'
         ) as test_cases
         """
@@ -1158,6 +1031,54 @@ def run_test():
     except Exception as e:
         return jsonify({"error": str(e)})
 
+def build_quality_test_mix_guidance(object_type, test_case_count):
+    """
+    Build prompt guidance that forces a healthier mix of test case types.
+    """
+    distinct_categories = min(max(int(test_case_count), 1), 5)
+
+    if object_type in ['TABLE', 'VIEW']:
+        return f"""
+=== TEST MIX REQUIREMENTS ===
+Generate a BALANCED suite, not repeated row-count checks.
+- Cover at least {distinct_categories} distinct data quality categories when metadata allows.
+- Include at most 2 pure table-level volume/count tests.
+- Do NOT make most tests simple whole-table SELECT COUNT(*) queries.
+- Prefer targeted validation queries that isolate bad records and use expected_type NO_ROWS or HAS_ROWS.
+
+Priority categories to mix across:
+1. Volume / freshness / unexpected emptiness
+2. Null or completeness checks on required columns
+3. Duplicate or uniqueness checks on candidate keys / business keys
+4. Domain / allowed-values / invalid-code checks for categorical columns
+5. Numeric or date boundary / range checks using observed statistics
+6. Cross-column business-rule checks when names imply a rule
+7. Referential integrity / orphan detection when related tables can be inferred
+
+Diversity rules:
+- At least 1 test should look for null/completeness issues.
+- At least 1 test should look for duplicates or uniqueness violations if a key-like column exists.
+- At least 1 test should validate a domain, pattern, range, or business rule.
+- Use COUNT(*) only when asserting a precise metric or counting invalid rows is the clearest design.
+- When checking for bad data, prefer queries that return offending rows and expect NO_ROWS.
+- Avoid generating multiple tests that differ only by column name while using the same COUNT pattern.
+"""
+
+    return f"""
+=== TEST MIX REQUIREMENTS ===
+Generate a BALANCED suite, not repeated success-path calls.
+- Cover at least {distinct_categories} distinct test intents when metadata allows.
+- Include a mix of happy-path, boundary, alternate valid input, and invalid/error-path tests.
+- Do not generate near-duplicate calls that only swap one literal without testing a new behavior.
+
+Priority categories to mix across:
+1. Standard valid execution
+2. Boundary date / numeric parameter values
+3. Alternate valid business scenarios using actual metadata values
+4. Invalid input or error-handling behavior
+5. Optional / null / default parameter behavior when supported by the signature
+"""
+
 def create_test_generation_prompt(schema, object_name, object_type, metadata, user_test_request='', test_case_count=5):
     """
     Create a prompt for Cortex AI to generate test cases
@@ -1171,6 +1092,7 @@ def create_test_generation_prompt(schema, object_name, object_type, metadata, us
     
     # Build a clear metadata summary
     metadata_summary = ""
+    test_mix_guidance = build_quality_test_mix_guidance(object_type, test_case_count)
     
     # Add list of ALL tables in schema so AI uses correct names
     if schema_tables:
@@ -1320,6 +1242,7 @@ Total Rows: {total_rows}
 
 {metadata_summary}
 {user_request_section}
+{test_mix_guidance}
 === YOUR TASK ===
 Analyze the metadata thoroughly and generate exactly {test_case_count} meaningful test cases that:
 1. Validate data integrity and quality
@@ -1334,6 +1257,8 @@ Analyze the metadata thoroughly and generate exactly {test_case_count} meaningfu
 - Use the STATISTICS section to understand numeric ranges
 - Generate tests appropriate for the table's size and purpose
 - Think about what could go wrong with this data
+- Prefer issue-detection queries that return bad rows over generic aggregate-only checks
+- If a COUNT query is used, it should usually count invalid records for a specific rule, not just count all rows
 
 === IMPORTANT NOTES ===
 - For categorical columns: The DISTINCT VALUES section shows ALL valid values in the data
@@ -1364,6 +1289,18 @@ Return ONLY a JSON array:
 IMPORTANT: For COUNT(*) queries, use VALUE_EQUALS:N, not ROW_COUNT:N!
 Example: SELECT COUNT(*) → returns 1 row with value 500 → use VALUE_EQUALS:500
 
+GOOD TEST SHAPES:
+- SELECT * FROM {schema}.{object_name} WHERE critical_column IS NULL  → expected_type NO_ROWS
+- SELECT business_key, COUNT(*) FROM {schema}.{object_name} GROUP BY business_key HAVING COUNT(*) > 1 → expected_type NO_ROWS
+- SELECT * FROM {schema}.{object_name} WHERE status NOT IN ('VALID1', 'VALID2') → expected_type NO_ROWS
+- SELECT COUNT(*) FROM {schema}.{object_name} WHERE amount < 0 → expected_type VALUE_EQUALS:0
+
+AVOID THIS PATTERN REPEATEDLY:
+- SELECT COUNT(*) FROM {schema}.{object_name}
+- SELECT COUNT(column_a) FROM {schema}.{object_name}
+- SELECT COUNT(column_b) FROM {schema}.{object_name}
+- Multiple tests that are all aggregate counts of the same form without new business meaning
+
 Generate intelligent test cases based on your analysis. Return ONLY the JSON array."""
     
     # Escape single quotes for SQL
@@ -1384,9 +1321,11 @@ Object: {schema}.{object_name}
 Total Rows: {total_rows}
 {user_request_section}
 {metadata_summary}
+{test_mix_guidance}
 
 Generate test cases as a JSON array with: test_name, description, query, expected_type, expected_description.
 Use the actual column names and statistics from metadata.
+Prefer a mix of null, duplicate, domain, range, business-rule, and volume checks instead of repeating aggregate counts.
 Return ONLY the JSON array."""
         escaped_prompt = prompt.replace("'", "''")
     
@@ -1411,6 +1350,7 @@ IMPORTANT: Prioritize generating test cases that match the user's request above.
 
 {metadata_summary}
 {user_request_section}
+{build_quality_test_mix_guidance(object_type, test_case_count)}
 YOUR TASK - ANALYZE AND GENERATE SMART TESTS:
 
 STEP 1: READ THE FULL DEFINITION ABOVE
@@ -1470,6 +1410,12 @@ Test variety:
 3. Different variations of string parameters from sample data
 4. Boundary values for numbers
 5. Invalid input test (expect ERROR)
+
+Diversity rules:
+- Include at least 1 valid happy-path test.
+- Include at least 1 boundary or edge-case test.
+- Include at least 1 negative/error-path test when the signature allows it.
+- Make each test validate a different behavior, not just different literals.
 
 FORMAT AS JSON ARRAY:
 [
@@ -1951,10 +1897,10 @@ Return ONLY the JSON, nothing else."""
             print(f"Warning: Could not set warehouse: {use_wh_result['error']}")
         
         # Call Cortex AI
-        # Using mixtral-8x7b (more commonly available than mistral-large2)
+        # Using llama3.1-70b
         cortex_query = f"""
         SELECT SNOWFLAKE.CORTEX.COMPLETE(
-            'mixtral-8x7b',
+            'llama3.1-70b',
             '{escaped_prompt}'
         ) as generated_sql
         """

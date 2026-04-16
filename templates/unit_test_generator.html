@@ -456,12 +456,6 @@
                     <button class="btn btn-primary" onclick="generateTests()" id="generateBtn" disabled>
                         🚀 Generate Unit Tests with AI
                     </button>
-                    <button class="btn btn-secondary" onclick="fetchExistingTests()" id="fetchTestsBtn" disabled style="background: linear-gradient(135deg, #6c757d 0%, #495057 100%);">
-                        � Look for Unit Tests
-                    </button>
-                    <button class="btn btn-success" onclick="saveAllTests()" id="saveTestsBtn" style="display: none; background: linear-gradient(135deg, #28a745 0%, #218838 100%);">
-                        💾 Save All Test Cases
-                    </button>
                     <button onclick="openReportModal()" id="generateReportBtn"
                         style="display: none; background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
                                color: white; border: none; padding: 10px 22px; border-radius: 6px;
@@ -582,14 +576,11 @@
         function updateUIForCortexAccess() {
             const generateBtn = document.getElementById('generateBtn');
             const testRequestSection = document.getElementById('testRequestSection');
-            const fetchTestsBtn = document.getElementById('fetchTestsBtn');
-            const saveTestsBtn = document.getElementById('saveTestsBtn');
             const runAllTestsBtn = document.getElementById('runAllTestsBtn');
             
             if (hasCortexAccess) {
                 // User has Cortex access - show generate button
                 generateBtn.style.display = 'inline-block';
-                if (saveTestsBtn) saveTestsBtn.style.display = 'none'; // Hidden until tests are generated
                 if (runAllTestsBtn) runAllTestsBtn.style.display = 'none';
             } else {
                 // No Cortex access - hide generate button and customize section
@@ -738,7 +729,6 @@
             
             showStatus('Loading metadata...', 'loading');
             document.getElementById('generateBtn').disabled = true;
-            document.getElementById('fetchTestsBtn').disabled = true;
             
             try {
                 const response = await fetch('/api/object-metadata', {
@@ -760,13 +750,9 @@
                 // Enable buttons based on Cortex access
                 if (hasCortexAccess) {
                     document.getElementById('generateBtn').disabled = false;
-                }
-                document.getElementById('fetchTestsBtn').disabled = false;
-                
-                if (hasCortexAccess) {
-                    showStatus('Metadata loaded! Generate new tests or look for existing tests.', 'success');
+                    showStatus('Metadata loaded! Generate unit tests when ready.', 'success');
                 } else {
-                    showStatus('Metadata loaded! Click "Look for Unit Tests" to see existing tests.', 'success');
+                    showStatus('Metadata loaded! Cortex access is required to generate tests.', 'warning');
                 }
             } catch (error) {
                 showStatus(`Error loading metadata: ${error.message}`, 'error');
@@ -841,18 +827,13 @@
                     return;
                 }
                 
-                // Store generated tests for saving
                 generatedTestCases = result.test_cases;
                 
                 displayTestCases(result.test_cases);
-                document.getElementById('testCasesSource').textContent = '(AI Generated - not saved)';
-                
-                // Show save button
-                document.getElementById('saveTestsBtn').style.display = 'inline-block';
+                document.getElementById('testCasesSource').textContent = '(AI Generated)';
                 document.getElementById('generateReportBtn').style.display = 'inline-block';
-                document.getElementById('saveTestsBtn').disabled = false;
                 
-                showStatus(`✅ Successfully generated ${result.test_cases.length} test cases! Click "Save All Test Cases" to store them.`, 'success');
+                showStatus(`✅ Successfully generated ${result.test_cases.length} test cases!`, 'success');
                 document.getElementById('generateBtn').disabled = false;
             } catch (error) {
                 showStatus(`Error generating tests: ${error.message}`, 'error');
@@ -1051,100 +1032,6 @@
                 runAllBtn.disabled = false;
                 runAllBtn.textContent = originalLabel;
                 singleRunButtons.forEach(button => button.disabled = false);
-            }
-        }
-
-        async function fetchExistingTests() {
-            if (!currentDatabase || !currentSchema || !currentObjectName || !currentObjectType) {
-                showStatus('Please select all required fields first', 'error');
-                return;
-            }
-            
-            showStatus('🔍 Looking for existing test cases...', 'loading');
-            document.getElementById('fetchTestsBtn').disabled = true;
-            
-            try {
-                const response = await fetch('/api/fetch-tests', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        database: currentDatabase,
-                        schema: currentSchema,
-                        object_name: currentObjectName,
-                        object_type: currentObjectType
-                    })
-                });
-                
-                const result = await response.json();
-                
-                if (result.error) {
-                    showStatus(`Error: ${result.error}`, 'error');
-                    document.getElementById('fetchTestsBtn').disabled = false;
-                    return;
-                }
-                
-                if (result.test_cases && result.test_cases.length > 0) {
-                    // Add id to each test for display
-                    result.test_cases.forEach((test, index) => {
-                        test.id = test.test_id || (index + 1);
-                    });
-                    generatedTestCases = [];
-                    
-                    displayTestCases(result.test_cases);
-                    document.getElementById('testCasesSource').textContent = '(Loaded from database)';
-                    document.getElementById('saveTestsBtn').style.display = 'none'; // No need to save fetched tests
-                    document.getElementById('generateReportBtn').style.display = 'inline-block';
-                    showStatus(`✅ Found ${result.test_cases.length} existing test case(s)!`, 'success');
-                } else {
-                    showStatus('ℹ️ No existing test cases found for this object.', 'warning');
-                    document.getElementById('testCasesContainer').style.display = 'none';
-                    document.getElementById('runAllTestsBtn').style.display = 'none';
-                }
-                
-                document.getElementById('fetchTestsBtn').disabled = false;
-            } catch (error) {
-                showStatus(`Error fetching tests: ${error.message}`, 'error');
-                document.getElementById('fetchTestsBtn').disabled = false;
-            }
-        }
-
-        async function saveAllTests() {
-            if (!generatedTestCases || generatedTestCases.length === 0) {
-                showStatus('No test cases to save', 'error');
-                return;
-            }
-            
-            showStatus('💾 Saving test cases to database...', 'loading');
-            document.getElementById('saveTestsBtn').disabled = true;
-            
-            try {
-                const response = await fetch('/api/save-tests', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        database: currentDatabase,
-                        schema: currentSchema,
-                        object_name: currentObjectName,
-                        object_type: currentObjectType,
-                        test_cases: generatedTestCases
-                    })
-                });
-                
-                const result = await response.json();
-                
-                if (result.error) {
-                    showStatus(`Error saving: ${result.error}`, 'error');
-                    document.getElementById('saveTestsBtn').disabled = false;
-                    return;
-                }
-                
-                showStatus(`✅ Successfully saved ${result.saved_count} test case(s) to database!`, 'success');
-                document.getElementById('saveTestsBtn').style.display = 'none'; // Hide after saving
-                document.getElementById('testCasesSource').textContent = '(Saved to database)';
-                generatedTestCases = []; // Clear saved tests
-            } catch (error) {
-                showStatus(`Error saving tests: ${error.message}`, 'error');
-                document.getElementById('saveTestsBtn').disabled = false;
             }
         }
 
