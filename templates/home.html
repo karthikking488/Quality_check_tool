@@ -455,7 +455,9 @@
                     document.getElementById('featureQuery').className = 'tool-item enabled';
                 } else {
                     cortexStatus.className = 'cortex-status no-access';
-                    cortexStatus.innerHTML = '⚠️ This role does not have Cortex AI access. You can still fetch and run existing test cases.';
+                    const errorReason = cortexResult.reason || cortexResult.error || 'Cortex check failed for an unknown reason.';
+                    const checkModel = cortexResult.model ? ` on model ${cortexResult.model}` : '';
+                    cortexStatus.innerHTML = `⚠️ Cortex check failed${checkModel}: ${errorReason}<br>You can still fetch and run existing test cases.`;
                     document.getElementById('featureGenerate').className = 'tool-item disabled';
                     document.getElementById('featureQuery').className = 'tool-item disabled';
                 }

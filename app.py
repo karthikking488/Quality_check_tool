@@ -351,7 +351,9 @@ def set_role():
 @app.route('/api/check-cortex', methods=['GET'])
 def check_cortex():
     """
-    Check if the current role has Cortex AI access
+    Check if Cortex COMPLETE can be executed with the current role/model.
+    Return exact Snowflake error details so UI can distinguish model issues
+    from role/permission issues.
     """
     try:
         conn = get_connection()
@@ -366,24 +368,121 @@ def check_cortex():
             cursor.execute(f"USE WAREHOUSE {warehouse}")
         except:
             pass
+
+        # Model used by the lightweight access/availability check.
+        check_model = os.getenv('SNOWFLAKE_CORTEX_CHECK_MODEL', 'Llama3.1-70b')
         
         # Try a simple Cortex call
         try:
-            cursor.execute("SELECT SNOWFLAKE.CORTEX.COMPLETE('llama3.1-70b', 'Say hello') as test")
+            cursor.execute(f"SELECT SNOWFLAKE.CORTEX.COMPLETE('{check_model}', 'Say hello') as test")
             result = cursor.fetchone()
             cursor.close()
-            return jsonify({"has_access": True})
+            return jsonify({"has_access": True, "model": check_model})
         except Exception as cortex_error:
             cursor.close()
-            error_msg = str(cortex_error).lower()
-            # Check if it's a permission/access error
-            if 'not authorized' in error_msg or 'access' in error_msg or 'permission' in error_msg or 'not found' in error_msg:
-                return jsonify({"has_access": False, "reason": str(cortex_error)})
-            # For other errors (like syntax), assume access exists
-            return jsonify({"has_access": False, "reason": str(cortex_error)})
+            raw_error = str(cortex_error)
+            error_msg = raw_error.lower()
+
+            failure_type = "unknown"
+            if any(token in error_msg for token in ['not authorized', 'insufficient privileges', 'permission', 'access denied']):
+                failure_type = "permission"
+            elif any(token in error_msg for token in ['model', 'not found', 'unknown model', 'is not supported', 'unsupported']):
+                failure_type = "model"
+            elif any(token in error_msg for token in ['warehouse', 'compute']):
+                failure_type = "warehouse"
+
+            return jsonify({
+                "has_access": False,
+                "model": check_model,
+                "failure_type": failure_type,
+                "reason": raw_error
+            })
             
     except Exception as e:
         return jsonify({"error": str(e), "has_access": False})
+
+@app.route('/api/save-tests', methods=['POST'])
+def save_tests():
+    try:
+        data = request.get_json()
+        database, schema = data.get('database'), data.get('schema')
+        object_name, object_type = data.get('object_name'), data.get('object_type')
+        test_cases = data.get('test_cases', [])
+        if not all([database, schema, object_name, object_type, test_cases]):
+            return jsonify({"error": "Missing required parameters"})
+        conn = get_connection()
+        if conn is None:
+            return jsonify({"error": "Not connected to Snowflake"})
+        full_schema = f"{database}.{schema}"
+        cursor = conn.cursor()
+        saved_count = 0
+        for test in test_cases:
+            tn = test.get('test_name','').replace("'","''")
+            td = test.get('description','').replace("'","''")
+            tq = test.get('query','').replace("'","''")
+            er = test.get('expected_type','').replace("'","''")
+            ao = str(test.get('actual_output') or '').replace("'","''")
+            raw = str(test.get('test_status') or 'NOT_RUN').upper()
+            ts = raw if raw in ('PASSED','FAILED','NOT_RUN') else 'NOT_RUN'
+            try:
+                cursor.execute(f"""INSERT INTO HACKATHON_POC.NN.DATA_QUALITY_TEST_CASES
+                (SCHEMA_NAME,OBJECT_TYPE,OBJECT_NAME,TEST_NAME,TEST_DESCRIPTION,TEST_QUERY,EXPECTED_RESULT,ACTUAL_OUTPUT,TEST_STATUS)
+                VALUES ('{full_schema}','{object_type}','{object_name}','{tn}','{td}','{tq}','{er}','{ao}','{ts}')""")
+                saved_count += 1
+            except Exception as e:
+                print(f"Insert error: {e}")
+        cursor.close()
+        return jsonify({"success": True, "saved_count": saved_count})
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+
+@app.route('/api/fetch-tests', methods=['POST'])
+def fetch_tests():
+    try:
+        data = request.get_json()
+        database, schema = data.get('database'), data.get('schema')
+        object_name, object_type = data.get('object_name'), data.get('object_type')
+        if not all([database, schema, object_name, object_type]):
+            return jsonify({"error": "Missing required parameters"})
+        conn = get_connection()
+        if conn is None:
+            return jsonify({"error": "Not connected to Snowflake"})
+        full_schema = f"{database}.{schema}"
+        cursor = conn.cursor(DictCursor)
+        cursor.execute(f"""SELECT TEST_ID,TEST_NAME,TEST_DESCRIPTION,TEST_QUERY,
+               EXPECTED_RESULT,ACTUAL_OUTPUT,TEST_STATUS,CREATED_AT
+        FROM HACKATHON_POC.NN.DATA_QUALITY_TEST_CASES
+        WHERE SCHEMA_NAME='{full_schema}' AND OBJECT_TYPE='{object_type}' AND OBJECT_NAME='{object_name}'
+        ORDER BY CREATED_AT DESC""")
+        results = cursor.fetchall()
+        cursor.close()
+        test_cases = [{"test_id":r.get('TEST_ID'),"test_name":r.get('TEST_NAME'),"description":r.get('TEST_DESCRIPTION'),
+            "query":r.get('TEST_QUERY'),"expected_type":r.get('EXPECTED_RESULT'),"expected_description":r.get('TEST_DESCRIPTION'),
+            "actual_output":r.get('ACTUAL_OUTPUT'),"test_status":r.get('TEST_STATUS') or 'NOT_RUN',
+            "created_at":str(r.get('CREATED_AT')) if r.get('CREATED_AT') else None} for r in results]
+        return jsonify({"success": True, "test_cases": test_cases})
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+
+@app.route('/api/delete-test', methods=['POST'])
+def delete_test():
+    try:
+        data = request.get_json()
+        test_id = data.get('test_id')
+        if not test_id:
+            return jsonify({"error": "Test ID is required"})
+        conn = get_connection()
+        if conn is None:
+            return jsonify({"error": "Not connected to Snowflake"})
+        cursor = conn.cursor()
+        cursor.execute(f"DELETE FROM HACKATHON_POC.NN.DATA_QUALITY_TEST_CASES WHERE TEST_ID = {int(test_id)}")
+        cursor.close()
+        return jsonify({"success": True})
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
 
 @app.route('/execute', methods=['POST'])
 def execute():
@@ -865,7 +964,7 @@ def generate_tests():
         # Using llama3.1-70b
         cortex_query = f"""
         SELECT SNOWFLAKE.CORTEX.COMPLETE(
-            'llama3.1-70b',
+            'Llama3.1-70b',
             '{prompt}'
         ) as test_cases
         """
@@ -1900,7 +1999,7 @@ Return ONLY the JSON, nothing else."""
         # Using llama3.1-70b
         cortex_query = f"""
         SELECT SNOWFLAKE.CORTEX.COMPLETE(
-            'llama3.1-70b',
+            'Llama3.1-70b',
             '{escaped_prompt}'
         ) as generated_sql
         """
